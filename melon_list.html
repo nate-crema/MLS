@@ -1,0 +1,283 @@
+
+
+<div class="section_playlist">
+	<h3 class="title arr">수록곡 <span class="cnt">(4)</span></h3>
+	<div id="pageList" style="display:none">
+		
+
+	<!-- 곡1 목록 -->
+	<form id="frm" name="frm">
+	<div class="tb_list d_song_list songTypeOne" style="width:1008px;">
+		
+		<div class="wrap_btn_tb top">
+			<button type="button" title="곡 목록 전체 선택" class="btn_base short check_all d_checkall"><span class="odd_span"><span class="even_span">전체선택</span></span></button>
+			<button type="button" title="선택된 곡 재생 - 새 창" class="btn_base short play d_listen" onClick="melon.play.playFormSong('75010101','frm');"><span class="odd_span"><span class="even_span">듣기</span></span></button>
+			<button type="button" title="선택된 곡 다운로드 - 새 창" class="btn_base short download d_download" onClick="melon.buy.goBuyProduct('frm','','3C0001','input_check','0','75010101');"><span class="odd_span"><span class="even_span">다운</span></span></button>
+			<button type="button" title="선택된 곡 담기 - 새 창" class="btn_base short scrap d_scrap" onClick="melon.play.addFormPlayList('frm');"><span class="odd_span"><span class="even_span">담기</span></span></button>
+			<button type="button" title="선택된 곡 선물하기 - 새 창" class="btn_base short gift d_gift" onClick="melon.buy.goPresent('song', 'frm', '75010101');"><span class="odd_span"><span class="even_span">선물</span></span></button>
+		</div>
+		<table border="1" style="width:100%">
+			<caption>곡 목록입니다. 목록에 있는 곡을 선택하여 재생, 다운로드, 플레이리스트 담기, 선물하기가 가능합니다.</caption>
+			<colgroup><col style="width:29px"><col style="width:48px"><col><col style="width:152px"><col style="width:146px"><col style="width:82px"><col style="width:49px"><col style="width:40px"></colgroup>
+			<thead>
+				<tr>
+					<th scope="col"><div class="wrap pd_none left">
+						<input type="checkbox" title="곡 목록 전체 선택" class="input_check d_checkall" />
+					</div></th>
+					<th scope="col"><div class="wrap">NO</div></th>
+					<th scope="col"><div class="wrap">곡명</div></th>
+					<th scope="col" class="t_left"><div class="wrap">아티스트</div></th>
+					<th scope="col" class="t_left"><div class="wrap">앨범</div></th>
+					<th scope="col" class="t_left"><div class="wrap right_none">좋아요</div></th>
+					<th scope="col"><div class="wrap pd_none left">뮤비</div></th>
+					<th scope="col"><div class="wrap pd_none right">다운</div></th>
+				</tr>
+			</thead>
+			<tbody>
+				
+				<tr >
+					<td><div class="wrap pd_none left">
+						<input type="checkbox" title="오늘부터 우리는 (Me Gustas Tu) 곡 선택" class="input_check" name="input_check" value="5791706" />
+					</div></td>
+					<td class="no"><div class="wrap">1</div></td>
+					<td class="t_left"><div class="wrap pd_none">
+						<div class="ellipsis" style="max-width:100%">
+							<button type="button"  class="btn_icon play" title="오늘부터 우리는 (Me Gustas Tu) 재생 - 새 창" onClick="melon.play.playSong('75010101',5791706);"><span class="odd_span">재생</span></button>
+							<button type="button" class="btn_icon add" title="오늘부터 우리는 (Me Gustas Tu) 곡담기 - 새 창" onClick="melon.play.addPlayList('5791706');"><span class="odd_span">담기</span></button>
+							<a href="javascript:melon.link.goSongDetail('5791706');" title="오늘부터 우리는 (Me Gustas Tu) 곡정보 - 페이지 이동" class="btn btn_icon_detail" ><span class="odd_span">오늘부터 우리는 (Me Gustas Tu)</span></a>
+							
+							
+							
+							
+							
+							
+							<a href="javascript:melon.play.playSong('75010101',5791706);" class="fc_gray" title="오늘부터 우리는 (Me Gustas Tu) 재생 - 새 창">오늘부터 우리는 (Me Gustas Tu)</a>
+						</div>
+					</div></td>
+					<td class="t_left"><div class="wrap wrapArtistName">
+						<div id="artistName" class="ellipsis" style="max-width:122px">
+							<a href="javascript:melon.link.goArtistDetail('828478');" title="여자친구 (GFRIEND) - 페이지 이동" class="fc_mgray">여자친구 (GFRIEND)</a>
+						</div>
+						
+					</div></td>
+					<td class="t_left"><div class="wrap">
+						<div class="ellipsis" style="max-width:90%">
+							
+								
+								
+									<a href="javascript:melon.link.goAlbumDetail('2330981');" title="여자친구 2nd Mini Album `Flower Bud` - 페이지 이동" class="fc_mgray">여자친구 2nd Mini Album `Flower Bud`</a>
+								
+							
+						</div>
+					</div></td>
+					<td class="t_left"><div class="wrap right_none">
+						<button type="button"  class="btn_icon like" title="오늘부터 우리는 (Me Gustas Tu)" data-song-no="5791706" data-song-menuId="75010101">
+							<span class="odd_span">좋아요</span>
+							<span class="cnt"><span class="none">총건수</span>129,840</span>
+						</button>
+					</div></td>
+					<td><div class="wrap pd_none left">
+						<button type="button"  class="btn_icon mv" title="오늘부터 우리는 (Me Gustas Tu) 뮤직비디오 - 새 창" onClick="melon.link.goMvDetail('75010101', '5791706','song');"><span class="odd_span">뮤직비디오</span></button>
+					</div></td>
+					<td><div class="wrap pd_none right">
+						<button type="button"  class="btn_icon dl" title="오늘부터 우리는 (Me Gustas Tu) 다운로드 - 새 창" onClick="melon.buy.goBuyProduct('frm', '5791706', '3C0001', '','0', '75010101');"><span class="odd_span">다운</span></button>
+					</div></td>
+				</tr>
+				
+				<tr >
+					<td><div class="wrap pd_none left">
+						<input type="checkbox" title="BDZ (Korean Ver.) 곡 선택" class="input_check" name="input_check" value="31403169" />
+					</div></td>
+					<td class="no"><div class="wrap">2</div></td>
+					<td class="t_left"><div class="wrap pd_none">
+						<div class="ellipsis" style="max-width:100%">
+							<button type="button"  class="btn_icon play" title="BDZ (Korean Ver.) 재생 - 새 창" onClick="melon.play.playSong('75010101',31403169);"><span class="odd_span">재생</span></button>
+							<button type="button" class="btn_icon add" title="BDZ (Korean Ver.) 곡담기 - 새 창" onClick="melon.play.addPlayList('31403169');"><span class="odd_span">담기</span></button>
+							<a href="javascript:melon.link.goSongDetail('31403169');" title="BDZ (Korean Ver.) 곡정보 - 페이지 이동" class="btn btn_icon_detail" ><span class="odd_span">BDZ (Korean Ver.)</span></a>
+							
+							
+							
+							
+							
+							
+							<a href="javascript:melon.play.playSong('75010101',31403169);" class="fc_gray" title="BDZ (Korean Ver.) 재생 - 새 창">BDZ (Korean Ver.)</a>
+						</div>
+					</div></td>
+					<td class="t_left"><div class="wrap wrapArtistName">
+						<div id="artistName" class="ellipsis" style="max-width:122px">
+							<a href="javascript:melon.link.goArtistDetail('905701');" title="TWICE (트와이스) - 페이지 이동" class="fc_mgray">TWICE (트와이스)</a>
+						</div>
+						
+					</div></td>
+					<td class="t_left"><div class="wrap">
+						<div class="ellipsis" style="max-width:90%">
+							
+								
+								
+									<a href="javascript:melon.link.goAlbumDetail('10219298');" title="YES or YES - 페이지 이동" class="fc_mgray">YES or YES</a>
+								
+							
+						</div>
+					</div></td>
+					<td class="t_left"><div class="wrap right_none">
+						<button type="button"  class="btn_icon like" title="BDZ (Korean Ver.)" data-song-no="31403169" data-song-menuId="75010101">
+							<span class="odd_span">좋아요</span>
+							<span class="cnt"><span class="none">총건수</span>23,310</span>
+						</button>
+					</div></td>
+					<td><div class="wrap pd_none left">
+						<button type="button" disabled="disabled" class="btn_icon mv disabled" title="BDZ (Korean Ver.) 뮤직비디오 - 새 창" onClick="melon.link.goMvDetail('75010101', '31403169','song');"><span class="odd_span">뮤직비디오</span></button>
+					</div></td>
+					<td><div class="wrap pd_none right">
+						<button type="button"  class="btn_icon dl" title="BDZ (Korean Ver.) 다운로드 - 새 창" onClick="melon.buy.goBuyProduct('frm', '31403169', '3C0001', '','0', '75010101');"><span class="odd_span">다운</span></button>
+					</div></td>
+				</tr>
+				
+				<tr >
+					<td><div class="wrap pd_none left">
+						<input type="checkbox" title="작은 것들을 위한 시 (Boy With Luv) feat. Halsey 곡 선택" class="input_check" name="input_check" value="31737197" />
+					</div></td>
+					<td class="no"><div class="wrap">3</div></td>
+					<td class="t_left"><div class="wrap pd_none">
+						<div class="ellipsis" style="max-width:100%">
+							<button type="button"  class="btn_icon play" title="작은 것들을 위한 시 (Boy With Luv) feat. Halsey 재생 - 새 창" onClick="melon.play.playSong('75010101',31737197);"><span class="odd_span">재생</span></button>
+							<button type="button" class="btn_icon add" title="작은 것들을 위한 시 (Boy With Luv) feat. Halsey 곡담기 - 새 창" onClick="melon.play.addPlayList('31737197');"><span class="odd_span">담기</span></button>
+							<a href="javascript:melon.link.goSongDetail('31737197');" title="작은 것들을 위한 시 (Boy With Luv) feat. Halsey 곡정보 - 페이지 이동" class="btn btn_icon_detail" ><span class="odd_span">작은 것들을 위한 시 (Boy With Luv) feat. Halsey</span></a>
+							
+							
+							
+							
+							
+							
+							<a href="javascript:melon.play.playSong('75010101',31737197);" class="fc_gray" title="작은 것들을 위한 시 (Boy With Luv) feat. Halsey 재생 - 새 창">작은 것들을 위한 시 (Boy With Luv) feat. Halsey</a>
+						</div>
+					</div></td>
+					<td class="t_left"><div class="wrap wrapArtistName">
+						<div id="artistName" class="ellipsis" style="max-width:122px">
+							<a href="javascript:melon.link.goArtistDetail('672375');" title="방탄소년단 - 페이지 이동" class="fc_mgray">방탄소년단</a>
+						</div>
+						
+					</div></td>
+					<td class="t_left"><div class="wrap">
+						<div class="ellipsis" style="max-width:90%">
+							
+								
+								
+									<a href="javascript:melon.link.goAlbumDetail('10273641');" title="MAP OF THE SOUL : PERSONA - 페이지 이동" class="fc_mgray">MAP OF THE SOUL : PERSONA</a>
+								
+							
+						</div>
+					</div></td>
+					<td class="t_left"><div class="wrap right_none">
+						<button type="button"  class="btn_icon like" title="작은 것들을 위한 시 (Boy With Luv) feat. Halsey" data-song-no="31737197" data-song-menuId="75010101">
+							<span class="odd_span">좋아요</span>
+							<span class="cnt"><span class="none">총건수</span>344,989</span>
+						</button>
+					</div></td>
+					<td><div class="wrap pd_none left">
+						<button type="button"  class="btn_icon mv" title="작은 것들을 위한 시 (Boy With Luv) feat. Halsey 뮤직비디오 - 새 창" onClick="melon.link.goMvDetail('75010101', '31737197','song');"><span class="odd_span">뮤직비디오</span></button>
+					</div></td>
+					<td><div class="wrap pd_none right">
+						<button type="button"  class="btn_icon dl" title="작은 것들을 위한 시 (Boy With Luv) feat. Halsey 다운로드 - 새 창" onClick="melon.buy.goBuyProduct('frm', '31737197', '3C0001', '','0', '75010101');"><span class="odd_span">다운</span></button>
+					</div></td>
+				</tr>
+				
+				<tr >
+					<td><div class="wrap pd_none left">
+						<input type="checkbox" title="오랜 날 오랜 밤 곡 선택" class="input_check" name="input_check" value="30181278" />
+					</div></td>
+					<td class="no"><div class="wrap">4</div></td>
+					<td class="t_left"><div class="wrap pd_none">
+						<div class="ellipsis" style="max-width:100%">
+							<button type="button"  class="btn_icon play" title="오랜 날 오랜 밤 재생 - 새 창" onClick="melon.play.playSong('75010101',30181278);"><span class="odd_span">재생</span></button>
+							<button type="button" class="btn_icon add" title="오랜 날 오랜 밤 곡담기 - 새 창" onClick="melon.play.addPlayList('30181278');"><span class="odd_span">담기</span></button>
+							<a href="javascript:melon.link.goSongDetail('30181278');" title="오랜 날 오랜 밤 곡정보 - 페이지 이동" class="btn btn_icon_detail" ><span class="odd_span">오랜 날 오랜 밤</span></a>
+							
+							
+							
+							
+							
+							
+							<a href="javascript:melon.play.playSong('75010101',30181278);" class="fc_gray" title="오랜 날 오랜 밤 재생 - 새 창">오랜 날 오랜 밤</a>
+						</div>
+					</div></td>
+					<td class="t_left"><div class="wrap wrapArtistName">
+						<div id="artistName" class="ellipsis" style="max-width:122px">
+							<a href="javascript:melon.link.goArtistDetail('712452');" title="AKMU (악동뮤지션) - 페이지 이동" class="fc_mgray">AKMU (악동뮤지션)</a>
+						</div>
+						
+					</div></td>
+					<td class="t_left"><div class="wrap">
+						<div class="ellipsis" style="max-width:90%">
+							
+								
+								
+									<a href="javascript:melon.link.goAlbumDetail('10027786');" title="사춘기 하 (思春記 下) - 페이지 이동" class="fc_mgray">사춘기 하 (思春記 下)</a>
+								
+							
+						</div>
+					</div></td>
+					<td class="t_left"><div class="wrap right_none">
+						<button type="button"  class="btn_icon like" title="오랜 날 오랜 밤" data-song-no="30181278" data-song-menuId="75010101">
+							<span class="odd_span">좋아요</span>
+							<span class="cnt"><span class="none">총건수</span>181,001</span>
+						</button>
+					</div></td>
+					<td><div class="wrap pd_none left">
+						<button type="button"  class="btn_icon mv" title="오랜 날 오랜 밤 뮤직비디오 - 새 창" onClick="melon.link.goMvDetail('75010101', '30181278','song');"><span class="odd_span">뮤직비디오</span></button>
+					</div></td>
+					<td><div class="wrap pd_none right">
+						<button type="button"  class="btn_icon dl" title="오랜 날 오랜 밤 다운로드 - 새 창" onClick="melon.buy.goBuyProduct('frm', '30181278', '3C0001', '','0', '75010101');"><span class="odd_span">다운</span></button>
+					</div></td>
+				</tr>
+				
+				
+			</tbody>
+		</table>
+		<div class="wrap_btn_tb bottom">
+			<button type="button" title="곡 목록 전체 선택" class="btn_base short check_all d_checkall"><span class="odd_span"><span class="even_span">전체선택</span></span></button>
+			<button type="button" title="선택된 곡 재생 - 새 창" class="btn_base short play d_listen" onClick="melon.play.playFormSong('75010101','frm');"><span class="odd_span"><span class="even_span">듣기</span></span></button>
+			<button type="button" title="선택된 곡 다운로드 - 새 창" class="btn_base short download d_download" onClick="melon.buy.goBuyProduct('frm','','3C0001','input_check','0','75010101');"><span class="odd_span"><span class="even_span">다운</span></span></button>
+			<button type="button" title="선택된 곡 담기 - 새 창" class="btn_base short scrap d_scrap" onClick="melon.play.addFormPlayList('frm');"><span class="odd_span"><span class="even_span">담기</span></span></button>
+			<button type="button" title="선택된 곡 선물하기 - 새 창" class="btn_base short gift d_gift" onClick="melon.buy.goPresent('song', 'frm', '75010101');"><span class="odd_span"><span class="even_span">선물</span></span></button>
+		</div>
+	</div>
+	</form>
+	<script type="text/javascript">
+$(document).ready(function(){
+$('#pageObjNavgation').html("\u003Cdiv class=\"paginate\"\u003E\u003Ca href=\"javascript:;\" class=\"btn_first disabled\"\u003E\u003Cspan\u003E맨처음\u003C\/span\u003E\u003C\/a\u003E \u003Ca href=\"javascript:;\" class=\"btn_pre disabled\"\u003E\u003Cspan\u003E이전\u003C\/span\u003E\u003C\/a\u003E \u003Cspan class=\"page_num\"\u003E\u003Cstrong\u003E\u003Cspan class=\"none\"\u003E현재페이지\u003C\/span\u003E1\u003C\/strong\u003E\u003C\/span\u003E \u003Ca href=\"javascript:;\" class=\"btn_next disabled\"\u003E\u003Cspan\u003E다음\u003C\/span\u003E\u003C\/a\u003E \u003Ca href=\"javascript:;\" class=\"btn_last disabled\"\u003E\u003Cspan\u003E맨끝\u003C\/span\u003E\u003C\/a\u003E\u003C\/div\u003E")
+});
+</script>
+
+	<!-- //곡1 목록 -->
+	<script type="text/javascript">
+	$(function(){
+		/* 좋아요 공통부 */
+		//WEBELLIPSIS.ellipsis("checkEllipsis","wrap_atist",122);
+	});
+	</script>
+	</div>
+
+	<!-- 게시물 페이지 -->
+	
+		<div id='pageObjNavgation' style='display: none;'></div>
+<script src='/resource/script/common/jquery.ba-bbq.min.js' type='text/javascript'></script>
+<script src='/resource/script/common/historypager.js' type='text/javascript'></script>
+<script type="text/javascript">
+var pageObj = new Pagination('mymusicplaylistview_listPagingSong.htm', 'pageList', 'pageObjNavgation', '50', 'pageObj', false);
+</script>
+
+		<script type="text/javascript">
+			if(typeof pageObj != "undefined"){
+				var _oldShow = pageObj.show;
+				pageObj.show = function(){
+					return _oldShow.apply(this, arguments);
+				}
+			}
+
+			var plylstSeq = '459370411';
+			pageObj.addParam("plylstSeq", plylstSeq);
+		</script>
+	
+
+</div>
