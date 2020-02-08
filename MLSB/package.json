@@ -2,9 +2,11 @@
   "name": "MListSync",
   "version": "1.0.0",
   "dependencies": {
+    "ajax": "0.0.4",
     "axios": "^0.19.2",
     "cheerio": "^1.0.0-rc.3",
     "fs": "0.0.1-security",
+    "jQuery": "^1.7.4",
     "path": "^0.12.7"
   }
 }
