@@ -1,3 +1,6 @@
+import bodyParser from "body-parser";
+import session from "express-session";
+
 module.exports = {
   /*
   ** Headers of the page
@@ -14,13 +17,24 @@ module.exports = {
       { src: "https://cdnjs.cloudflare.com/ajax/libs/color-thief/2.3.0/color-thief.umd.js" }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Noto+Sans+KR:300,400,500,700&display=swap' }
     ]
   },
   /*
+  ** Base CSS settings
+  */
+  css: [
+    'assets/main.css'
+  ],
+  /*
   ** Customize the progress bar color
   */
-  loading: { color: '#3B8070' },
+  loading: {
+    color: 'rgb(30, 70, 158)',       // 색상
+    height: '10px',          // 높이
+    failedColor: '#d43c6d', // 전환 오류 발생 시, 색상
+  },
   /*
   ** Build configuration
   */
@@ -38,6 +52,20 @@ module.exports = {
         })
       }
     }
-  }
+  },
+  serverMiddleware: [
+    // body-parser middleware
+    bodyParser.json(),
+    // session middleware
+    session({
+      secret: 'super-secret-key',
+      resave: false,
+      saveUninitialized: false,
+      cookie: { maxAge: 60000 }
+    }),
+    // Api middleware
+    // We add /api/login & /api/logout routes
+    '~/api'
+  ]
 }
 

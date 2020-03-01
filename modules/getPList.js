@@ -30,7 +30,7 @@ axios.get("https://www.melon.com/mymusic/playlist/mymusicplaylist_list.htm?membe
         })
     }
 
-    console.log(lists);
+    // console.log(lists);
     
     // for (var i = 0; i < playlists.length; i++) {
     //     lists.push({
