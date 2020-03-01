@@ -67,4 +67,15 @@ export default {
     transform: translateX(-50%);
   }
 }
+@media (max-width: 450px) {
+  .mainPage .area-a {
+    position: absolute;
+    top: 120px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    height: 300px;
+    /* border: 1px solid purple; */
+  }
+}
 </style>

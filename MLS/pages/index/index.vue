@@ -43,4 +43,9 @@ export default {
     transform: translateX(-50%);
   }
 }
+@media (max-width: 450px) {
+  .mainPage .startBtn {
+    top: 100px;
+  }
+}
 </style>
