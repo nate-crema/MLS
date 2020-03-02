@@ -78,4 +78,5 @@ export default {
     /* border: 1px solid purple; */
   }
 }
+
 </style>

@@ -70,7 +70,7 @@ export default {
                     "approxDurationMs": "280404",
                     "audioSampleRate": "44100",
                     "audioChannels": 2,
-                    "url": "https://r3---sn-3u-bh2lr.googlevideo.com/videoplayback?expire=1583068935&ei=p2JbXqKmNJna4wKZ2qGgCQ&ip=183.101.93.222&id=o-AEHPsTfQW_muwtktHyoi9__T8iGV-GuxCSX8alo7Ypov&itag=18&source=youtube&requiressl=yes&mm=31%2C26&mn=sn-3u-bh2lr%2Csn-i3b7knlk&ms=au%2Conr&mv=m&mvi=2&pl=17&gcr=kr&initcwndbps=1396250&vprv=1&mime=video%2Fmp4&gir=yes&clen=7136744&ratebypass=yes&dur=280.404&lmt=1581983558385911&mt=1583047228&fvip=3&fexp=23842630%2C23882514&c=WEB&txp=5531432&sparams=expire%2Cei%2Cip%2Cid%2Citag%2Csource%2Crequiressl%2Cgcr%2Cvprv%2Cmime%2Cgir%2Cclen%2Cratebypass%2Cdur%2Clmt&lsparams=mm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpl%2Cinitcwndbps&lsig=ABSNjpQwRAIgbSf1fIyoW9sXvTm7rmQDY9lItrSQj_tRURGsXOUNYXoCIETSuRR92iJAdkmX5TGgJQt3q9msvB9Y3MK_vGchiWEA&sig=ADKhkGMwRQIhANJYs1i1Mkm8Q18vFwMUj-__be1m0andYwRxRBr4IFiSAiBOT1yRYDTmTGTmBLsI7Q3IOQPExdQscKUAcTtByChNhw%3D%3D",
+                    "url": "https://r3---sn-3u-bh2lr.googlevideo.com/videoplayback?expire=1583135394&ei=QmZcXt_HNYH84gL3x5fgAQ&ip=183.101.93.222&id=o-AGsjQjCO2JMTqaPz5jdnv9D656LTz91oQDP4B_AikWzz&itag=140&source=youtube&requiressl=yes&mm=31%2C26&mn=sn-3u-bh2lr%2Csn-i3belney&ms=au%2Conr&mv=m&mvi=2&pl=17&gcr=kr&initcwndbps=978750&vprv=1&mime=audio%2Fmp4&gir=yes&clen=4539161&dur=280.359&lmt=1581983496486924&mt=1583113727&fvip=3&keepalive=yes&fexp=23842630&c=WEB&txp=5531432&sparams=expire%2Cei%2Cip%2Cid%2Citag%2Csource%2Crequiressl%2Cgcr%2Cvprv%2Cmime%2Cgir%2Cclen%2Cdur%2Clmt&lsparams=mm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpl%2Cinitcwndbps&lsig=ABSNjpQwRQIhAJsJwlTMT9KiG9umnCsyplcBIIykpecb0rJ07L2SOfK-AiAKPc0DaLMhsL-i7Meh73mYq0RMRItbaFILpRED7zLmQQ%3D%3D&ratebypass=yes&sig=ADKhkGMwRAIgPUAkq6jgS974AK4SNNF9XmKtYOfYN80SxBAdGs7ObGECIBepgfe20y78re3Al8_LEFlFG9mykZqfEfyQEEQmhFWH",
                     "sp": "sig",
                     "s": "IDADKhkGMwRQIhANJYs1i1Mkm8Q18vFwMUj-_=be1m0andYwRxRBr4AFiSAiBOT1yRYDTmTGTmBLsI7Q3IOQPExdQscKUAcTtByChNhw=_",
                     "container": "mp4",
@@ -446,7 +446,7 @@ body {
     font-weight: 300;
     position: absolute;
     color:rgb(30, 70, 158);
-    transition: all .6s cubic-bezier(0.55, 0.085, 0.68, 0.53);
+    transition: all .6s cubic-bezier(0.2, 1.14, 0.6, 1.03);
 }
 .playArea .contArea .lyrics .lyricsData.top {
     opacity: 0.3;

@@ -13,6 +13,7 @@
     "precommit": "npm run lint"
   },
   "dependencies": {
+    "@material/checkbox": "^5.1.0",
     "body-parser": "^1.19.0",
     "cheerio": "^1.0.0-rc.3",
     "colorthief": "^2.3.0",

@@ -56,6 +56,7 @@ module.exports = {
   serverMiddleware: [
     // body-parser middleware
     bodyParser.json(),
+    bodyParser.urlencoded(),
     // session middleware
     session({
       secret: 'super-secret-key',
