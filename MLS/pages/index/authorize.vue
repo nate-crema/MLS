@@ -39,7 +39,7 @@
             <input id="authCodeIN" type="number"/>
           </div>
       </div>
-      <nuxt-link to="/service" id="nuxt-link-next" hidden>alpha</nuxt-link>
+      <nuxt-link to="/register" id="nuxt-link-next" hidden>alpha</nuxt-link>
   </div>
 </template>
 

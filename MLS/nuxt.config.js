@@ -14,7 +14,8 @@ module.exports = {
     ],
     script: [
       { src: 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js' },
-      { src: "https://cdnjs.cloudflare.com/ajax/libs/color-thief/2.3.0/color-thief.umd.js" }
+      { src: "https://cdnjs.cloudflare.com/ajax/libs/color-thief/2.3.0/color-thief.umd.js" },
+      { src: "https://unpkg.com/hangul-js" }
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
