@@ -40,6 +40,8 @@ export default {
       }
     },
     mounted() {
+        console.log(this.$store.state.isAuthorized);
+        console.log(this.$store.state.isRegistered);
         const Hangul = window.Hangul;
         const this_out = this;
         $(document).ready(() => {
@@ -52,7 +54,7 @@ export default {
               document.getElementById("nuxt-link-next").click();
             }, 500);
           } else if (this_out.$store.state.isRegistered) {
-            this_out.to = "/start";
+            this_out.to = "/sync";
             setTimeout(() => {
               document.getElementById("nuxt-link-next").click();
             }, 500);
@@ -186,8 +188,7 @@ export default {
                   } else if (keyInfo.key == "Enter") {
                     // passCode Input Complete
                     const dissolve = Hangul.d(document.getElementById(idName).innerText, true); ;
-                    let totalOK = new Array(dissolve.length);
-                    dissolve.every(function(element, index) {
+                    const totalOK = dissolve.every(function(element, index) {
                       // console.log(index);
                       let isOKA = false;
                       let isOKB = false;
@@ -199,25 +200,29 @@ export default {
                       if (possibilityA.includes(element[0])) isOKA = true;
                       if (element[1] != undefined && possibilityB.includes(element[1])) isOKB = true;
                       if (!isOKA || !isOKB) {
-                        alert("마지막 인증문자열의 내용이 조건과 일치하지 않습니다.");
-                        location.reload();
                         return false;
                       } else {
                         return true;
                       }
                     })
-                    this_out.$store.commit('registered');
-                    setTimeout(() => {
-                      document.getElementsByName("passCodeSetted")[4].style.backgroundColor = "#3b804761";
+                    if (totalOK) {
+                      // passed
                       this_out.inputData += document.getElementById(idName).innerText;
+                      this_out.$store.commit('registered', this_out.inputData);
                       setTimeout(() => {
-                        this_out.to = "/start";
+                        document.getElementsByName("passCodeSetted")[4].style.backgroundColor = "#3b804761";
                         setTimeout(() => {
-                          document.getElementById("nuxt-link-next").click();
+                          this_out.to = "/sync";
+                          setTimeout(() => {
+                            document.getElementById("nuxt-link-next").click();
+                          }, 500);
                         }, 500);
                       }, 500);
-                    }, 500);
-                    // console.log(this_out);
+                      // console.log(this_out);
+                    } else {
+                      alert("마지막 인증문자열의 내용이 조건과 일치하지 않습니다.");
+                      location.reload();
+                    }
                   }
                 } else {
                   let cont = document.getElementById(idName).innerText;

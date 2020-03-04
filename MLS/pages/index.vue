@@ -19,6 +19,8 @@ export default {
       $("body").height($(window).height());
       $(".routeArea").css("height", $("body").height()-400 + "px");
     })
+    console.log(this.$store.state.isAuthorized);
+    console.log(this.$store.state.isRegistered);
   } 
 }
 </script>

@@ -56,6 +56,8 @@ export default {
         }
     },
     mounted() {
+        console.log(this.$store.state.isAuthorized);
+        console.log(this.$store.state.isRegistered);
         const this_out = this;
         $(document).ready(() => {
             console.log(this_out.$store.state.isAuthorized);
