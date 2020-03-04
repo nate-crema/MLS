@@ -39,7 +39,7 @@
             <input id="authCodeIN" type="number"/>
           </div>
       </div>
-      <nuxt-link to="/register" id="nuxt-link-next" hidden>alpha</nuxt-link>
+      <nuxt-link :to="to" id="nuxt-link-next" hidden>alpha</nuxt-link>
   </div>
 </template>
 
@@ -51,14 +51,20 @@ export default {
     data() {
         return {
             isSend: false,
-            pn: ""
+            pn: "",
+            to: "/"
         }
     },
     mounted() {
         const this_out = this;
         $(document).ready(() => {
             console.log(this_out.$store.state.isAuthorized);
-            if (this_out.$store.state.isAuthorized) document.getElementById("nuxt-link-next").click();
+            if (this_out.$store.state.isAuthorized) {
+                this_out.to = "/register";
+                setTimeout(() => {
+                    document.getElementById("nuxt-link-next").click();   
+                }, 500);
+            }
 
             $("#phoneNumPH").click(() => {
                 document.getElementById("phoneNumIN").focus();
@@ -172,6 +178,7 @@ export default {
                         })
                         .then(({data}) => {
                             if (data == true) {
+                                this_out.to = "/register";
                                 setTimeout(() => {
                                     document.getElementById("authCodeIN").attributes[1].value = "text";
                                     document.getElementById("authCodeIN").value = "인증되었습니다!";
@@ -182,7 +189,7 @@ export default {
                                 }, 500);
                                 setTimeout(() => {
                                     console.log("sefg");
-                                    document.getElementById("nuxt-link-next").click();
+                                    document.getElementById("nuxt-link-next").click();   
                                     // location.href = "/service";
                                 }, 1000);
                             }

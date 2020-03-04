@@ -17,7 +17,7 @@
         </div>
         <div name="inputCharShowerUnset"></div>
       </div>
-      <nuxt-link to="/start" id="nuxt-link-next" hidden>alpha</nuxt-link>
+      <nuxt-link :to="to" id="nuxt-link-next" hidden>alpha</nuxt-link>
   </div>
 </template>
 
@@ -29,7 +29,8 @@ export default {
     data() {
         return {
           isInputing: -1,
-          inputData: ""
+          inputData: "",
+          to: "/"
         }
     },
     watch: {
@@ -42,6 +43,20 @@ export default {
         const Hangul = window.Hangul;
         const this_out = this;
         $(document).ready(() => {
+
+          // authorize check
+
+          if (!this_out.$store.state.isAuthorized) {
+            this_out.to = "/authorize";
+            setTimeout(() => {
+              document.getElementById("nuxt-link-next").click();
+            }, 500);
+          } else if (this_out.$store.state.isRegistered) {
+            this_out.to = "/start";
+            setTimeout(() => {
+              document.getElementById("nuxt-link-next").click();
+            }, 500);
+          }
 
           // input security
 
@@ -58,6 +73,7 @@ export default {
           const idName = setInputId(document.getElementsByName("inputCharShowerUnset"), true);
 
           function setInputId(passCodeArr, isSave) {
+
             // console.log(passCodeArr);
             if (passCodeArr.length == 0) return false;
             else {
@@ -72,7 +88,7 @@ export default {
                 passCodeArr[0].style.top="50%";
                 passCodeArr[0].style.transform="translateY(-50%)";
                 passCodeArr[0].style.textAlign="center";
-                passCodeArr[0].style.paddingTop="40px";
+                passCodeArr[0].style.paddingTop="30px";
                 passCodeArr[0].style.fontFamily="Noto Sans KR";
                 passCodeArr[0].style.fontWeight="300";
                 // passCodeArr[0].setAttribute("name", "inputCharShowerSetted");
@@ -190,12 +206,15 @@ export default {
                         return true;
                       }
                     })
-                    
+                    this_out.$store.commit('registered');
                     setTimeout(() => {
                       document.getElementsByName("passCodeSetted")[4].style.backgroundColor = "#3b804761";
                       this_out.inputData += document.getElementById(idName).innerText;
                       setTimeout(() => {
-                        $("#nuxt-link-next").click();
+                        this_out.to = "/start";
+                        setTimeout(() => {
+                          document.getElementById("nuxt-link-next").click();
+                        }, 500);
                       }, 500);
                     }, 500);
                     // console.log(this_out);

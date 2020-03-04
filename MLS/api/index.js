@@ -115,6 +115,15 @@ app.post('/AuthComplete', (req, res) => {
   res.end("true");
 })
 
+app.post('/register', (req, res) => {
+  // user authCode Register Process
+
+
+  // set complete session
+  req.session.isRegistered = true;
+  res.end("true");
+})
+
 
 
 export default {
