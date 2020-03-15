@@ -1,31 +1,40 @@
-// import"./enc-base64";
-// import "./hmac-sha256";
-<script type="text/javascript" src="./hmac-sha256.js"></script>
-<script type="text/javascript" src="./enc-base64.js"></script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<body>
+	<script type="text/javascript" src="./hmac-sha256.js"></script>
+	<script type="text/javascript" src="./enc-base64.js"></script>
+	<script>
+		function makeSignature() {
+			var space = " ";				// one space
+			var newLine = "\n";				// new line
+			var method = "GET";				// method
+			var url = "/geolocation/v2/geoLocation";	// url (include query string)
+			var timestamp = Date.now();			// current timestamp (epoch)
+			var accessKey = "e5cdpnB8Iu90no14yW2c";			// access key id (from portal or Sub Account)
+			var secretKey = "CcTIjwDnWBjnYh6Qp0Yct2kBUbAtTzjphNoLeMIP";			// secret key (from portal or Sub Account)
 
-function makeSignature() {
-	var space = " ";				// one space
-	var newLine = "\n";				// new line
-	var method = "GET";				// method
-	var url = "/server/v2/getRegionList";	// url (include query string)
-	var timestamp = Date.now();			// current timestamp (epoch)
-	var accessKey = "e5cdpnB8Iu90no14yW2c";			// access key id (from portal or Sub Account)
-	var secretKey = "CcTIjwDnWBjnYh6Qp0Yct2kBUbAtTzjphNoLeMIP";			// secret key (from portal or Sub Account)
+			var hmac = CryptoJS.algo.HMAC.create(CryptoJS.algo.SHA256, secretKey);
+			hmac.update(method);
+			hmac.update(space);
+			hmac.update(url);
+			hmac.update(newLine);
+			hmac.update(timestamp);
+			hmac.update(newLine);
+			hmac.update(accessKey);
 
-	var hmac = CryptoJS.algo.HMAC.create(CryptoJS.algo.SHA256, secretKey);
-	hmac.update(method);
-	hmac.update(space);
-	hmac.update(url);
-	hmac.update(newLine);
-	hmac.update(timestamp);
-	hmac.update(newLine);
-	hmac.update(accessKey);
+			var hash = hmac.finalize();
 
-	var hash = hmac.finalize();
+			return hash.toString(CryptoJS.enc.Base64);
+		}
 
-	return hash.toString(CryptoJS.enc.Base64);
-}
-
-makeSignature();
+		makeSignature();
+	</script>
+</body>
+</html>
 
 

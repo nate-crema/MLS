@@ -120,6 +120,7 @@ export default {
                                         document.getElementById("phoneNumIN").attributes[1].value = "text";
                                         document.getElementById("phoneNumIN").value = "전송이 완료되었습니다";
                                         $(".authCode").css("opacity", "1");
+                                        $("#authCodePH").click();
                                     }, 500);
                                 }
                                 else{

@@ -1,7 +1,13 @@
-const getPList = require("./getPList");
-const getListInfo = require("./getListInfo");
+const getPList = require("./melon/getPList");
+const getListInfo = require("./melon/getListInfo");
+const search = require("./ytMusic/search");
 
 module.exports = {
-    getPList,
-    getListInfo
+    melon: {
+        getPList,
+        getListInfo
+    },
+    ytMusic: {
+        search
+    }
 }

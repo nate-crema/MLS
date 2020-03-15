@@ -1,9 +1,13 @@
 import express from 'express';
-import { getPList, getListInfo } from "../../modules";
+import { melon, ytMusic } from "../../modules";
+const getPList = melon.getPList;
+const getListInfo = melon.getListInfo;
+const searchYT = ytMusic.search;
 import crypto from 'crypto';
 import axios from "axios";
 import fs from "fs";
 import path from "path";
+import mysql from "mysql";
 
 // Create express router
 const app = express.Router()
@@ -26,34 +30,6 @@ app.use((req, res, next) => {
 const NCP_API = JSON.parse(fs.readFileSync(path.join(__dirname, "/../NCPAuth.json"), { encoding: "UTF-8" }));
 console.log(typeof NCP_API);
 
-function setHeader(method, url) {
-  var space = " ";				// one space
-  var newLine = "\n";				// new line 
-  // var hmac = CryptoJS.algo.HMAC.create(CryptoJS.algo.SHA256, NCP_API.secretKey);
-
-  console.log(method);
-  console.log(url);
-
-  var hmac = crypto.createHmac('sha256', NCP_API.secretKey);
-  hmac.write(method);
-  hmac.write(space);
-  hmac.write(url);
-  hmac.write(newLine);
-  hmac.write(Date.now() + "");
-  hmac.write(newLine);
-  hmac.write(NCP_API.accKeyId);
-  hmac.end();
-
-  const signature = hmac.read().toString("base64");
-  const headers = {
-    "Content-Type": "application/json; charset=utf-8",
-    "x-ncp-apigw-timestamp": Date.now(),
-    "x-ncp-iam-access-key": NCP_API.accKeyId,
-    "x-ncp-apigw-signature-v2": signature
-  }
-  return headers;
-}
-
 /*
 * Naver Cloud Platform API Information
 */
@@ -68,7 +44,7 @@ app.get('/', (req, res) => {
 })
 
 let authArray = [];
-authArray.push({pn: "01000000000", code: "0000"});
+authArray.push({pn: "01000000000", code: "0000", SndBnyCode: "0000뷁"});
 
 app.post('/sms', (req, res) => {
   console.log(req.body);
@@ -110,6 +86,26 @@ app.post('/sms', (req, res) => {
   }
 })
 
+app.post('/login', (req, res) => {
+  let check = "false";
+  if (!req.body.SndBnyCode) {
+    authArray.every((value) => {
+      console.log(value.pn);
+      console.log(req.body.pn);
+      if (req.body.pn == value.pn) check = "true";
+    })
+    res.end(check);
+  } else {
+    console.log("Login Request");
+    authArray.every((value) => {
+      console.log(value.pn);
+      console.log(req.body.pn);
+      if (req.body.pn == value.pn && req.body.SndBnyCode == value.SndBnyCode) check = "true";
+    })
+    res.end(check);
+  }
+})
+
 app.post('/AuthComplete', (req, res) => {
   req.session.isAuthorized = true;
   res.end("true");
@@ -122,6 +118,20 @@ app.post('/register', (req, res) => {
   // set complete session
   req.session.isRegistered = true;
   res.end("true");
+})
+
+app.get('/img/:url', (req, res) => {
+  console.log(path.join(__dirname, "../assets/" + req.params.url));
+  const img = fs.readFileSync(path.join(__dirname, "../assets/" + req.params.url));
+  res.end(img);
+})
+
+app.post('/search', (req, res) => {
+  const searchKeyword = req.body.searchKey;
+  searchYT(searchKeyword)
+  .then((result) => {
+    res.json(result);
+  })
 })
 
 

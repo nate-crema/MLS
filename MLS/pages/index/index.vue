@@ -1,6 +1,6 @@
 <template>
     <div>
-        <nuxt-link to="/licenseAgree">
+        <nuxt-link to="/login">
             <div class="startBtn">
                 <p>시작하기 ></p>
             </div>
