@@ -11,7 +11,7 @@
                   <input id="i2" type="checkbox">
                   <label for="i2">개인정보 이용약관, 서비스 약관을 확인하였으며,<br>해당 약관에 동의합니다</label>
                 </div>
-                <nuxt-link to="/authorize" id="nuxt-link-next" hidden>sfdg</nuxt-link>
+                <nuxt-link to="/register/authorize" id="nuxt-link-next" hidden>sfdg</nuxt-link>
           </div>
       </div>
   </div>

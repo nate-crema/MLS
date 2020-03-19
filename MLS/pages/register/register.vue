@@ -40,21 +40,20 @@ export default {
       }
     },
     mounted() {
-        console.log(this.$store.state.isAuthorized);
-        console.log(this.$store.state.isRegistered);
+        console.log(this.$store.state.userInfo);
         const Hangul = window.Hangul;
         const this_out = this;
         $(document).ready(() => {
 
           // authorize check
 
-          if (!this_out.$store.state.isAuthorized) {
-            this_out.to = "/authorize";
+          if (!this_out.$store.state.userInfo.pn) {
+            this_out.to = "/register/authorize";
             setTimeout(() => {
               document.getElementById("nuxt-link-next").click();
             }, 500);
-          } else if (this_out.$store.state.isRegistered) {
-            this_out.to = "/sync";
+          } else if (Object.keys(this_out.$store.state.userInfo).length > 1) {
+            this_out.to = "/sync/Google";
             setTimeout(() => {
               document.getElementById("nuxt-link-next").click();
             }, 500);
@@ -119,6 +118,7 @@ export default {
           let beforeTimestamp = 0;
 
           $(window).keydown((e) => {
+            if (!location.href.includes("/register/register")) return true;
             // console.log(e);
             // console.log(this_out.isInputing);
             const keyInfo = e.originalEvent;
@@ -208,16 +208,18 @@ export default {
                     if (totalOK) {
                       // passed
                       this_out.inputData += document.getElementById(idName).innerText;
-                      this_out.$store.commit('registered', this_out.inputData);
-                      setTimeout(() => {
-                        document.getElementsByName("passCodeSetted")[4].style.backgroundColor = "#3b804761";
+                      this_out.$store.dispatch('registered', {passwd: this_out.inputData})
+                      .then(() => {
                         setTimeout(() => {
-                          this_out.to = "/sync";
+                          document.getElementsByName("passCodeSetted")[4].style.backgroundColor = "#3b804761";
                           setTimeout(() => {
-                            document.getElementById("nuxt-link-next").click();
+                            this_out.to = "/sync/Google";
+                            setTimeout(() => {
+                              document.getElementById("nuxt-link-next").click();
+                            }, 500);
                           }, 500);
                         }, 500);
-                      }, 500);
+                      })
                       // console.log(this_out);
                     } else {
                       alert("마지막 인증문자열의 내용이 조건과 일치하지 않습니다.");

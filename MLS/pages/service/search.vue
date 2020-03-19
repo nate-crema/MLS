@@ -78,7 +78,11 @@ export default {
 
       $("#searchCmd").click(() => {
           document.getElementById("hiddenClicker").click();
-          if (location.href.includes('/search/searchQuery')) location.reload();
+          if (location.href.includes('/search/searchQuery')) {
+              setTimeout(() => {
+                  location.reload();
+              }, 100);
+            }
       });
   }
 }

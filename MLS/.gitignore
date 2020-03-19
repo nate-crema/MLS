@@ -12,3 +12,6 @@ dist
 
 # NCP Authorization File
 NCPAuth.json
+
+# Security files
+security/

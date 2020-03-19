@@ -66,7 +66,6 @@ module.exports = {
       cookie: { maxAge: 60000 }
     }),
     // Api middleware
-    // We add /api/login & /api/logout routes
     '~/api'
   ]
 }

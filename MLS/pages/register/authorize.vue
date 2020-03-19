@@ -39,7 +39,7 @@
             <input id="authCodeIN" type="number"/>
           </div>
       </div>
-      <nuxt-link :to="to" id="nuxt-link-next" hidden>alpha</nuxt-link>
+      <nuxt-link :to="to" id="nuxt-link-next" hidden>Welcome</nuxt-link>
   </div>
 </template>
 
@@ -56,13 +56,11 @@ export default {
         }
     },
     mounted() {
-        console.log(this.$store.state.isAuthorized);
-        console.log(this.$store.state.isRegistered);
         const this_out = this;
         $(document).ready(() => {
-            console.log(this_out.$store.state.isAuthorized);
-            if (this_out.$store.state.isAuthorized) {
-                this_out.to = "/register";
+            console.log(this_out.$store.state.userInfo);
+            if (this_out.$store.state.userInfo.pn) {
+                this_out.to = "/register/register";
                 setTimeout(() => {
                     document.getElementById("nuxt-link-next").click();   
                 }, 500);
@@ -122,8 +120,15 @@ export default {
                                         $(".authCode").css("opacity", "1");
                                         $("#authCodePH").click();
                                     }, 500);
-                                }
-                                else{
+                                } else if (data == "duplicate") {
+                                    document.getElementById("phoneNumIN").setAttribute("type", "text");
+                                    document.getElementById("phoneNumIN").value = "이미 등록된 전화번호입니다. 로그인 해주세요";
+                                    document.getElementById("phoneNumIN").style.color = "#9c0c0c";
+                                    setTimeout(() => {
+                                        location.href = "/login";
+                                    }, 800);
+                                } else {
+                                    document.getElementById("phoneNumIN").setAttribute("type", "text");
                                     document.getElementById("phoneNumIN").value = "오류가 발생했습니다. 다시 시도해주세요.";
                                     document.getElementById("phoneNumIN").style.color = "#9c0c0c";
                                     setTimeout(() => {
@@ -181,22 +186,20 @@ export default {
                         })
                         .then(({data}) => {
                             if (data == true) {
-                                this_out.to = "/register";
+                                this_out.to = "/register/register";
                                 setTimeout(() => {
                                     document.getElementById("authCodeIN").attributes[1].value = "text";
                                     document.getElementById("authCodeIN").value = "인증되었습니다!";
                                     document.getElementById("authCodeIN").style.color = "#0f6a43";
                                     document.getElementById("phoneNumIN").value = "인증되었습니다!";
                                     document.getElementById("phoneNumIN").style.color = "#0f6a43";
-                                    this_out.$store.commit('authed');
+                                    this_out.$store.dispatch("authed", {pn: this_out.pn + ""})
+                                    .then(() => {
+                                        console.log("sefg");
+                                        document.getElementById("nuxt-link-next").click();   
+                                    })
                                 }, 500);
-                                setTimeout(() => {
-                                    console.log("sefg");
-                                    document.getElementById("nuxt-link-next").click();   
-                                    // location.href = "/service";
-                                }, 1000);
-                            }
-                            else{
+                            } else {
                                 document.getElementById("phoneNumIN").value = "인증번호가 일치하지 않습니다. 다시 시도해주세요.";
                                 document.getElementById("phoneNumIN").style.color = "#9c0c0c";
                                 setTimeout(() => {

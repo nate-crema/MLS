@@ -279,7 +279,7 @@ export default {
                                 if (totalOK) {
                                     // passed
                                     this_out.inputData += document.getElementById(idName).innerText;
-                                    this_out.$store.commit('registered', this_out.inputData);
+                                    this_out.$store.dispatch('registered', this_out.inputData);
                                     setTimeout(() => {
                                     document.getElementsByName("passCodeSetted")[4].style.backgroundColor = "#3b804761";
                                     setTimeout(() => {

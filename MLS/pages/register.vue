@@ -25,7 +25,7 @@ export default {
     function resizeWindow() {
       $("body").width($(window).width());
       $("body").height($(window).height());
-      $(".routeArea").css("height", $("body").height()-400 + "px");
+      $(".routeArea").css("height", $("body").height()-300 + "px");
       // alert($(".routeArea").height())
     }
   } 
@@ -44,7 +44,7 @@ export default {
 }
 .mainPage .area-a {
   position: absolute;
-  top: 120px;
+  top: 80px;
   left: 100px;
   width: 400px;
   height: 300px;
@@ -59,12 +59,15 @@ export default {
 .mainPage .area-a .serviceName {
   font-size: 40px;
   font-weight: 700;
-  margin-top: 20px;
+  margin-top: 10px;
+  /* position: absolute;
+  top: -15px;
+  left: 270px; */
 }
 .mainPage .routeArea {
   position: absolute;
   width: 100%;
-  top: 400px;
+  top: 300px;
   /* bottom: 10px; */
 }
 
