@@ -93,33 +93,34 @@ export default {
                 if(keyCode == 32) return false;
             };
 
+            let isSubmitedName = false;
+
             $(window).keydown((e) => {
-                if (this_out.welcomeAPlayed) {
-                    if (e.originalEvent.key == "Enter") {
-                        const inputName = document.getElementsByName("userName")[0].value;
-                        if (inputName && inputName != "") {
-                            $(".inputObj").css("opacity", "0.4");
-                            document.getElementsByName("userName")[0].setAttribute("readOnly", "");
-                            this_out.userName = inputName;
-                            this_out.$store.dispatch('userInfoAdd', {
-                                name: inputName
-                            })
-                            .then(() => {
-                                changeText(inputName + "님, 안녕하세요!", 600, {
-                                    "font-size": "25px",
-                                    "font-size": "20px",
-                                    "top": "40%"
-                                });
+                if (this_out.welcomeAPlayed && isSubmitedName == false && e.originalEvent.key == "Enter") {
+                    isSubmitedName = true;
+                    const inputName = document.getElementsByName("userName")[0].value;
+                    if (inputName && inputName != "") {
+                        $(".inputObj").css("opacity", "0.4");
+                        document.getElementsByName("userName")[0].setAttribute("readOnly", "");
+                        this_out.userName = inputName;
+                        this_out.$store.dispatch('userInfoAdd', {
+                            name: inputName
+                        })
+                        .then(() => {
+                            changeText(inputName + "님, 안녕하세요!", 600, {
+                                "font-size": "25px",
+                                "font-size": "20px",
+                                "top": "40%"
+                            });
+                            setTimeout(() => {
+                                $(".inputObj").css("opacity", "0");
+                                $(".inputObj").css("width", "50%");
                                 setTimeout(() => {
-                                    $(".inputObj").css("opacity", "0");
-                                    $(".inputObj").css("width", "50%");
-                                    setTimeout(() => {
-                                        document.getElementsByClassName("inputObj")[0].remove();
-                                        welcomeB();
-                                    }, 300);
-                                }, 1500);
-                            })
-                        }
+                                    document.getElementsByClassName("inputObj")[0].remove();
+                                    welcomeB();
+                                }, 300);
+                            }, 1500);
+                        })
                     }
                 }
             })

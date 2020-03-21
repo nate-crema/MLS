@@ -72,38 +72,40 @@ import async from 'async';
       })
     },
 
-    // const Update = (table, base:{columns: Object, values: Object}, alter:{columns: Object, values: Object}, done) => {
-    Update: (table, base, alter, done) => {
-      let command = "UPDATE " + table;
-      // console.log(typeof data.values);
+    // const Update = (table, base:{columns: Object, values: Object}, alter:{columns: Object, values: Object}) => {
+    Update: (table, base, alter) => {
+      return new Promise((resolve, reject) => {
+        let command = "UPDATE " + table;
+        // console.log(typeof data.values);
 
-      if (typeof alter.values == "object") {
-          command += " SET ";
-          alter.values.forEach((element, index) => {
-              command += "" + alter.columns[index] + " = " + (util.isNumber(element) ? element : "'" + element + "'");
-              index != alter.values.length-1 ? command += ", " : command += "";
-          });
-      } else if (alter.values != "" || !alter.values) {
-          command += " SET " + alter.columns + " = " + (util.isNumber(alter.values) ? alter.values : "'" + alter.values + "'");
-      }
+        if (Object.values(alter).length > 1) {
+            command += " SET ";
+            Object.values(alter).forEach((element, index) => {
+                command += "" + Object.keys(alter)[index] + " = " + (util.isNumber(element) ? element : "'" + element + "'");
+                index != Object.values(alter).length-1 ? command += ", " : command += "";
+            });
+        } else if (Object.values(alter).length == 1) {
+            command += " SET " + Object.keys(alter)[0] + " = " + (util.isNumber(Object.values(alter)[0]) ? Object.values(alter)[0] : "'" + Object.values(alter)[0] + "'");
+        }
 
-      if (typeof base.values == "object") {
-          command += " WHERE ";
-          base.values.forEach((element, index) => {
-              command += "" + base.columns[index] + " = " + (util.isNumber(element) ? element : "'" + element + "'");
-              index != base.values.length-1 ? command += " AND " : command += ");";
-          });
-      } else if (base.values != "" || !base.values) {
-          command += " WHERE " + "" + base.columns + " = " + (util.isNumber(base.values) ? base.values : "'"  + base.values + "'");
-      }
+        if (Object.values(base).length > 1) {
+            command += " WHERE ";
+            Object.values(base).forEach((element, index) => {
+                command += "" + Object.values(base)[index] + " = " + (util.isNumber(element) ? element : "'" + element + "'");
+                index != Object.values(base).length-1 ? command += " AND " : command += ");";
+            });
+        } else if (Object.values(base).length == 1) {
+            command += " WHERE " + "" + Object.keys(base)[0] + " = " + (util.isNumber(Object.values(base)[0]) ? Object.values(base)[0] : "'"  + Object.values(base)[0] + "'");
+        }
 
-      console.log(command);
-      mysql_query(command)
-      .then((res_sql) => {
-          return done(null, res_sql);
-      })
-      .catch((e) => {
-          return done(e);
+        console.log(command);
+        mysql_query(command)
+        .then((res_sql) => {
+            resolve(res_sql);
+        })
+        .catch((e) => {
+            reject(e);
+        })
       })
       
     },
@@ -120,32 +122,37 @@ import async from 'async';
           })
       } else return done(new Error("Invalid type: " + type));
     },
-    // const Read = (table: String, output: Object, filter: {columns: String, values: String}, done) => {
-    Read: (table, output, filter, done) => {
-      // console.log(table);
-      // console.log(output);
-      // console.log(filter);
-      let command = "SELECT " + (!output ? "*" : output.toString()) + " FROM " + table;
-      // console.log(command);
-      if (Object.values(filter).length > 1) {
-          command += " WHERE ";
-          Object.keys(filter).forEach((element, index) => {
-              command += element + "=" + (util.isNumber(Object.values(filter)[index]) ? Object.values(filter)[index] : "'" + Object.values(filter)[index] + "'");
-              if (Object.keys(filter).indexOf(element) != Object.keys(filter).length-1) command += " AND ";
-          });
-      } else if (Object.values(filter).length == 1) {
-          command += " WHERE " + Object.keys(filter)[0] + "=" + (util.isNumber(Object.values(filter)[0]) ? Object.values(filter)[0] : "'" + Object.values(filter)[0] + "'");
-      }
+    // const Read = (table: String, output: Object, filter: {columns: String, values: String}) => {
+    Read: (table, output, filter) => {
+      return new Promise((resolve, reject) => {
+        // console.log(table);
+        // console.log(output);
+        // console.log(filter);
+        let command = "SELECT " + (!output ? "*" : output.toString()) + " FROM " + table;
+        // console.log(command);
+        if (Object.values(filter).length > 1) {
+            command += " WHERE ";
+            Object.keys(filter).forEach((element, index) => {
+                command += element + "=" + (util.isNumber(Object.values(filter)[index]) ? Object.values(filter)[index] : "'" + Object.values(filter)[index] + "'");
+                if (Object.keys(filter).indexOf(element) != Object.keys(filter).length-1) command += " AND ";
+            });
+        } else if (Object.values(filter).length == 1) {
+            command += " WHERE " + Object.keys(filter)[0] + "=" + (util.isNumber(Object.values(filter)[0]) ? Object.values(filter)[0] : "'" + Object.values(filter)[0] + "'");
+        }
 
-      // console.log(command);
+        // console.log(command);
 
-      mysql_query(command)
-      .then((res_sql) => {
-          // return done(null, res_sql.length == 1 ? res_sql[0] : res_sql);
-          return done(null, res_sql);
-      })
-      .catch((e) => {
-          return done(e);
+        mysql_query(command)
+        .then((res_sql) => {
+            // return done(null, res_sql.length == 1 ? res_sql[0] : res_sql);
+            // console.log(res_sql);  
+            resolve(res_sql);
+        })
+        .catch((e) => {
+            console.log("mysql read Error: ");          
+            console.log(e);          
+            reject(e);
+        })
       })
     },
     // const Delete = (table, filter: {columns: String, values: String}, done) => {
@@ -204,14 +211,9 @@ app.post('/sms', (req, res) => {
   console.log(req.body);
   if (!req.body.to) res.end("false");
   else {
-
-    sqlFnc.Read('user', "pn", {pn: req.body.to}, (err, result) => {
-      console.log(result);
-      if (err) {
-        console.error(err);
-        res.status(500);
-        res.end("ERR: READ FROM SERVER");
-      } else if (result.length != 0) {
+    sqlFnc.Read('user', "pn", {pn: req.body.to})
+    .then((result) => {
+      if (result.length != 0) {
         res.status(200);
         res.end("duplicate");
       } else {
@@ -255,7 +257,11 @@ app.post('/sms', (req, res) => {
         }
       }
     })
-
+    .catch((e) => {
+      console.error(e);
+      res.status(500);
+      res.end("ERR: READ FROM SERVER");
+    })
   }
 })
 
@@ -276,6 +282,44 @@ app.post('/login', (req, res) => {
       if (req.body.pn == value.pn && req.body.SndBnyCode == value.SndBnyCode) check = "true";
     })
     res.end(check);
+  }
+})
+
+app.post('/login', (req, res) => {
+  let check = false;
+  if (!req.body.pn) {
+    res.status(400);
+    return res.end("false");
+  }
+
+  if (!req.body.SndBnyCode) {
+    sqlFnc.Read("user", "id", {pn: req.body.pn})
+    .then((lists) => {
+      if (lists.length >= 1) {
+        res.status(200);
+        return res.end("true");
+      } else {
+        res.status(400);
+        return res.end("false");
+      }
+    });
+  } else {
+    if (typeof req.body.SndBnyCode == "string") {
+      res.status(400);
+      return res.end("false");
+    }
+    sqlFnc.Read("user", "salt, enccode", {pn: req.body.pn})
+    .then((lists) => {
+      lists.forEach((element, index) => {
+        crypto.pbkdf2(req.body.SndBnyCode, element.salt.toString('base64'), 7860803, 100, 'sha512', (err, key) => {
+          if (key.toString("base64") == element.enccode) {
+            check = true;
+          }
+        });
+        res.status(200);
+        return res.end(check);
+      })
+    });
   }
 })
 
@@ -346,49 +390,67 @@ app.post('/logined', (req, res) => {
 
 app.post('/sess/userInfoAdd', (req, res) => {
   const data = req.body.dataO;
+  console.log("backend: userInfoAdd");
   console.log(data);
   if (typeof data != "object") {
     res.status(400);
     return res.end("false");
   }
-  if (Object.keys(data).includes("id") || Object.keys(data).includes("isUpdateable")) {
+  if (Object.keys(data).includes("id") || Object.keys(data).includes("isUpdateable") || !req.session.userInfo) {
     res.status(400);
     return res.end("Bad Request");
   }
   let sendJson = {};
-  Object.keys(data).forEach((element, index) => {
-    req.session.userInfo[element] = Object.values(data)[index];
-    sendJson[element] = Object.values(data)[index];
-  })
+
+  console.log(Object.keys(data));
+  
+  try {
+    Object.keys(data).forEach((element, index) => {
+      console.log(element + ": " + Object.values(data)[index]);
+      req.session.userInfo[element] = Object.values(data)[index];
+      console.log(req.session.userInfo);
+      sendJson[element] = Object.values(data)[index];
+    })
+  } catch(e) {
+    res.status(501);
+    return res.end(e);
+  }
   async.waterfall([
-    (callback) => {
-      sqlFnc.Read("user", "isUpdateable", {pn: req.session.useInfo.id}, (err, result) => {
-        console.log("-----READ_______");
-        console.log(err);
-        console.log(result);
-        console.log("-----READ_______");
-        callback(err, result)
-      });
+    function(callback) {
+      // read is account updateable
+      console.log("asyncA");
+      sqlFnc.Read("user", "isUpdateable", {
+        id: req.session.userInfo.id
+      })
+      .then((result) => {
+        console.log("results: " + JSON.stringify(result))
+        if (result.length == 1) callback(null, result);
+        else callback(new Error("ERR: Cannot find user"))
+      })
+      .catch((e) => {
+        if (Object.keys(e).length != 0) callback(e);
+      })
     },
-    (err, isExt, callback) => {
-      if (!err && isExt.length == 1) {
-        if (isExt[0].isUpdateable + "" == "1") {
-          sqlFnc.Update("user", {id: req.session.userInfo.id}, sendJson, (err, result) => {
-            console.log("-----UPDATE_______");
-            console.log(err);
-            console.log(result);
-            callback(err, result);
-            console.log("-----UPDATE_______");
-          })
-        } else {
-          callback(err);
-        }
-      } else {
-        if (err) callback(err);
-        else if (isExt.length != 1) callback(err, isExt);
+    function(isExt, callback) {
+      console.log("asyncB");
+      console.log(isExt);
+      console.log(isExt[0]);
+      console.log(isExt[0].isUpdateable);
+      if (isExt[0].isUpdateable == 1) {
+        sqlFnc.Update("user", {
+          id: req.session.userInfo.id
+        }, sendJson)
+        .then((updateRes) => {
+          callback(null, true);
+        })
+        .catch((e) => {
+          console.log(JSON.stringify(e));
+          if (Object.keys(e).length != 0) callback(e);
+        })
       }
     }
-  ], (err, result) => {
+  ], function(err, result) {
+    console.log("asyncC");
     if (err) {
       console.error(err);
       res.status(500);
@@ -456,9 +518,12 @@ app.get('/yt/setTokenReq', (req, res) => {
   console.log(userInfo);
 
   if (queryObj.code) {
-    sqlFnc.Update('user', {pn: userInfo.pn}, {code: queryObj.code}, (err, res) => {
-      if (err) console.error(err);
-      console.log("complete");
+    sqlFnc.Update('user', {pn: userInfo.pn}, {codeG: queryObj.code})
+    .then((updateResult) => {
+      console.log("complete")
+    })
+    .catch((e) => {
+      console.error(e);
     })
   }
 

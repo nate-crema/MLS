@@ -116,6 +116,8 @@ export default {
           })
 
           let beforeTimestamp = 0;
+          let isEntered = false;
+
 
           $(window).keydown((e) => {
             if (!location.href.includes("/register/register")) return true;
@@ -186,6 +188,12 @@ export default {
                     else inputERD = "올바르지 않은 입력키";
                     alert("한국어 자/모음만 입력 가능합니다. 현재 " + inputERD + "가 입력되었습니다.");
                   } else if (keyInfo.key == "Enter") {
+
+                    if (isEntered) {
+                      alert("등록중입니다! 잠시만 기다려주세요");
+                      return false;
+                    } else isEntered = true;
+
                     // passCode Input Complete
                     const dissolve = Hangul.d(document.getElementById(idName).innerText, true); ;
                     const totalOK = dissolve.every(function(element, index) {
@@ -208,17 +216,15 @@ export default {
                     if (totalOK) {
                       // passed
                       this_out.inputData += document.getElementById(idName).innerText;
+                      document.getElementsByName("passCodeSetted")[4].style.backgroundColor = "#3b804761";
                       this_out.$store.dispatch('registered', {passwd: this_out.inputData})
                       .then(() => {
                         setTimeout(() => {
-                          document.getElementsByName("passCodeSetted")[4].style.backgroundColor = "#3b804761";
+                          this_out.to = "/sync/Google";
                           setTimeout(() => {
-                            this_out.to = "/sync/Google";
-                            setTimeout(() => {
-                              document.getElementById("nuxt-link-next").click();
-                            }, 500);
+                            document.getElementById("nuxt-link-next").click();
                           }, 500);
-                        }, 500);
+                        }, 100);
                       })
                       // console.log(this_out);
                     } else {

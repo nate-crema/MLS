@@ -81,8 +81,8 @@ const store = () => new Vuex.Store({
     },
     userInfoAdd (state, dataO) {
       return new Promise((resolve, reject) => {
-        console.log("ㄹㄴㅇ");
-        console.log(dataO);
+        console.log("store: userInfoAdd");
+        // console.log(dataO);
         Object.keys(dataO).forEach((element, index) => {
           state[element] = Object.values(dataO)[index]
         })
