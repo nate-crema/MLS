@@ -1,13 +1,19 @@
 const getPList = require("./melon/getPList");
 const getListInfo = require("./melon/getListInfo");
-const search = require("./ytMusic/search");
+const searchMelon = require("./melon/search");
+const searchYt = require("./ytMusic/search");
+const searchMedia = require("./justWatch/findMedia");
 
 module.exports = {
     melon: {
         getPList,
-        getListInfo
+        getListInfo,
+        searchMelon: searchMelon.default.searchMelon
     },
     ytMusic: {
-        search
+        searchYt: searchYt.default.searchYTM
+    },
+    mediaSearch: {
+        searchMedia: searchMedia.default.searchMVApi
     }
 }

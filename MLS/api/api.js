@@ -265,32 +265,35 @@ app.post('/sms', (req, res) => {
   }
 })
 
-app.post('/login', (req, res) => {
-  let check = "false";
-  if (!req.body.SndBnyCode) {
-    authArray.every((value) => {
-      console.log(value.pn);
-      console.log(req.body.pn);
-      if (req.body.pn == value.pn) check = "true";
-    })
-    res.end(check);
-  } else {
-    console.log("Login Request");
-    authArray.every((value) => {
-      console.log(value.pn);
-      console.log(req.body.pn);
-      if (req.body.pn == value.pn && req.body.SndBnyCode == value.SndBnyCode) check = "true";
-    })
-    res.end(check);
-  }
-})
+// app.post('/login', (req, res) => {
+//   let check = "false";
+//   if (!req.body.SndBnyCode) {
+//     authArray.every((value) => {
+//       console.log(value.pn);
+//       console.log(req.body.pn);
+//       if (req.body.pn == value.pn) check = "true";
+//     })
+//     res.end(check);
+//   } else {
+//     console.log("Login Request");
+//     authArray.every((value) => {
+//       console.log(value.pn);
+//       console.log(req.body.pn);
+//       if (req.body.pn == value.pn && req.body.SndBnyCode == value.SndBnyCode) check = "true";
+//     })
+//     res.end(check);
+//   }
+// })
 
 app.post('/login', (req, res) => {
-  let check = false;
+  console.log("login: serverside");
+  let check = "false";
   if (!req.body.pn) {
     res.status(400);
     return res.end("false");
   }
+
+  console.log(req.body);
 
   if (!req.body.SndBnyCode) {
     sqlFnc.Read("user", "id", {pn: req.body.pn})
@@ -304,22 +307,28 @@ app.post('/login', (req, res) => {
       }
     });
   } else {
-    if (typeof req.body.SndBnyCode == "string") {
+    console.log(req.body.SndBnyCode);
+    if (typeof req.body.SndBnyCode != "string") {
       res.status(400);
       return res.end("false");
+    } else {
+      sqlFnc.Read("user", "salt, enccode", {pn: req.body.pn})
+      .then((lists) => {
+        console.log(lists);
+        lists.forEach((element, index) => {
+          crypto.pbkdf2(req.body.SndBnyCode, element.salt.toString('base64'), 78608, 100, 'sha512', (err, key) => {
+            console.log(key.toString("base64"));
+            if (key.toString("base64") == element.enccode) {
+              check = "true";
+            }
+            if (index == lists.length-1) {
+              res.status(200);
+              return res.end(check);
+            }
+          });
+        })
+      });
     }
-    sqlFnc.Read("user", "salt, enccode", {pn: req.body.pn})
-    .then((lists) => {
-      lists.forEach((element, index) => {
-        crypto.pbkdf2(req.body.SndBnyCode, element.salt.toString('base64'), 7860803, 100, 'sha512', (err, key) => {
-          if (key.toString("base64") == element.enccode) {
-            check = true;
-          }
-        });
-        res.status(200);
-        return res.end(check);
-      })
-    });
   }
 })
 
@@ -353,7 +362,7 @@ app.post('/register', (req, res) => {
   const pn = req.session.userInfo.pn;
   
   crypto.randomBytes(64, (err, buf) => {
-    crypto.pbkdf2(req.body.passwd, buf.toString('base64'), 7860803, 100, 'sha512', (err, key) => {
+    crypto.pbkdf2(req.body.passwd, buf.toString('base64'), 78608, 100, 'sha512', (err, key) => {
       encpw = key.toString('base64');
       // console.log(encpw);
       sqlFnc.Insert('user', {

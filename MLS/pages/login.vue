@@ -289,6 +289,7 @@ export default {
                                                 SndBnyCode: this_out.inputData,
                                             })
                                             .then(({data}) => {
+                                                console.log(data);
                                                 if (data == true) {
                                                     this_out.to = "/service/main";
                                                     setTimeout(() => {
@@ -304,15 +305,16 @@ export default {
                                                     document.getElementById("phoneNumIN").style.color = "#9c0c0c";
                                                     setTimeout(() => {
                                                         location.reload();
-                                                    }, 500);   
+                                                    }, 1200);   
                                                 }
                                             })
                                             .catch((e) => {
+                                                alert(e);
                                                 document.getElementById("phoneNumIN").value = "오류가 발생했습니다. 다시 시도해주세요.";
                                                 document.getElementById("phoneNumIN").style.color = "#9c0c0c";
                                                 setTimeout(() => {
                                                     location.reload();
-                                                }, 500);  
+                                                }, 1000);  
                                             })
                                         }, 500);
                                     }, 500);

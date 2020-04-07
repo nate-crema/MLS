@@ -75,52 +75,56 @@ function searchYTM(searchKey) {
                 // console.log("ytData" + counter++);
                 // console.log(element.musicShelfRenderer.contents.length);
                 let videoIds = [];
-                if (element.musicShelfRenderer.title.runs[0].text == "아티스트") {
-                    // console.log(element.musicShelfRenderer.contents[0].musicResponsiveListItemRenderer.flexColumns[0].musicResponsiveListItemFlexColumnRenderer.text.runs[0]);
-                    const ArtistArrCont = [];
-                    element.musicShelfRenderer.contents.forEach((elementArtist) => {
-                        const ArtistName = elementArtist.musicResponsiveListItemRenderer.flexColumns[0].musicResponsiveListItemFlexColumnRenderer.text.runs[0].text;
-                        const ArtistThumbnail = elementArtist.musicResponsiveListItemRenderer.thumbnail.musicThumbnailRenderer.thumbnail.thumbnails;
-                        const ArtistPlaylist = {};
-                        elementArtist.musicResponsiveListItemRenderer.menu.menuRenderer.items.forEach((elementArtistInfo) => {
-                            ArtistPlaylist[elementArtistInfo.menuNavigationItemRenderer.text.runs[0].text] = elementArtistInfo.menuNavigationItemRenderer.navigationEndpoint.watchPlaylistEndpoint
+                try {
+                    if (element.musicShelfRenderer.title.runs[0].text == "아티스트") {
+                        // console.log(element.musicShelfRenderer.contents[0].musicResponsiveListItemRenderer.flexColumns[0].musicResponsiveListItemFlexColumnRenderer.text.runs[0]);
+                        const ArtistArrCont = [];
+                        element.musicShelfRenderer.contents.forEach((elementArtist) => {
+                            const ArtistName = elementArtist.musicResponsiveListItemRenderer.flexColumns[0].musicResponsiveListItemFlexColumnRenderer.text.runs[0].text;
+                            const ArtistThumbnail = elementArtist.musicResponsiveListItemRenderer.thumbnail.musicThumbnailRenderer.thumbnail.thumbnails;
+                            const ArtistPlaylist = {};
+                            elementArtist.musicResponsiveListItemRenderer.menu.menuRenderer.items.forEach((elementArtistInfo) => {
+                                ArtistPlaylist[elementArtistInfo.menuNavigationItemRenderer.text.runs[0].text] = elementArtistInfo.menuNavigationItemRenderer.navigationEndpoint.watchPlaylistEndpoint
+                            })
+                            ArtistArrCont.push({
+                                ArtistName,
+                                thumbnails: ArtistThumbnail,
+                                authPlayList: ArtistPlaylist
+                            })
                         })
-                        ArtistArrCont.push({
-                            ArtistName,
-                            thumbnails: ArtistThumbnail,
-                            authPlayList: ArtistPlaylist
+    
+    
+                        returnData.push({
+                            title: element.musicShelfRenderer.title.runs[0].text,
+                            artists: ArtistArrCont
                         })
-                    })
-
-
-                    returnData.push({
-                        title: element.musicShelfRenderer.title.runs[0].text,
-                        artists: ArtistArrCont
-                    })
-                    
-                } else {
-                    element.musicShelfRenderer.contents.forEach(elementContents => {
-                        // console.log(elementContents.musicResponsiveListItemRenderer.overlay);
-                        if (elementContents.musicResponsiveListItemRenderer.overlay == undefined) {
-                            // console.log(elementContents); //error point: artist
-                        } else {
-        
-                            // console.log(elementContents.musicResponsiveListItemRenderer.overlay.musicItemThumbnailOverlayRenderer.content.musicPlayButtonRenderer.playNavigationEndpoint);
-                            if (!elementContents.musicResponsiveListItemRenderer.overlay.musicItemThumbnailOverlayRenderer.content.musicPlayButtonRenderer.playNavigationEndpoint.watchEndpoint) videoIds.push(elementContents.musicResponsiveListItemRenderer.overlay.musicItemThumbnailOverlayRenderer.content.musicPlayButtonRenderer.playNavigationEndpoint.watchPlaylistEndpoint.playlistId);
-                            else videoIds.push({
-                                id: elementContents.musicResponsiveListItemRenderer.overlay.musicItemThumbnailOverlayRenderer.content.musicPlayButtonRenderer.playNavigationEndpoint.watchEndpoint.videoId,
-                                thumbnails: elementContents.musicResponsiveListItemRenderer.thumbnail.musicThumbnailRenderer.thumbnail.thumbnails,
-                            });
-                        }
-                    })
-                    if (["앨범", "재생목록"].includes(element.musicShelfRenderer.title.runs[0].text)) returnData.push({
-                        title: element.musicShelfRenderer.title.runs[0].text,
-                        playListId: videoIds
-                    })
-                    else returnData.push({
-                        title: element.musicShelfRenderer.title.runs[0].text,
-                        videoId: videoIds
-                    })
+                        
+                    } else {
+                        element.musicShelfRenderer.contents.forEach(elementContents => {
+                            // console.log(elementContents.musicResponsiveListItemRenderer.overlay);
+                            if (elementContents.musicResponsiveListItemRenderer.overlay == undefined) {
+                                // console.log(elementContents); //error point: artist
+                            } else {
+            
+                                // console.log(elementContents.musicResponsiveListItemRenderer.overlay.musicItemThumbnailOverlayRenderer.content.musicPlayButtonRenderer.playNavigationEndpoint);
+                                if (!elementContents.musicResponsiveListItemRenderer.overlay.musicItemThumbnailOverlayRenderer.content.musicPlayButtonRenderer.playNavigationEndpoint.watchEndpoint) videoIds.push(elementContents.musicResponsiveListItemRenderer.overlay.musicItemThumbnailOverlayRenderer.content.musicPlayButtonRenderer.playNavigationEndpoint.watchPlaylistEndpoint.playlistId);
+                                else videoIds.push({
+                                    id: elementContents.musicResponsiveListItemRenderer.overlay.musicItemThumbnailOverlayRenderer.content.musicPlayButtonRenderer.playNavigationEndpoint.watchEndpoint.videoId,
+                                    thumbnails: elementContents.musicResponsiveListItemRenderer.thumbnail.musicThumbnailRenderer.thumbnail.thumbnails,
+                                });
+                            }
+                        })
+                        if (["앨범", "재생목록"].includes(element.musicShelfRenderer.title.runs[0].text)) returnData.push({
+                            title: element.musicShelfRenderer.title.runs[0].text,
+                            playListId: videoIds
+                        })
+                        else returnData.push({
+                            title: element.musicShelfRenderer.title.runs[0].text,
+                            videoId: videoIds
+                        })
+                    }
+                } catch(e) {
+                    // continue;
                 }
             })
             // console.log(returnData);
@@ -132,4 +136,6 @@ function searchYTM(searchKey) {
     }) 
 }
 
-module.exports = searchYTM;
+export default {
+    searchYTM
+}

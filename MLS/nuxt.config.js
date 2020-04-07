@@ -66,7 +66,8 @@ module.exports = {
       cookie: { maxAge: 6 * 60 * 60 * 1000 }
     }),
     // Api middleware
-    '~/api'
+    '~/api/api',
+    '~/api/searchApi'
   ]
 }
 
