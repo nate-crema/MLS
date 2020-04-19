@@ -1,5 +1,6 @@
 <template>
   <div>
+      <isMediaComp :mediaTypeText="mediaTypeText"></isMediaComp>
       <div class="songObj" v-for="(songInfo, index) in searchResult['노래']"
       :key="index">
         <svg version="1.1" id="lg_imgA" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
@@ -27,12 +28,17 @@
 <script>
 
 import axios from 'axios';
+import isMediaComp from '~/components/isMedia';
 
 export default {
 
+    components: {
+      isMediaComp
+    },
     data() {
       return {
-        searchResult: []
+        searchResult: [],
+        mediaTypeText: ""
       }
     },
     mounted() {
@@ -42,6 +48,23 @@ export default {
       $(document).ready(() => {
         document.getElementsByClassName("searchTitle")[0].innerHTML = "\"" + decodeURI(document.location.search.replace("?searchKey=", "")) + "\"에 대한 검색결과입니다!"
         document.getElementById("searchData").value = decodeURI(document.location.search.replace("?searchKey=", ""));
+
+        axios.post('/search/api/searchQuery', {
+          searchOption: "*",
+          searchQuery: decodeURI(document.location.search.replace("?searchKey=", ""))
+        })
+        .then(({data}) => {
+            console.log(data);
+            this_out.searchResult = data;
+            if (data.isMedia) {
+              console.log("data.mediaType");
+              console.log(data.MediaType);
+              this_out.mediaTypeText = data.MediaType.toString();
+              $("#isMediaTrue").css("display", "unset");
+              $("#isMediaTrue").css("opacity", "1");
+            }
+        })
+
         $(".searchBtn").css("display", "block");
         setTimeout(() => {
             $(".searchBtn").css("opacity", "1");
@@ -69,17 +92,14 @@ export default {
 
 
       
-      axios.post('/api/search', {
-          searchKey: decodeURI(document.location.search.replace("?searchKey=", ""))
-      })
-      .then(({data}) => {
-          console.log(data);
-          this_out.searchResult = data;
-      })
     }
 }
 </script>
 
 <style>
-
+.songCover {
+  width: 250px;
+  height: 250px;
+  border: 1px solid black;
+}
 </style>

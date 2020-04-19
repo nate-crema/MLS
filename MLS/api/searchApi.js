@@ -12,6 +12,7 @@ import path from "path";
 import mysql from "mysql";
 import util from '../util';
 import async from 'async';
+import { callbackify } from 'util';
 
 
 // mysql functions
@@ -203,17 +204,29 @@ app.post('/searchQuery', (req, res) => {
           // classify is searchquery drama/movie title
           searchMedia(query)
           .then((data) => {
+            let callbackData = data;
+            let MediaType = [];
             let isMedia;
-            console.log(data);
-            if (data.length > 0) {
+            if (callbackData.length > 0) {
               isMedia = true;
+              for (var cbDloop = 0; cbDloop < callbackData.length; cbDloop++) {
+                if (callbackData[cbDloop].full_path.split("/")[2] == "영화" && !MediaType.includes("영화")) MediaType.push("영화");
+                if (callbackData[cbDloop].full_path.split("/")[2] == "TV-프로그램" && !MediaType.includes("TV 프로그램")) MediaType.push("TV 프로그램");
+                if (cbDloop == callbackData.length - 1) {
+                  callback(null, {
+                    isMedia,
+                    MediaCont: callbackData,
+                    MediaType
+                  });
+                }
+              }
             } else {
               isMedia = false;
+              callback(null, {
+                isMedia,
+                MediaCont: callbackData
+              });
             }
-            callback(null, {
-              isMedia,
-              MediaCont: data
-            });
           })
           .catch((e) => {
             callback(e);
@@ -242,8 +255,15 @@ app.post('/searchQuery', (req, res) => {
           .catch((e) => {
             callback(e);
           })
+        },
+        (searchObj, callback) => {
+          // let melList = searchObj.melonSearch.filter(element => {
+          //   return element.
+          // })
+          callback(null, searchObj);
         }
       ], (err, result) => {
+          console.log(result);
         if (err) {
           res.status(500);
           return res.end("false");

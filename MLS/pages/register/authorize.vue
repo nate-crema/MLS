@@ -128,6 +128,7 @@ export default {
                                         location.href = "/login";
                                     }, 800);
                                 } else {
+                                    alert(data);
                                     document.getElementById("phoneNumIN").setAttribute("type", "text");
                                     document.getElementById("phoneNumIN").value = "오류가 발생했습니다. 다시 시도해주세요.";
                                     document.getElementById("phoneNumIN").style.color = "#9c0c0c";

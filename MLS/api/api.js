@@ -188,7 +188,7 @@ app.use((req, res, next) => {
 * Naver Cloud Platform API Information
 */
 
-const NCP_API = JSON.parse(fs.readFileSync(path.join(__dirname, "/../NCPAuth.json"), { encoding: "UTF-8" }));
+const NCP_API = JSON.parse(fs.readFileSync(path.join(__dirname, "/../security/NCPAuth.json"), { encoding: "UTF-8" }));
 // console.log(typeof NCP_API);
 
 /*
@@ -242,6 +242,7 @@ app.post('/sms', (req, res) => {
             res.end("true");
           })
           .catch((e) => {
+            console.log(e);
             res.end("false");
           })
         } else {
@@ -495,6 +496,25 @@ app.post('/search', (req, res) => {
   })
 })
 
+app.post('/dataRDY', (req, res) => {
+  const vid = req.body.vid;
+
+  async.waterfall([
+    (callback) => {
+      sqlFnc.Read('rdy', "*", {
+        vid
+      })
+      .then((data) => {
+          console.log(data);
+      })
+    }
+  ])
+})
+
+
+
+// youtube sync
+
 app.post('/yt/setToken', (req, res) => {
 
   const accessData = fs.readFileSync(path.join(__dirname, '../', "/security/client_secret_715508690086-7s72uojr6hjbo9toco148h06h0odsrld.apps.googleusercontent.com.json"));
@@ -510,7 +530,6 @@ app.post('/yt/setToken/redirect', (req, res) => {
   let accessData = JSON.parse(fs.readFileSync(path.join(__dirname, '../', "/security/client_secret_715508690086-7s72uojr6hjbo9toco148h06h0odsrld.apps.googleusercontent.com.json"), {encoding: "UTF-8"}));
   accessData.web.client_secret = "**********";
   console.log(accessData);
-  
   res.json(accessData);
 })
 

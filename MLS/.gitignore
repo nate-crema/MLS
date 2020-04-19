@@ -10,8 +10,5 @@ npm-debug.log
 # Nuxt generate
 dist
 
-# NCP Authorization File
-NCPAuth.json
-
 # Security files
 security/

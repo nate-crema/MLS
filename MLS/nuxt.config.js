@@ -1,5 +1,8 @@
-import bodyParser from "body-parser";
-import session from "express-session";
+// import bodyParser from "body-parser";
+// import session from "express-session";
+
+const bodyParser = require("body-parser");
+const session = require("express-session");
 
 module.exports = {
   /*
@@ -68,6 +71,18 @@ module.exports = {
     // Api middleware
     '~/api/api',
     '~/api/searchApi'
-  ]
+  ],
+  modules: [
+    'nuxt-socket-io'
+  ],
+  io: {
+    sockets: [
+      {
+        name: "BaseBND",
+        url: process.env.host || "http://localhost:3000",
+        default: true
+      }
+    ]
+  }
 }
 

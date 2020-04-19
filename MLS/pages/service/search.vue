@@ -5,9 +5,9 @@
         <div class="searchObj">
             <p class="searchTitle">제목/아티스트/가사를 검색해보세요! ;)</p>
             <div class="searchArea">
-                <input type="text" id="searchData" v-model="inputData"/>
+                <input type="text" id="searchData" v-model="inputDataUri"/>
                 <div class="searchBtn" id="searchCmd">
-                    <nuxt-link :to="'/service/search/searchQuery?searchKey=' + inputDataUri" hidden id="hiddenClicker"></nuxt-link>
+                    <nuxt-link :to="'/service/search/searchQuery?searchKey=' + encodeURI(inputDataUri)" hidden id="hiddenClicker"></nuxt-link>
                     <svg xmlns="http://www.w3.org/2000/svg" height="512px" version="1.1" viewBox="-1 0 136 136.21852"
                       width="512px">
                       <g>
@@ -19,9 +19,9 @@
                     </svg>
                 </div>
             </div>
+            <nuxt-child class="searchResult"/>
         </div>
     </div>
-    <nuxt-child/>
   </div>
 </template>
 
@@ -36,14 +36,7 @@ export default {
     
   data() {
       return {
-          inputData: "",
           inputDataUri: ""
-      }
-  },
-  watch: {
-      inputData: function() {
-          this.inputDataUri = encodeURI(this.inputData);
-        //   console.log(this);
       }
   },
   mounted() {
@@ -158,5 +151,13 @@ export default {
     transform: translate(-50%, -50%);
     width: 30%;
     height: 30%;
+}
+
+
+.search .searchObj .searchResult {
+    position: absolute;
+    top: 150px;
+    width: 100%;
+    height: 100%;
 }
 </style>

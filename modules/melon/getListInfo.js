@@ -13,6 +13,8 @@ const fs = require("fs");
 
 // test: 471369502
 
+// getListInfo("471369502")
+
 function getListInfo(playlistId) {
 
     let song = [];

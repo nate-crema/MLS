@@ -259,6 +259,10 @@ export default {
 
         // music play functions
 
+        // load media
+
+        const vId = location.pathname.split("/")[2];
+
         const video = document.createElement('video');
         function startPlay() {
             video.src = this_out.musicInfo.youtube.url;
@@ -520,16 +524,19 @@ body {
 
 
 .controller {
-  border: 5px solid rgb(30, 70, 158);
+  border: 2px solid rgb(30, 70, 158);
   border-radius: 50%;
   margin: 20px;
   padding: 0px;
-  width: 60px;
-  height: 60px;
+  width: 40px;
+  height: 40px;
   font-size: 0;
   white-space: nowrap;
   text-align: center;
   cursor: pointer;
+  position: absolute;
+  right: 100px;
+  top: 10px;
 }
 .controller,
 .controller .leftPauser,
@@ -542,26 +549,28 @@ body {
 }
 .controller:before {
   content: "";
-  height: 50px;
+  height: 30px;
 }
 .controller.pause .leftPauser,
 .controller.pause .rightPauser {
   margin: 0;
-  border-left: 4px solid rgb(30, 70, 158);
+  border-left: 2px solid rgb(30, 70, 158);
   border-top: 0 solid transparent;
   border-bottom: 0 solid transparent;
-  height: 20.3px;
+  margin-top: 5px;
+  height: 13.3px;
 }
 .controller.pause .leftPauser {
   border-right: 7px solid transparent;
 }
 .controller.play .leftPauser {
-  margin-left: 8px;
-  border-left: 25px solid rgb(30, 70, 158);
-  border-top: 13px solid transparent;
-  border-bottom: 13px solid transparent;
+  margin-left: 3px;
+  margin-top: 5px;
+  border-left: 15px solid rgb(30, 70, 158);
+  border-top: 8px solid transparent;
+  border-bottom: 8px solid transparent;
   border-right: 0px solid transparent;
-  height: 25px;
+  height: 12px;
 }
 .controller.play .rightPauser {
   margin: 0;
