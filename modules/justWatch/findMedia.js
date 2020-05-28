@@ -25,19 +25,23 @@ String.prototype.isContSame = function(input) {
 
 function searchMVApi(searchQuery) {
     return new Promise((resolve, reject) => {
+        console.log("searchMVApi");
         const jw = new justWatch({locale: "ko_KR"});
 
         jw.search(searchQuery)
         .then((data) => {
-            // console.log(data);
+            console.log(data);
             // console.log(searchQuery);
             const searchRes = data.items;
             const resolveObj = [];
+            if (searchRes.length == 0) resolve(resolveObj);
             searchRes.forEach((element, index) => {
                 // console.log(element.title);
                 if (searchQuery.isContSame(element.title)) {
                     resolveObj.push(element);
                 }
+                console.log(searchRes.length - 1);
+                console.log(index);
                 if (index == searchRes.length-1) resolve(resolveObj);
             })
         })

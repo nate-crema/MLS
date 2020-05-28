@@ -39,7 +39,7 @@ export default {
 <style>
 .isMediaTrue {
   opacity: 0;
-  position: absolute;
+  position: relative;
   width: 100%;
   height: 60px;
   border: 1px solid rgb(15, 63, 141);

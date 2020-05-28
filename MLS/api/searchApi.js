@@ -188,22 +188,27 @@ app.use((req, res, next) => {
 })
 
 app.post('/searchQuery', (req, res) => {
+  console.log("searchQuery API");
   // search option check
   const option = req.body.searchOption;
   const query = req.body.searchQuery;
   if (!option || !query) {
     res.status(400);
-    res.end("Bad Request");
+    return res.end("Bad Request");
   } else {
     // service specifiy search
+    console.log(`Option Filter: ${option}`);
     if (option == "*") {
+      console.log("Start Searching..");
       // console.log(typeof melon.searchMelon);
       // console.log(melon.searchMelon);
       async.waterfall([
         (callback) => {
-          // classify is searchquery drama/movie title
+          // classify whether searchquery is drama/movie title
+          console.log("Media API checking..");
           searchMedia(query)
           .then((data) => {
+            console.log("aserdg");
             let callbackData = data;
             let MediaType = [];
             let isMedia;
@@ -234,6 +239,7 @@ app.post('/searchQuery', (req, res) => {
         },
         (MediaData, callback) => {
           // find songs: searchquery from youtube music api
+          console.log("Youtube API checking.."); 
           searchYT(query)
           .then((data) => {
             let ytResult = MediaData;
@@ -263,7 +269,7 @@ app.post('/searchQuery', (req, res) => {
           callback(null, searchObj);
         }
       ], (err, result) => {
-          console.log(result);
+        console.log(result);
         if (err) {
           res.status(500);
           return res.end("false");
@@ -271,6 +277,9 @@ app.post('/searchQuery', (req, res) => {
         res.status(200);
         return res.json(result);
       })
+    } else {
+      res.status(400);
+      res.end("Invalid Option");
     }
   }
 })
