@@ -1,5 +1,5 @@
 import express from 'express';
-import { melon, ytMusic, mediaSearch } from "../../modules";
+import { melon, ytMusic, mediaSearch } from "../modules";
 const getPList = melon.getPList;
 const getListInfo = melon.getListInfo;
 const searchMelon = melon.searchMelon;
