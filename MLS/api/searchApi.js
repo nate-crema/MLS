@@ -12,7 +12,8 @@ import path from "path";
 import mysql from "mysql";
 import util from '../util';
 import async from 'async';
-import { callbackify } from 'util';
+// import { callbackify } from 'util';
+// import { STATUS_CODES } from 'http';
 
 
 // mysql functions
@@ -187,102 +188,144 @@ app.use((req, res, next) => {
   next();
 })
 
-app.post('/searchQuery', (req, res) => {
-  console.log("searchQuery API");
+const searchOptions = ["singer", "title", "lyrics"];
+
+app.post("/searchQuery", (req, res) => {
+  console.log("---searchQuery API---");
   // search option check
-  const option = req.body.searchOption;
+  const option = req.body.searchOption.replace(/(\s*)/g,"");
   const query = req.body.searchQuery;
   if (!option || !query) {
     res.status(400);
     return res.end("Bad Request");
-  } else {
-    // service specifiy search
-    console.log(`Option Filter: ${option}`);
-    if (option == "*") {
-      console.log("Start Searching..");
-      // console.log(typeof melon.searchMelon);
-      // console.log(melon.searchMelon);
-      async.waterfall([
-        (callback) => {
-          // classify whether searchquery is drama/movie title
-          console.log("Media API checking..");
-          searchMedia(query)
-          .then((data) => {
-            console.log("aserdg");
-            let callbackData = data;
-            let MediaType = [];
-            let isMedia;
-            if (callbackData.length > 0) {
-              isMedia = true;
-              for (var cbDloop = 0; cbDloop < callbackData.length; cbDloop++) {
-                if (callbackData[cbDloop].full_path.split("/")[2] == "영화" && !MediaType.includes("영화")) MediaType.push("영화");
-                if (callbackData[cbDloop].full_path.split("/")[2] == "TV-프로그램" && !MediaType.includes("TV 프로그램")) MediaType.push("TV 프로그램");
-                if (cbDloop == callbackData.length - 1) {
-                  callback(null, {
-                    isMedia,
-                    MediaCont: callbackData,
-                    MediaType
-                  });
-                }
-              }
-            } else {
-              isMedia = false;
-              callback(null, {
-                isMedia,
-                MediaCont: callbackData
-              });
-            }
-          })
-          .catch((e) => {
-            callback(e);
-          })
-        },
-        (MediaData, callback) => {
-          // find songs: searchquery from youtube music api
-          console.log("Youtube API checking.."); 
-          searchYT(query)
-          .then((data) => {
-            let ytResult = MediaData;
-            ytResult.ytSearch = data;
-            callback(null, ytResult);
-          })
-          .catch((e) => {
-            callback(e);
-          })
-        },
-        (YtData, callback) => {
-          // find songs: searchquery from melon
-          searchMelon(query)
-          .then((data) => {
-            let melonResult = YtData;
-            melonResult.melonSearch = data;
-            callback(null, melonResult);
-          })
-          .catch((e) => {
-            callback(e);
-          })
-        },
-        (searchObj, callback) => {
-          // let melList = searchObj.melonSearch.filter(element => {
-          //   return element.
-          // })
-          callback(null, searchObj);
-        }
-      ], (err, result) => {
-        console.log(result);
-        if (err) {
-          res.status(500);
-          return res.end("false");
-        }
-        res.status(200);
-        return res.json(result);
-      })
-    } else {
-      res.status(400);
-      res.end("Invalid Option");
-    }
   }
+
+  // let selected = [];
+
+  // switch (option) {
+  //   case "*":
+  //     console.log("Full option inbounded");
+  //     selected = searchOptions;
+
+  //   default:
+  //     console.log(`${option} selected`);
+  //     option.split(",").forEach((val) => selected.push(val));
+  // }
+
+  let result = [];
+  
+  searchMedia(query)
+  .then((mediaResult) => {
+    console.log(mediaResult);
+  })
+
+  switch (option) {
+  
+  }
+  
+
+  
+
+
 })
+
+// app.post('/searchQuery', (req, res) => {
+//   console.log("searchQuery API");
+//   // search option check
+//   const option = req.body.searchOption;
+//   const query = req.body.searchQuery;
+//   if (!option || !query) {
+//     res.status(400);
+//     return res.end("Bad Request");
+//   } else {
+//     // service specifiy search
+//     console.log(`Option Filter: ${option}`);
+//     if (option == "*") {
+//       console.log("Start Searching..");
+//       // console.log(typeof melon.searchMelon);
+//       // console.log(melon.searchMelon);
+//       async.waterfall([
+//         (callback) => {
+//           // classify whether searchquery is drama/movie title
+//           console.log("Media API checking..");
+//           searchMedia(query)
+//           .then((data) => {
+//             console.log("aserdg");
+//             let callbackData = data;
+//             let MediaType = [];
+//             let isMedia;
+//             if (callbackData.length > 0) {
+//               isMedia = true;
+//               for (var cbDloop = 0; cbDloop < callbackData.length; cbDloop++) {
+//                 if (callbackData[cbDloop].full_path.split("/")[2] == "영화" && !MediaType.includes("영화")) MediaType.push("영화");
+//                 if (callbackData[cbDloop].full_path.split("/")[2] == "TV-프로그램" && !MediaType.includes("TV 프로그램")) MediaType.push("TV 프로그램");
+//                 if (cbDloop == callbackData.length - 1) {
+//                   callback(null, {
+//                     isMedia,
+//                     MediaCont: callbackData,
+//                     MediaType
+//                   });
+//                 }
+//               }
+//             } else {
+//               isMedia = false;
+//               callback(null, {
+//                 isMedia,
+//                 MediaCont: callbackData
+//               });
+//             }
+//           })
+//           .catch((e) => {
+//             callback(e);
+//           })
+//         },
+//         (MediaData, callback) => {
+//           // find songs: searchquery from youtube music api
+//           console.log("Youtube API checking.."); 
+//           searchYT(query)
+//           .then((data) => {
+//             let ytResult = MediaData;
+//             ytResult.ytSearch = data;
+//             callback(null, ytResult);
+//           })
+//           .catch((e) => {
+//             console.error(e);
+//             callback(null, MediaData);
+//           })
+//         },
+//         (YtData, callback) => {
+//           // find songs: searchquery from melon
+//           searchMelon(query)
+//           .then((data) => {
+//             let melonResult = YtData;
+//             melonResult.melonSearch = data;
+//             callback(null, melonResult);
+//           })
+//           .catch((e) => {
+//             callback(e);
+//           })
+//         },
+//         (searchObj, callback) => {
+//           // let melList = searchObj.melonSearch.filter(element => {
+//           //   return element.
+//           // })
+//           callback(null, searchObj);
+//         }
+//       ], (err, result) => {
+//         console.log(result);
+//         if (err) {
+//           res.status(500);
+//           return res.end("false");
+//         }
+//         res.status(200);
+//         return res.json(result);
+//       })
+//     } else {
+//       res.status(400);
+//       res.end("Invalid Option");
+//     }
+//   }
+// })
 
 
 
