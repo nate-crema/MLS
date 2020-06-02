@@ -191,37 +191,64 @@ app.use((req, res, next) => {
 const searchOptions = ["singer", "title", "lyrics"];
 
 app.post("/searchQuery", (req, res) => {
-  console.log("---searchQuery API---");
-  // search option check
-  const option = req.body.searchOption.replace(/(\s*)/g,"");
-  const query = req.body.searchQuery;
-  if (!option || !query) {
+    console.log("---searchQuery API---");
+    // search option check
+    const option = req.body.searchOption.replace(/(\s*)/g,"");
+    const query = req.body.searchQuery;
+    if (!option || !query) {
     res.status(400);
     return res.end("Bad Request");
-  }
+    }
 
-  // let selected = [];
+    // let selected = [];
 
-  // switch (option) {
-  //   case "*":
-  //     console.log("Full option inbounded");
-  //     selected = searchOptions;
+    // switch (option) {
+    //   case "*":
+    //     console.log("Full option inbounded");
+    //     selected = searchOptions;
 
-  //   default:
-  //     console.log(`${option} selected`);
-  //     option.split(",").forEach((val) => selected.push(val));
-  // }
+    //   default:
+    //     console.log(`${option} selected`);
+    //     option.split(",").forEach((val) => selected.push(val));
+    // }
 
-  let result = [];
-  
-  searchMedia(query)
-  .then((mediaResult) => {
-    console.log(mediaResult);
-  })
+    let result = [];
+    let searchMediaC = false;
+    let searchYTC = false;
+    let searchMelonC = false;
 
-  switch (option) {
-  
-  }
+    searchMedia(query)
+    .then((mediaResult) => {
+        console.log(mediaResult);
+        searchMediaC = mediaResult;
+    })
+    .catch((e) => {
+        console.error(e);
+        searchMediaC = "ERR";
+    })
+
+    searchYT(query)
+    .then((data) => {
+        console.log(mediaResult);
+        searchMediaC = mediaResult;
+    })
+    .catch((e) => {
+        console.error(e);
+        searchMediaC = "ERR";
+    })
+
+    
+
+    
+
+    searchMediaC.registerListener(function (val) {
+        if (val == "ERR") a // return response error
+        else console.log("media searching complete");
+    });
+
+    switch (option) {
+
+    }
   
 
   

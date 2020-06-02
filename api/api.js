@@ -1,5 +1,5 @@
 import express from 'express';
-import { melon, ytMusic } from "../../modules";
+import { melon, ytMusic } from "../modules";
 const getPList = melon.getPList;
 const getListInfo = melon.getListInfo;
 const searchYT = ytMusic.search;
@@ -297,7 +297,7 @@ app.post('/login', (req, res) => {
   console.log(req.body);
 
   if (!req.body.SndBnyCode) {
-    sqlFnc.Read("user", "id", {pn: req.body.pn})
+    sqlFnc.Read("user", "cusId", {pn: req.body.pn})
     .then((lists) => {
       if (lists.length >= 1) {
         res.status(200);
