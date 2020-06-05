@@ -1,0 +1,1774 @@
+
+
+
+<style type="text/css">
+</style>
+	
+	
+	
+	
+	
+	
+	<!-- 곡1 목록 -->
+	<form id="frm_defaultList" name="frm_defaultList">
+	<div class="tb_list d_song_list songTypeOne" style="width:1008px;">
+		
+		<div class="wrap_btn_tb top">
+			<button type="button" title="곡 목록 전체 선택" class="btn_base short check_all d_checkall"><span class="odd_span"><span class="even_span">전체선택</span></span></button>
+			<button type="button" title="선택된 곡 재생 - 새 창" class="btn_base short play d_listen" onClick="searchLog('web_song','SONG','SO','에잇','','frm_defaultList');melon.play.playFormSong('26020103','frm_defaultList');"><span class="odd_span"><span class="even_span">듣기</span></span></button>
+			<button type="button" title="선택된 곡 다운로드 - 새 창" class="btn_base short download d_download" onClick="searchLog('web_song','SONG','SO','에잇','','frm_defaultList');melon.buy.goBuyProduct('frm_defaultList','','3C0001','input_check','0','26020103');"><span class="odd_span"><span class="even_span">다운</span></span></button>
+			<button type="button" title="선택된 곡 담기 - 새 창" class="btn_base short scrap d_scrap" onClick="searchLog('web_song','SONG','SO','에잇','','frm_defaultList');melon.play.addFormPlayList('frm_defaultList');"><span class="odd_span"><span class="even_span">담기</span></span></button>
+			<button type="button" title="선택된 곡 선물하기 - 새 창" class="btn_base short gift d_gift" onClick="searchLog('web_song','SONG','SO','에잇','','frm_defaultList');melon.buy.goPresent('song', 'frm_defaultList', '26020103');"><span class="odd_span"><span class="even_span">선물</span></span></button>
+		</div>
+		<table border="1" style="width:100%">
+			<caption>곡 목록입니다. 목록에 있는 곡을 선택하여 재생, 다운로드, 플레이리스트 담기, 선물하기가 가능합니다.</caption>
+			<colgroup><col style="width:29px" /><col style="width:48px" /><col style="width:100%"/><col style="width:152px" /><col style="width:146px" /><col style="width:82px" /><col style="width:49px" /><col style="width:40px" /></colgroup>
+			<thead>
+				<tr>
+					<th scope="col"><div class="wrap pd_none left">
+						<input type="checkbox" title="곡 목록 전체 선택" class="input_check d_checkall" />
+					</div></th>
+					<th scope="col"><div class="wrap">NO</div></th>
+					<th scope="col"><div class="wrap">곡명</div></th>
+					<th scope="col" class="t_left"><div class="wrap">아티스트</div></th>
+					<th scope="col" class="t_left"><div class="wrap">앨범</div></th>
+					<th scope="col" class="t_left"><div class="wrap right_none">좋아요</div></th>
+					<th scope="col"><div class="wrap pd_none left">뮤비</div></th>
+					<th scope="col"><div class="wrap pd_none right">다운</div></th>
+				</tr>
+			</thead>
+			<tbody>
+				
+				<tr >
+					<td><div class="wrap pd_none left">
+						<input type="checkbox" title="에잇(Prod.&Feat. SUGA of BTS) 곡 선택" class="input_check" name="input_check" value="32578498" />
+					</div></td>
+					<td class="no"><div class="wrap">1</div></td>
+					<td class="t_left"><div class="wrap pd_none">
+						<div class="ellipsis" style="max-width:100%">
+							<button type="button" class="btn_icon play" title="재생" onClick="searchLog('web_song','SONG','SO','에잇','32578498');melon.play.playSong('26020103',32578498);"><span class="odd_span">재생</span></button>
+							<button type="button" class="btn_icon add" title="담기" onClick="searchLog('web_song','SONG','SO','에잇','32578498');melon.play.addPlayList('32578498');"><span class="odd_span">담기</span></button>
+							<a href="javascript:searchLog('web_song','SONG','SO','에잇','32578498');melon.link.goSongDetail('32578498');" title="곡정보 보기" class="btn btn_icon_detail"><span class="odd_span"><b>에잇</b>(Prod.&Feat. SUGA of BTS) 상세정보 페이지 이동</span></a>
+							<span class="icon_song title">Title</span>
+							
+							
+							
+							
+							
+							<a href="javascript:searchLog('web_song','SONG','SO','에잇','32578498');melon.play.playSong('26020103',32578498);" class="fc_gray" title="에잇(Prod.&Feat. SUGA of BTS)"><b>에잇</b>(Prod.&Feat. SUGA of BTS)</a>
+						</div>
+					</div></td>
+					<td class="t_left"><div class="wrap wrapArtistName">
+						<div id="artistName" class="ellipsis" style="max-width:122px">
+							<a href="javascript:melon.link.goArtistDetail('261143');melon.link.goSearchLog('web_song','SONG', 'AR', '에잇','32578498');" title="아이유 - 페이지 이동" class="fc_mgray">아이유</a>
+							<span class="checkEllipsisSongdefaultList" style="display:none"><a href="javascript:melon.link.goArtistDetail('261143');melon.link.goSearchLog('web_song','SONG', 'AR', '에잇','32578498');" title="아이유 - 페이지 이동" class="fc_mgray">아이유</a></span>
+						</div>
+						
+					</div></td>
+					<td class="t_left"><div class="wrap">
+						<div class="ellipsis" style="max-width:90%">
+							<a href="javascript:searchLog('web_song','SONG','AL','에잇','32578498');melon.link.goAlbumDetail('10426648');" title="에잇 - 페이지 이동" class="fc_mgray"><b>에잇</b></a>
+						</div>
+					</div></td>
+					<td class="t_left"><div class="wrap right_none">
+						<button type="button" class="btn_icon like" title="에잇(Prod.&Feat. SUGA of BTS) 좋아요 " data-song-no="32578498" data-song-menuId="26020103" onclick="searchLog('web_song','SONG','SO','에잇','32578498');">
+							<span class="odd_span">좋아요</span>
+							<span class="cnt"><span class="none">총건수</span>0</span>
+						</button>
+					</div></td>
+					<td><div class="wrap pd_none left">
+						<button type="button"  class="btn_icon mv" title="뮤직비디오" onClick="searchLog('web_song','SONG','MV','에잇','32578498');melon.link.goMvDetail('26020103', '32578498','song');"><span class="odd_span">뮤직비디오</span></button>
+					</div></td>
+					<td><div class="wrap pd_none right">
+						<button type="button"  class="btn_icon dl" title="다운로드" onClick="searchLog('web_song','SONG','SO','에잇','32578498');melon.buy.goBuyProduct('frm_defaultList', '32578498', '3C0001', '','0', '26020103');"><span class="odd_span">다운</span></button>
+					</div></td>
+				</tr>
+				
+				<tr >
+					<td><div class="wrap pd_none left">
+						<input type="checkbox" title="나도 좋아 곡 선택" class="input_check" name="input_check" value="30862793" />
+					</div></td>
+					<td class="no"><div class="wrap">2</div></td>
+					<td class="t_left"><div class="wrap pd_none">
+						<div class="ellipsis" style="max-width:100%">
+							<button type="button" class="btn_icon play" title="재생" onClick="searchLog('web_song','SONG','SO','에잇','30862793');melon.play.playSong('26020103',30862793);"><span class="odd_span">재생</span></button>
+							<button type="button" class="btn_icon add" title="담기" onClick="searchLog('web_song','SONG','SO','에잇','30862793');melon.play.addPlayList('30862793');"><span class="odd_span">담기</span></button>
+							<a href="javascript:searchLog('web_song','SONG','SO','에잇','30862793');melon.link.goSongDetail('30862793');" title="곡정보 보기" class="btn btn_icon_detail"><span class="odd_span">나도 좋아 상세정보 페이지 이동</span></a>
+							<span class="icon_song title">Title</span>
+							
+							
+							
+							
+							
+							<a href="javascript:searchLog('web_song','SONG','SO','에잇','30862793');melon.play.playSong('26020103',30862793);" class="fc_gray" title="나도 좋아">나도 좋아</a>
+						</div>
+					</div></td>
+					<td class="t_left"><div class="wrap wrapArtistName">
+						<div id="artistName" class="ellipsis" style="max-width:122px">
+							<a href="javascript:melon.link.goArtistDetail('2084245');melon.link.goSearchLog('web_song','SONG', 'AR', '에잇','30862793');" title="에잇좋아+1 - 페이지 이동" class="fc_mgray"><b>에잇</b>좋아+1</a>
+							<span class="checkEllipsisSongdefaultList" style="display:none"><a href="javascript:melon.link.goArtistDetail('2084245');melon.link.goSearchLog('web_song','SONG', 'AR', '에잇','30862793');" title="에잇좋아+1 - 페이지 이동" class="fc_mgray"><b>에잇</b>좋아+1</a></span>
+						</div>
+						
+					</div></td>
+					<td class="t_left"><div class="wrap">
+						<div class="ellipsis" style="max-width:90%">
+							<a href="javascript:searchLog('web_song','SONG','AL','에잇','30862793');melon.link.goAlbumDetail('10133622');" title="믹스나인 Part.6 - 페이지 이동" class="fc_mgray">믹스나인 Part.6</a>
+						</div>
+					</div></td>
+					<td class="t_left"><div class="wrap right_none">
+						<button type="button" class="btn_icon like" title="나도 좋아 좋아요 " data-song-no="30862793" data-song-menuId="26020103" onclick="searchLog('web_song','SONG','SO','에잇','30862793');">
+							<span class="odd_span">좋아요</span>
+							<span class="cnt"><span class="none">총건수</span>0</span>
+						</button>
+					</div></td>
+					<td><div class="wrap pd_none left">
+						<button type="button"  class="btn_icon mv" title="뮤직비디오" onClick="searchLog('web_song','SONG','MV','에잇','30862793');melon.link.goMvDetail('26020103', '30862793','song');"><span class="odd_span">뮤직비디오</span></button>
+					</div></td>
+					<td><div class="wrap pd_none right">
+						<button type="button"  class="btn_icon dl" title="다운로드" onClick="searchLog('web_song','SONG','SO','에잇','30862793');melon.buy.goBuyProduct('frm_defaultList', '30862793', '3C0001', '','0', '26020103');"><span class="odd_span">다운</span></button>
+					</div></td>
+				</tr>
+				
+				<tr >
+					<td><div class="wrap pd_none left">
+						<input type="checkbox" title="잘자 곡 선택" class="input_check" name="input_check" value="30383020" />
+					</div></td>
+					<td class="no"><div class="wrap">3</div></td>
+					<td class="t_left"><div class="wrap pd_none">
+						<div class="ellipsis" style="max-width:100%">
+							<button type="button" class="btn_icon play" title="재생" onClick="searchLog('web_song','SONG','SO','에잇','30383020');melon.play.playSong('26020103',30383020);"><span class="odd_span">재생</span></button>
+							<button type="button" class="btn_icon add" title="담기" onClick="searchLog('web_song','SONG','SO','에잇','30383020');melon.play.addPlayList('30383020');"><span class="odd_span">담기</span></button>
+							<a href="javascript:searchLog('web_song','SONG','SO','에잇','30383020');melon.link.goSongDetail('30383020');" title="곡정보 보기" class="btn btn_icon_detail"><span class="odd_span">잘자 상세정보 페이지 이동</span></a>
+							
+							
+							
+							
+							
+							
+							<a href="javascript:searchLog('web_song','SONG','SO','에잇','30383020');melon.play.playSong('26020103',30383020);" class="fc_gray" title="잘자">잘자</a>
+						</div>
+					</div></td>
+					<td class="t_left"><div class="wrap wrapArtistName">
+						<div id="artistName" class="ellipsis" style="max-width:122px">
+							<a href="javascript:melon.link.goArtistDetail('1702715');melon.link.goSearchLog('web_song','SONG', 'AR', '에잇','30383020');" title="8LOOP (에잇루프) - 페이지 이동" class="fc_mgray">8LOOP (<b>에잇</b>루프)</a>
+							<span class="checkEllipsisSongdefaultList" style="display:none"><a href="javascript:melon.link.goArtistDetail('1702715');melon.link.goSearchLog('web_song','SONG', 'AR', '에잇','30383020');" title="8LOOP (에잇루프) - 페이지 이동" class="fc_mgray">8LOOP (<b>에잇</b>루프)</a></span>
+						</div>
+						
+					</div></td>
+					<td class="t_left"><div class="wrap">
+						<div class="ellipsis" style="max-width:90%">
+							<a href="javascript:searchLog('web_song','SONG','AL','에잇','30383020');melon.link.goAlbumDetail('10057403');" title="[DAWN 01:14] - 페이지 이동" class="fc_mgray">[DAWN 01:14]</a>
+						</div>
+					</div></td>
+					<td class="t_left"><div class="wrap right_none">
+						<button type="button" class="btn_icon like" title="잘자 좋아요 " data-song-no="30383020" data-song-menuId="26020103" onclick="searchLog('web_song','SONG','SO','에잇','30383020');">
+							<span class="odd_span">좋아요</span>
+							<span class="cnt"><span class="none">총건수</span>0</span>
+						</button>
+					</div></td>
+					<td><div class="wrap pd_none left">
+						<button type="button" disabled="disabled" class="btn_icon mv disabled" title="뮤직비디오" onClick="searchLog('web_song','SONG','MV','에잇','30383020');melon.link.goMvDetail('26020103', '30383020','song');"><span class="odd_span">뮤직비디오</span></button>
+					</div></td>
+					<td><div class="wrap pd_none right">
+						<button type="button"  class="btn_icon dl" title="다운로드" onClick="searchLog('web_song','SONG','SO','에잇','30383020');melon.buy.goBuyProduct('frm_defaultList', '30383020', '3C0001', '','0', '26020103');"><span class="odd_span">다운</span></button>
+					</div></td>
+				</tr>
+				
+				<tr >
+					<td><div class="wrap pd_none left">
+						<input type="checkbox" title="FIRE 곡 선택" class="input_check" name="input_check" value="30383017" />
+					</div></td>
+					<td class="no"><div class="wrap">4</div></td>
+					<td class="t_left"><div class="wrap pd_none">
+						<div class="ellipsis" style="max-width:100%">
+							<button type="button" class="btn_icon play" title="재생" onClick="searchLog('web_song','SONG','SO','에잇','30383017');melon.play.playSong('26020103',30383017);"><span class="odd_span">재생</span></button>
+							<button type="button" class="btn_icon add" title="담기" onClick="searchLog('web_song','SONG','SO','에잇','30383017');melon.play.addPlayList('30383017');"><span class="odd_span">담기</span></button>
+							<a href="javascript:searchLog('web_song','SONG','SO','에잇','30383017');melon.link.goSongDetail('30383017');" title="곡정보 보기" class="btn btn_icon_detail"><span class="odd_span">FIRE 상세정보 페이지 이동</span></a>
+							
+							
+							
+							
+							
+							
+							<a href="javascript:searchLog('web_song','SONG','SO','에잇','30383017');melon.play.playSong('26020103',30383017);" class="fc_gray" title="FIRE">FIRE</a>
+						</div>
+					</div></td>
+					<td class="t_left"><div class="wrap wrapArtistName">
+						<div id="artistName" class="ellipsis" style="max-width:122px">
+							<a href="javascript:melon.link.goArtistDetail('1702715');melon.link.goSearchLog('web_song','SONG', 'AR', '에잇','30383017');" title="8LOOP (에잇루프) - 페이지 이동" class="fc_mgray">8LOOP (<b>에잇</b>루프)</a>
+							<span class="checkEllipsisSongdefaultList" style="display:none"><a href="javascript:melon.link.goArtistDetail('1702715');melon.link.goSearchLog('web_song','SONG', 'AR', '에잇','30383017');" title="8LOOP (에잇루프) - 페이지 이동" class="fc_mgray">8LOOP (<b>에잇</b>루프)</a></span>
+						</div>
+						
+					</div></td>
+					<td class="t_left"><div class="wrap">
+						<div class="ellipsis" style="max-width:90%">
+							<a href="javascript:searchLog('web_song','SONG','AL','에잇','30383017');melon.link.goAlbumDetail('10057403');" title="[DAWN 01:14] - 페이지 이동" class="fc_mgray">[DAWN 01:14]</a>
+						</div>
+					</div></td>
+					<td class="t_left"><div class="wrap right_none">
+						<button type="button" class="btn_icon like" title="FIRE 좋아요 " data-song-no="30383017" data-song-menuId="26020103" onclick="searchLog('web_song','SONG','SO','에잇','30383017');">
+							<span class="odd_span">좋아요</span>
+							<span class="cnt"><span class="none">총건수</span>0</span>
+						</button>
+					</div></td>
+					<td><div class="wrap pd_none left">
+						<button type="button" disabled="disabled" class="btn_icon mv disabled" title="뮤직비디오" onClick="searchLog('web_song','SONG','MV','에잇','30383017');melon.link.goMvDetail('26020103', '30383017','song');"><span class="odd_span">뮤직비디오</span></button>
+					</div></td>
+					<td><div class="wrap pd_none right">
+						<button type="button"  class="btn_icon dl" title="다운로드" onClick="searchLog('web_song','SONG','SO','에잇','30383017');melon.buy.goBuyProduct('frm_defaultList', '30383017', '3C0001', '','0', '26020103');"><span class="odd_span">다운</span></button>
+					</div></td>
+				</tr>
+				
+				<tr >
+					<td><div class="wrap pd_none left">
+						<input type="checkbox" title="기억에게 곡 선택" class="input_check" name="input_check" value="30024002" />
+					</div></td>
+					<td class="no"><div class="wrap">5</div></td>
+					<td class="t_left"><div class="wrap pd_none">
+						<div class="ellipsis" style="max-width:100%">
+							<button type="button" class="btn_icon play" title="재생" onClick="searchLog('web_song','SONG','SO','에잇','30024002');melon.play.playSong('26020103',30024002);"><span class="odd_span">재생</span></button>
+							<button type="button" class="btn_icon add" title="담기" onClick="searchLog('web_song','SONG','SO','에잇','30024002');melon.play.addPlayList('30024002');"><span class="odd_span">담기</span></button>
+							<a href="javascript:searchLog('web_song','SONG','SO','에잇','30024002');melon.link.goSongDetail('30024002');" title="곡정보 보기" class="btn btn_icon_detail"><span class="odd_span">기억에게 상세정보 페이지 이동</span></a>
+							<span class="icon_song title">Title</span>
+							
+							
+							
+							
+							
+							<a href="javascript:searchLog('web_song','SONG','SO','에잇','30024002');melon.play.playSong('26020103',30024002);" class="fc_gray" title="기억에게">기억에게</a>
+						</div>
+					</div></td>
+					<td class="t_left"><div class="wrap wrapArtistName">
+						<div id="artistName" class="ellipsis" style="max-width:122px">
+							<a href="javascript:melon.link.goArtistDetail('858541');melon.link.goSearchLog('web_song','SONG', 'AR', '에잇','30024002');" title="에잇오클락 (eight o clock) - 페이지 이동" class="fc_mgray"><b>에잇</b>오클락 (eight o clock)</a>
+							<span class="checkEllipsisSongdefaultList" style="display:none"><a href="javascript:melon.link.goArtistDetail('858541');melon.link.goSearchLog('web_song','SONG', 'AR', '에잇','30024002');" title="에잇오클락 (eight o clock) - 페이지 이동" class="fc_mgray"><b>에잇</b>오클락 (eight o clock)</a></span>
+						</div>
+						
+					</div></td>
+					<td class="t_left"><div class="wrap">
+						<div class="ellipsis" style="max-width:90%">
+							<a href="javascript:searchLog('web_song','SONG','AL','에잇','30024002');melon.link.goAlbumDetail('10003993');" title="기억에게 - 페이지 이동" class="fc_mgray">기억에게</a>
+						</div>
+					</div></td>
+					<td class="t_left"><div class="wrap right_none">
+						<button type="button" class="btn_icon like" title="기억에게 좋아요 " data-song-no="30024002" data-song-menuId="26020103" onclick="searchLog('web_song','SONG','SO','에잇','30024002');">
+							<span class="odd_span">좋아요</span>
+							<span class="cnt"><span class="none">총건수</span>0</span>
+						</button>
+					</div></td>
+					<td><div class="wrap pd_none left">
+						<button type="button" disabled="disabled" class="btn_icon mv disabled" title="뮤직비디오" onClick="searchLog('web_song','SONG','MV','에잇','30024002');melon.link.goMvDetail('26020103', '30024002','song');"><span class="odd_span">뮤직비디오</span></button>
+					</div></td>
+					<td><div class="wrap pd_none right">
+						<button type="button"  class="btn_icon dl" title="다운로드" onClick="searchLog('web_song','SONG','SO','에잇','30024002');melon.buy.goBuyProduct('frm_defaultList', '30024002', '3C0001', '','0', '26020103');"><span class="odd_span">다운</span></button>
+					</div></td>
+				</tr>
+				
+				<tr >
+					<td><div class="wrap pd_none left">
+						<input type="checkbox" title="진심 / 眞心 (Inst.) 곡 선택" class="input_check" name="input_check" value="30514435" />
+					</div></td>
+					<td class="no"><div class="wrap">6</div></td>
+					<td class="t_left"><div class="wrap pd_none">
+						<div class="ellipsis" style="max-width:100%">
+							<button type="button" class="btn_icon play" title="재생" onClick="searchLog('web_song','SONG','SO','에잇','30514435');melon.play.playSong('26020103',30514435);"><span class="odd_span">재생</span></button>
+							<button type="button" class="btn_icon add" title="담기" onClick="searchLog('web_song','SONG','SO','에잇','30514435');melon.play.addPlayList('30514435');"><span class="odd_span">담기</span></button>
+							<a href="javascript:searchLog('web_song','SONG','SO','에잇','30514435');melon.link.goSongDetail('30514435');" title="곡정보 보기" class="btn btn_icon_detail"><span class="odd_span">진심 / 眞心 (Inst.) 상세정보 페이지 이동</span></a>
+							
+							
+							
+							
+							
+							
+							<a href="javascript:searchLog('web_song','SONG','SO','에잇','30514435');melon.play.playSong('26020103',30514435);" class="fc_gray" title="진심 / 眞心 (Inst.)">진심 / 眞心 (Inst.)</a>
+						</div>
+					</div></td>
+					<td class="t_left"><div class="wrap wrapArtistName">
+						<div id="artistName" class="ellipsis" style="max-width:122px">
+							<a href="javascript:melon.link.goArtistDetail('858541');melon.link.goSearchLog('web_song','SONG', 'AR', '에잇','30514435');" title="에잇오클락 (eight o clock) - 페이지 이동" class="fc_mgray"><b>에잇</b>오클락 (eight o clock)</a>
+							<span class="checkEllipsisSongdefaultList" style="display:none"><a href="javascript:melon.link.goArtistDetail('858541');melon.link.goSearchLog('web_song','SONG', 'AR', '에잇','30514435');" title="에잇오클락 (eight o clock) - 페이지 이동" class="fc_mgray"><b>에잇</b>오클락 (eight o clock)</a></span>
+						</div>
+						
+					</div></td>
+					<td class="t_left"><div class="wrap">
+						<div class="ellipsis" style="max-width:90%">
+							<a href="javascript:searchLog('web_song','SONG','AL','에잇','30514435');melon.link.goAlbumDetail('10078184');" title="진심 / 眞心 - 페이지 이동" class="fc_mgray">진심 / 眞心</a>
+						</div>
+					</div></td>
+					<td class="t_left"><div class="wrap right_none">
+						<button type="button" class="btn_icon like" title="진심 / 眞心 (Inst.) 좋아요 " data-song-no="30514435" data-song-menuId="26020103" onclick="searchLog('web_song','SONG','SO','에잇','30514435');">
+							<span class="odd_span">좋아요</span>
+							<span class="cnt"><span class="none">총건수</span>0</span>
+						</button>
+					</div></td>
+					<td><div class="wrap pd_none left">
+						<button type="button" disabled="disabled" class="btn_icon mv disabled" title="뮤직비디오" onClick="searchLog('web_song','SONG','MV','에잇','30514435');melon.link.goMvDetail('26020103', '30514435','song');"><span class="odd_span">뮤직비디오</span></button>
+					</div></td>
+					<td><div class="wrap pd_none right">
+						<button type="button"  class="btn_icon dl" title="다운로드" onClick="searchLog('web_song','SONG','SO','에잇','30514435');melon.buy.goBuyProduct('frm_defaultList', '30514435', '3C0001', '','0', '26020103');"><span class="odd_span">다운</span></button>
+					</div></td>
+				</tr>
+				
+				<tr >
+					<td><div class="wrap pd_none left">
+						<input type="checkbox" title="Black Rose 곡 선택" class="input_check" name="input_check" value="30734946" />
+					</div></td>
+					<td class="no"><div class="wrap">7</div></td>
+					<td class="t_left"><div class="wrap pd_none">
+						<div class="ellipsis" style="max-width:100%">
+							<button type="button" class="btn_icon play" title="재생" onClick="searchLog('web_song','SONG','SO','에잇','30734946');melon.play.playSong('26020103',30734946);"><span class="odd_span">재생</span></button>
+							<button type="button" class="btn_icon add" title="담기" onClick="searchLog('web_song','SONG','SO','에잇','30734946');melon.play.addPlayList('30734946');"><span class="odd_span">담기</span></button>
+							<a href="javascript:searchLog('web_song','SONG','SO','에잇','30734946');melon.link.goSongDetail('30734946');" title="곡정보 보기" class="btn btn_icon_detail"><span class="odd_span">Black Rose 상세정보 페이지 이동</span></a>
+							<span class="icon_song title">Title</span>
+							
+							
+							
+							
+							
+							<a href="javascript:searchLog('web_song','SONG','SO','에잇','30734946');melon.play.playSong('26020103',30734946);" class="fc_gray" title="Black Rose">Black Rose</a>
+						</div>
+					</div></td>
+					<td class="t_left"><div class="wrap wrapArtistName">
+						<div id="artistName" class="ellipsis" style="max-width:122px">
+							<a href="javascript:melon.link.goArtistDetail('1702715');melon.link.goSearchLog('web_song','SONG', 'AR', '에잇','30734946');" title="8LOOP (에잇루프) - 페이지 이동" class="fc_mgray">8LOOP (<b>에잇</b>루프)</a>
+							<span class="checkEllipsisSongdefaultList" style="display:none"><a href="javascript:melon.link.goArtistDetail('1702715');melon.link.goSearchLog('web_song','SONG', 'AR', '에잇','30734946');" title="8LOOP (에잇루프) - 페이지 이동" class="fc_mgray">8LOOP (<b>에잇</b>루프)</a></span>
+						</div>
+						
+					</div></td>
+					<td class="t_left"><div class="wrap">
+						<div class="ellipsis" style="max-width:90%">
+							<a href="javascript:searchLog('web_song','SONG','AL','에잇','30734946');melon.link.goAlbumDetail('10112269');" title="Black Rose - 페이지 이동" class="fc_mgray">Black Rose</a>
+						</div>
+					</div></td>
+					<td class="t_left"><div class="wrap right_none">
+						<button type="button" class="btn_icon like" title="Black Rose 좋아요 " data-song-no="30734946" data-song-menuId="26020103" onclick="searchLog('web_song','SONG','SO','에잇','30734946');">
+							<span class="odd_span">좋아요</span>
+							<span class="cnt"><span class="none">총건수</span>0</span>
+						</button>
+					</div></td>
+					<td><div class="wrap pd_none left">
+						<button type="button"  class="btn_icon mv" title="뮤직비디오" onClick="searchLog('web_song','SONG','MV','에잇','30734946');melon.link.goMvDetail('26020103', '30734946','song');"><span class="odd_span">뮤직비디오</span></button>
+					</div></td>
+					<td><div class="wrap pd_none right">
+						<button type="button"  class="btn_icon dl" title="다운로드" onClick="searchLog('web_song','SONG','SO','에잇','30734946');melon.buy.goBuyProduct('frm_defaultList', '30734946', '3C0001', '','0', '26020103');"><span class="odd_span">다운</span></button>
+					</div></td>
+				</tr>
+				
+				<tr >
+					<td><div class="wrap pd_none left">
+						<input type="checkbox" title="그 겨울에 곡 선택" class="input_check" name="input_check" value="30786000" />
+					</div></td>
+					<td class="no"><div class="wrap">8</div></td>
+					<td class="t_left"><div class="wrap pd_none">
+						<div class="ellipsis" style="max-width:100%">
+							<button type="button" class="btn_icon play" title="재생" onClick="searchLog('web_song','SONG','SO','에잇','30786000');melon.play.playSong('26020103',30786000);"><span class="odd_span">재생</span></button>
+							<button type="button" class="btn_icon add" title="담기" onClick="searchLog('web_song','SONG','SO','에잇','30786000');melon.play.addPlayList('30786000');"><span class="odd_span">담기</span></button>
+							<a href="javascript:searchLog('web_song','SONG','SO','에잇','30786000');melon.link.goSongDetail('30786000');" title="곡정보 보기" class="btn btn_icon_detail"><span class="odd_span">그 겨울에 상세정보 페이지 이동</span></a>
+							<span class="icon_song title">Title</span>
+							
+							
+							
+							
+							
+							<a href="javascript:searchLog('web_song','SONG','SO','에잇','30786000');melon.play.playSong('26020103',30786000);" class="fc_gray" title="그 겨울에">그 겨울에</a>
+						</div>
+					</div></td>
+					<td class="t_left"><div class="wrap wrapArtistName">
+						<div id="artistName" class="ellipsis" style="max-width:122px">
+							<a href="javascript:melon.link.goArtistDetail('858541');melon.link.goSearchLog('web_song','SONG', 'AR', '에잇','30786000');" title="에잇오클락 (eight o clock) - 페이지 이동" class="fc_mgray"><b>에잇</b>오클락 (eight o clock)</a>
+							<span class="checkEllipsisSongdefaultList" style="display:none"><a href="javascript:melon.link.goArtistDetail('858541');melon.link.goSearchLog('web_song','SONG', 'AR', '에잇','30786000');" title="에잇오클락 (eight o clock) - 페이지 이동" class="fc_mgray"><b>에잇</b>오클락 (eight o clock)</a></span>
+						</div>
+						
+					</div></td>
+					<td class="t_left"><div class="wrap">
+						<div class="ellipsis" style="max-width:90%">
+							<a href="javascript:searchLog('web_song','SONG','AL','에잇','30786000');melon.link.goAlbumDetail('10119576');" title="그 겨울에 첫 눈 - 페이지 이동" class="fc_mgray">그 겨울에 첫 눈</a>
+						</div>
+					</div></td>
+					<td class="t_left"><div class="wrap right_none">
+						<button type="button" class="btn_icon like" title="그 겨울에 좋아요 " data-song-no="30786000" data-song-menuId="26020103" onclick="searchLog('web_song','SONG','SO','에잇','30786000');">
+							<span class="odd_span">좋아요</span>
+							<span class="cnt"><span class="none">총건수</span>0</span>
+						</button>
+					</div></td>
+					<td><div class="wrap pd_none left">
+						<button type="button" disabled="disabled" class="btn_icon mv disabled" title="뮤직비디오" onClick="searchLog('web_song','SONG','MV','에잇','30786000');melon.link.goMvDetail('26020103', '30786000','song');"><span class="odd_span">뮤직비디오</span></button>
+					</div></td>
+					<td><div class="wrap pd_none right">
+						<button type="button"  class="btn_icon dl" title="다운로드" onClick="searchLog('web_song','SONG','SO','에잇','30786000');melon.buy.goBuyProduct('frm_defaultList', '30786000', '3C0001', '','0', '26020103');"><span class="odd_span">다운</span></button>
+					</div></td>
+				</tr>
+				
+				<tr >
+					<td><div class="wrap pd_none left">
+						<input type="checkbox" title="Elevator 곡 선택" class="input_check" name="input_check" value="5428809" />
+					</div></td>
+					<td class="no"><div class="wrap">9</div></td>
+					<td class="t_left"><div class="wrap pd_none">
+						<div class="ellipsis" style="max-width:100%">
+							<button type="button" class="btn_icon play" title="재생" onClick="searchLog('web_song','SONG','SO','에잇','5428809');melon.play.playSong('26020103',5428809);"><span class="odd_span">재생</span></button>
+							<button type="button" class="btn_icon add" title="담기" onClick="searchLog('web_song','SONG','SO','에잇','5428809');melon.play.addPlayList('5428809');"><span class="odd_span">담기</span></button>
+							<a href="javascript:searchLog('web_song','SONG','SO','에잇','5428809');melon.link.goSongDetail('5428809');" title="곡정보 보기" class="btn btn_icon_detail"><span class="odd_span">Elevator 상세정보 페이지 이동</span></a>
+							
+							
+							
+							
+							
+							
+							<a href="javascript:searchLog('web_song','SONG','SO','에잇','5428809');melon.play.playSong('26020103',5428809);" class="fc_gray" title="Elevator">Elevator</a>
+						</div>
+					</div></td>
+					<td class="t_left"><div class="wrap wrapArtistName">
+						<div id="artistName" class="ellipsis" style="max-width:122px">
+							<a href="javascript:melon.link.goArtistDetail('787822');melon.link.goSearchLog('web_song','SONG', 'AR', '에잇','5428809');" title="Fall On Your Sword - 페이지 이동" class="fc_mgray">Fall On Your Sword</a>
+							<span class="checkEllipsisSongdefaultList" style="display:none"><a href="javascript:melon.link.goArtistDetail('787822');melon.link.goSearchLog('web_song','SONG', 'AR', '에잇','5428809');" title="Fall On Your Sword - 페이지 이동" class="fc_mgray">Fall On Your Sword</a></span>
+						</div>
+						
+					</div></td>
+					<td class="t_left"><div class="wrap">
+						<div class="ellipsis" style="max-width:90%">
+							<a href="javascript:searchLog('web_song','SONG','AL','에잇','5428809');melon.link.goAlbumDetail('2287357');" title="28 Hotel Rooms (트웬티 에잇 호텔 룸스) - 페이지 이동" class="fc_mgray">28 Hotel Rooms (트웬티 <b>에잇</b> 호텔 룸스)</a>
+						</div>
+					</div></td>
+					<td class="t_left"><div class="wrap right_none">
+						<button type="button" class="btn_icon like" title="Elevator 좋아요 " data-song-no="5428809" data-song-menuId="26020103" onclick="searchLog('web_song','SONG','SO','에잇','5428809');">
+							<span class="odd_span">좋아요</span>
+							<span class="cnt"><span class="none">총건수</span>0</span>
+						</button>
+					</div></td>
+					<td><div class="wrap pd_none left">
+						<button type="button" disabled="disabled" class="btn_icon mv disabled" title="뮤직비디오" onClick="searchLog('web_song','SONG','MV','에잇','5428809');melon.link.goMvDetail('26020103', '5428809','song');"><span class="odd_span">뮤직비디오</span></button>
+					</div></td>
+					<td><div class="wrap pd_none right">
+						<button type="button"  class="btn_icon dl" title="다운로드" onClick="searchLog('web_song','SONG','SO','에잇','5428809');melon.buy.goBuyProduct('frm_defaultList', '5428809', '3C0001', '','0', '26020103');"><span class="odd_span">다운</span></button>
+					</div></td>
+				</tr>
+				
+				<tr >
+					<td><div class="wrap pd_none left">
+						<input type="checkbox" title="솔직히 (Feat. EK Of M.B.A) 곡 선택" class="input_check" name="input_check" value="30519263" />
+					</div></td>
+					<td class="no"><div class="wrap">10</div></td>
+					<td class="t_left"><div class="wrap pd_none">
+						<div class="ellipsis" style="max-width:100%">
+							<button type="button" class="btn_icon play" title="재생" onClick="searchLog('web_song','SONG','SO','에잇','30519263');melon.play.playSong('26020103',30519263);"><span class="odd_span">재생</span></button>
+							<button type="button" class="btn_icon add" title="담기" onClick="searchLog('web_song','SONG','SO','에잇','30519263');melon.play.addPlayList('30519263');"><span class="odd_span">담기</span></button>
+							<a href="javascript:searchLog('web_song','SONG','SO','에잇','30519263');melon.link.goSongDetail('30519263');" title="곡정보 보기" class="btn btn_icon_detail"><span class="odd_span">솔직히 (Feat. EK Of M.B.A) 상세정보 페이지 이동</span></a>
+							<span class="icon_song title">Title</span>
+							
+							
+							
+							
+							
+							<a href="javascript:searchLog('web_song','SONG','SO','에잇','30519263');melon.play.playSong('26020103',30519263);" class="fc_gray" title="솔직히 (Feat. EK Of M.B.A)">솔직히 (Feat. EK Of M.B.A)</a>
+						</div>
+					</div></td>
+					<td class="t_left"><div class="wrap wrapArtistName">
+						<div id="artistName" class="ellipsis" style="max-width:122px">
+							<a href="javascript:melon.link.goArtistDetail('1702715');melon.link.goSearchLog('web_song','SONG', 'AR', '에잇','30519263');" title="8LOOP (에잇루프) - 페이지 이동" class="fc_mgray">8LOOP (<b>에잇</b>루프)</a>
+							<span class="checkEllipsisSongdefaultList" style="display:none"><a href="javascript:melon.link.goArtistDetail('1702715');melon.link.goSearchLog('web_song','SONG', 'AR', '에잇','30519263');" title="8LOOP (에잇루프) - 페이지 이동" class="fc_mgray">8LOOP (<b>에잇</b>루프)</a></span>
+						</div>
+						
+					</div></td>
+					<td class="t_left"><div class="wrap">
+						<div class="ellipsis" style="max-width:90%">
+							<a href="javascript:searchLog('web_song','SONG','AL','에잇','30519263');melon.link.goAlbumDetail('10078983');" title="솔직히 (Truth) - 페이지 이동" class="fc_mgray">솔직히 (Truth)</a>
+						</div>
+					</div></td>
+					<td class="t_left"><div class="wrap right_none">
+						<button type="button" class="btn_icon like" title="솔직히 (Feat. EK Of M.B.A) 좋아요 " data-song-no="30519263" data-song-menuId="26020103" onclick="searchLog('web_song','SONG','SO','에잇','30519263');">
+							<span class="odd_span">좋아요</span>
+							<span class="cnt"><span class="none">총건수</span>0</span>
+						</button>
+					</div></td>
+					<td><div class="wrap pd_none left">
+						<button type="button" disabled="disabled" class="btn_icon mv disabled" title="뮤직비디오" onClick="searchLog('web_song','SONG','MV','에잇','30519263');melon.link.goMvDetail('26020103', '30519263','song');"><span class="odd_span">뮤직비디오</span></button>
+					</div></td>
+					<td><div class="wrap pd_none right">
+						<button type="button"  class="btn_icon dl" title="다운로드" onClick="searchLog('web_song','SONG','SO','에잇','30519263');melon.buy.goBuyProduct('frm_defaultList', '30519263', '3C0001', '','0', '26020103');"><span class="odd_span">다운</span></button>
+					</div></td>
+				</tr>
+				
+				<tr >
+					<td><div class="wrap pd_none left">
+						<input type="checkbox" title="첫 눈 (Remake Ver.) 곡 선택" class="input_check" name="input_check" value="30786001" />
+					</div></td>
+					<td class="no"><div class="wrap">11</div></td>
+					<td class="t_left"><div class="wrap pd_none">
+						<div class="ellipsis" style="max-width:100%">
+							<button type="button" class="btn_icon play" title="재생" onClick="searchLog('web_song','SONG','SO','에잇','30786001');melon.play.playSong('26020103',30786001);"><span class="odd_span">재생</span></button>
+							<button type="button" class="btn_icon add" title="담기" onClick="searchLog('web_song','SONG','SO','에잇','30786001');melon.play.addPlayList('30786001');"><span class="odd_span">담기</span></button>
+							<a href="javascript:searchLog('web_song','SONG','SO','에잇','30786001');melon.link.goSongDetail('30786001');" title="곡정보 보기" class="btn btn_icon_detail"><span class="odd_span">첫 눈 (Remake Ver.) 상세정보 페이지 이동</span></a>
+							
+							
+							
+							
+							
+							
+							<a href="javascript:searchLog('web_song','SONG','SO','에잇','30786001');melon.play.playSong('26020103',30786001);" class="fc_gray" title="첫 눈 (Remake Ver.)">첫 눈 (Remake Ver.)</a>
+						</div>
+					</div></td>
+					<td class="t_left"><div class="wrap wrapArtistName">
+						<div id="artistName" class="ellipsis" style="max-width:122px">
+							<a href="javascript:melon.link.goArtistDetail('858541');melon.link.goSearchLog('web_song','SONG', 'AR', '에잇','30786001');" title="에잇오클락 (eight o clock) - 페이지 이동" class="fc_mgray"><b>에잇</b>오클락 (eight o clock)</a>
+							<span class="checkEllipsisSongdefaultList" style="display:none"><a href="javascript:melon.link.goArtistDetail('858541');melon.link.goSearchLog('web_song','SONG', 'AR', '에잇','30786001');" title="에잇오클락 (eight o clock) - 페이지 이동" class="fc_mgray"><b>에잇</b>오클락 (eight o clock)</a></span>
+						</div>
+						
+					</div></td>
+					<td class="t_left"><div class="wrap">
+						<div class="ellipsis" style="max-width:90%">
+							<a href="javascript:searchLog('web_song','SONG','AL','에잇','30786001');melon.link.goAlbumDetail('10119576');" title="그 겨울에 첫 눈 - 페이지 이동" class="fc_mgray">그 겨울에 첫 눈</a>
+						</div>
+					</div></td>
+					<td class="t_left"><div class="wrap right_none">
+						<button type="button" class="btn_icon like" title="첫 눈 (Remake Ver.) 좋아요 " data-song-no="30786001" data-song-menuId="26020103" onclick="searchLog('web_song','SONG','SO','에잇','30786001');">
+							<span class="odd_span">좋아요</span>
+							<span class="cnt"><span class="none">총건수</span>0</span>
+						</button>
+					</div></td>
+					<td><div class="wrap pd_none left">
+						<button type="button" disabled="disabled" class="btn_icon mv disabled" title="뮤직비디오" onClick="searchLog('web_song','SONG','MV','에잇','30786001');melon.link.goMvDetail('26020103', '30786001','song');"><span class="odd_span">뮤직비디오</span></button>
+					</div></td>
+					<td><div class="wrap pd_none right">
+						<button type="button"  class="btn_icon dl" title="다운로드" onClick="searchLog('web_song','SONG','SO','에잇','30786001');melon.buy.goBuyProduct('frm_defaultList', '30786001', '3C0001', '','0', '26020103');"><span class="odd_span">다운</span></button>
+					</div></td>
+				</tr>
+				
+				<tr >
+					<td><div class="wrap pd_none left">
+						<input type="checkbox" title="긴 꿈 곡 선택" class="input_check" name="input_check" value="30585451" />
+					</div></td>
+					<td class="no"><div class="wrap">12</div></td>
+					<td class="t_left"><div class="wrap pd_none">
+						<div class="ellipsis" style="max-width:100%">
+							<button type="button" class="btn_icon play" title="재생" onClick="searchLog('web_song','SONG','SO','에잇','30585451');melon.play.playSong('26020103',30585451);"><span class="odd_span">재생</span></button>
+							<button type="button" class="btn_icon add" title="담기" onClick="searchLog('web_song','SONG','SO','에잇','30585451');melon.play.addPlayList('30585451');"><span class="odd_span">담기</span></button>
+							<a href="javascript:searchLog('web_song','SONG','SO','에잇','30585451');melon.link.goSongDetail('30585451');" title="곡정보 보기" class="btn btn_icon_detail"><span class="odd_span">긴 꿈 상세정보 페이지 이동</span></a>
+							<span class="icon_song title">Title</span>
+							
+							
+							
+							
+							
+							<a href="javascript:searchLog('web_song','SONG','SO','에잇','30585451');melon.play.playSong('26020103',30585451);" class="fc_gray" title="긴 꿈">긴 꿈</a>
+						</div>
+					</div></td>
+					<td class="t_left"><div class="wrap wrapArtistName">
+						<div id="artistName" class="ellipsis" style="max-width:122px">
+							<a href="javascript:melon.link.goArtistDetail('1702715');melon.link.goSearchLog('web_song','SONG', 'AR', '에잇','30585451');" title="8LOOP (에잇루프) - 페이지 이동" class="fc_mgray">8LOOP (<b>에잇</b>루프)</a>
+							<span class="checkEllipsisSongdefaultList" style="display:none"><a href="javascript:melon.link.goArtistDetail('1702715');melon.link.goSearchLog('web_song','SONG', 'AR', '에잇','30585451');" title="8LOOP (에잇루프) - 페이지 이동" class="fc_mgray">8LOOP (<b>에잇</b>루프)</a></span>
+						</div>
+						
+					</div></td>
+					<td class="t_left"><div class="wrap">
+						<div class="ellipsis" style="max-width:90%">
+							<a href="javascript:searchLog('web_song','SONG','AL','에잇','30585451');melon.link.goAlbumDetail('10088753');" title="Dreamer - 페이지 이동" class="fc_mgray">Dreamer</a>
+						</div>
+					</div></td>
+					<td class="t_left"><div class="wrap right_none">
+						<button type="button" class="btn_icon like" title="긴 꿈 좋아요 " data-song-no="30585451" data-song-menuId="26020103" onclick="searchLog('web_song','SONG','SO','에잇','30585451');">
+							<span class="odd_span">좋아요</span>
+							<span class="cnt"><span class="none">총건수</span>0</span>
+						</button>
+					</div></td>
+					<td><div class="wrap pd_none left">
+						<button type="button" disabled="disabled" class="btn_icon mv disabled" title="뮤직비디오" onClick="searchLog('web_song','SONG','MV','에잇','30585451');melon.link.goMvDetail('26020103', '30585451','song');"><span class="odd_span">뮤직비디오</span></button>
+					</div></td>
+					<td><div class="wrap pd_none right">
+						<button type="button"  class="btn_icon dl" title="다운로드" onClick="searchLog('web_song','SONG','SO','에잇','30585451');melon.buy.goBuyProduct('frm_defaultList', '30585451', '3C0001', '','0', '26020103');"><span class="odd_span">다운</span></button>
+					</div></td>
+				</tr>
+				
+				<tr >
+					<td><div class="wrap pd_none left">
+						<input type="checkbox" title="한 여름밤의 꿈 곡 선택" class="input_check" name="input_check" value="5657866" />
+					</div></td>
+					<td class="no"><div class="wrap">13</div></td>
+					<td class="t_left"><div class="wrap pd_none">
+						<div class="ellipsis" style="max-width:100%">
+							<button type="button" class="btn_icon play" title="재생" onClick="searchLog('web_song','SONG','SO','에잇','5657866');melon.play.playSong('26020103',5657866);"><span class="odd_span">재생</span></button>
+							<button type="button" class="btn_icon add" title="담기" onClick="searchLog('web_song','SONG','SO','에잇','5657866');melon.play.addPlayList('5657866');"><span class="odd_span">담기</span></button>
+							<a href="javascript:searchLog('web_song','SONG','SO','에잇','5657866');melon.link.goSongDetail('5657866');" title="곡정보 보기" class="btn btn_icon_detail"><span class="odd_span">한 여름밤의 꿈 상세정보 페이지 이동</span></a>
+							<span class="icon_song title">Title</span>
+							
+							
+							
+							
+							
+							<a href="javascript:searchLog('web_song','SONG','SO','에잇','5657866');melon.play.playSong('26020103',5657866);" class="fc_gray" title="한 여름밤의 꿈">한 여름밤의 꿈</a>
+						</div>
+					</div></td>
+					<td class="t_left"><div class="wrap wrapArtistName">
+						<div id="artistName" class="ellipsis" style="max-width:122px">
+							<a href="javascript:melon.link.goArtistDetail('858541');melon.link.goSearchLog('web_song','SONG', 'AR', '에잇','5657866');" title="에잇오클락 (eight o clock) - 페이지 이동" class="fc_mgray"><b>에잇</b>오클락 (eight o clock)</a>
+							<span class="checkEllipsisSongdefaultList" style="display:none"><a href="javascript:melon.link.goArtistDetail('858541');melon.link.goSearchLog('web_song','SONG', 'AR', '에잇','5657866');" title="에잇오클락 (eight o clock) - 페이지 이동" class="fc_mgray"><b>에잇</b>오클락 (eight o clock)</a></span>
+						</div>
+						
+					</div></td>
+					<td class="t_left"><div class="wrap">
+						<div class="ellipsis" style="max-width:90%">
+							<a href="javascript:searchLog('web_song','SONG','AL','에잇','5657866');melon.link.goAlbumDetail('2313342');" title="Eight O Clock - 페이지 이동" class="fc_mgray">Eight O Clock</a>
+						</div>
+					</div></td>
+					<td class="t_left"><div class="wrap right_none">
+						<button type="button" class="btn_icon like" title="한 여름밤의 꿈 좋아요 " data-song-no="5657866" data-song-menuId="26020103" onclick="searchLog('web_song','SONG','SO','에잇','5657866');">
+							<span class="odd_span">좋아요</span>
+							<span class="cnt"><span class="none">총건수</span>0</span>
+						</button>
+					</div></td>
+					<td><div class="wrap pd_none left">
+						<button type="button" disabled="disabled" class="btn_icon mv disabled" title="뮤직비디오" onClick="searchLog('web_song','SONG','MV','에잇','5657866');melon.link.goMvDetail('26020103', '5657866','song');"><span class="odd_span">뮤직비디오</span></button>
+					</div></td>
+					<td><div class="wrap pd_none right">
+						<button type="button"  class="btn_icon dl" title="다운로드" onClick="searchLog('web_song','SONG','SO','에잇','5657866');melon.buy.goBuyProduct('frm_defaultList', '5657866', '3C0001', '','0', '26020103');"><span class="odd_span">다운</span></button>
+					</div></td>
+				</tr>
+				
+				<tr >
+					<td><div class="wrap pd_none left">
+						<input type="checkbox" title="Time-lapse Weekend 곡 선택" class="input_check" name="input_check" value="5428814" />
+					</div></td>
+					<td class="no"><div class="wrap">14</div></td>
+					<td class="t_left"><div class="wrap pd_none">
+						<div class="ellipsis" style="max-width:100%">
+							<button type="button" class="btn_icon play" title="재생" onClick="searchLog('web_song','SONG','SO','에잇','5428814');melon.play.playSong('26020103',5428814);"><span class="odd_span">재생</span></button>
+							<button type="button" class="btn_icon add" title="담기" onClick="searchLog('web_song','SONG','SO','에잇','5428814');melon.play.addPlayList('5428814');"><span class="odd_span">담기</span></button>
+							<a href="javascript:searchLog('web_song','SONG','SO','에잇','5428814');melon.link.goSongDetail('5428814');" title="곡정보 보기" class="btn btn_icon_detail"><span class="odd_span">Time-lapse Weekend 상세정보 페이지 이동</span></a>
+							
+							
+							
+							
+							
+							
+							<a href="javascript:searchLog('web_song','SONG','SO','에잇','5428814');melon.play.playSong('26020103',5428814);" class="fc_gray" title="Time-lapse Weekend">Time-lapse Weekend</a>
+						</div>
+					</div></td>
+					<td class="t_left"><div class="wrap wrapArtistName">
+						<div id="artistName" class="ellipsis" style="max-width:122px">
+							<a href="javascript:melon.link.goArtistDetail('787822');melon.link.goSearchLog('web_song','SONG', 'AR', '에잇','5428814');" title="Fall On Your Sword - 페이지 이동" class="fc_mgray">Fall On Your Sword</a>
+							<span class="checkEllipsisSongdefaultList" style="display:none"><a href="javascript:melon.link.goArtistDetail('787822');melon.link.goSearchLog('web_song','SONG', 'AR', '에잇','5428814');" title="Fall On Your Sword - 페이지 이동" class="fc_mgray">Fall On Your Sword</a></span>
+						</div>
+						
+					</div></td>
+					<td class="t_left"><div class="wrap">
+						<div class="ellipsis" style="max-width:90%">
+							<a href="javascript:searchLog('web_song','SONG','AL','에잇','5428814');melon.link.goAlbumDetail('2287357');" title="28 Hotel Rooms (트웬티 에잇 호텔 룸스) - 페이지 이동" class="fc_mgray">28 Hotel Rooms (트웬티 <b>에잇</b> 호텔 룸스)</a>
+						</div>
+					</div></td>
+					<td class="t_left"><div class="wrap right_none">
+						<button type="button" class="btn_icon like" title="Time-lapse Weekend 좋아요 " data-song-no="5428814" data-song-menuId="26020103" onclick="searchLog('web_song','SONG','SO','에잇','5428814');">
+							<span class="odd_span">좋아요</span>
+							<span class="cnt"><span class="none">총건수</span>0</span>
+						</button>
+					</div></td>
+					<td><div class="wrap pd_none left">
+						<button type="button" disabled="disabled" class="btn_icon mv disabled" title="뮤직비디오" onClick="searchLog('web_song','SONG','MV','에잇','5428814');melon.link.goMvDetail('26020103', '5428814','song');"><span class="odd_span">뮤직비디오</span></button>
+					</div></td>
+					<td><div class="wrap pd_none right">
+						<button type="button"  class="btn_icon dl" title="다운로드" onClick="searchLog('web_song','SONG','SO','에잇','5428814');melon.buy.goBuyProduct('frm_defaultList', '5428814', '3C0001', '','0', '26020103');"><span class="odd_span">다운</span></button>
+					</div></td>
+				</tr>
+				
+				<tr >
+					<td><div class="wrap pd_none left">
+						<input type="checkbox" title="Reconciliation 곡 선택" class="input_check" name="input_check" value="5428819" />
+					</div></td>
+					<td class="no"><div class="wrap">15</div></td>
+					<td class="t_left"><div class="wrap pd_none">
+						<div class="ellipsis" style="max-width:100%">
+							<button type="button" class="btn_icon play" title="재생" onClick="searchLog('web_song','SONG','SO','에잇','5428819');melon.play.playSong('26020103',5428819);"><span class="odd_span">재생</span></button>
+							<button type="button" class="btn_icon add" title="담기" onClick="searchLog('web_song','SONG','SO','에잇','5428819');melon.play.addPlayList('5428819');"><span class="odd_span">담기</span></button>
+							<a href="javascript:searchLog('web_song','SONG','SO','에잇','5428819');melon.link.goSongDetail('5428819');" title="곡정보 보기" class="btn btn_icon_detail"><span class="odd_span">Reconciliation 상세정보 페이지 이동</span></a>
+							
+							
+							
+							
+							
+							
+							<a href="javascript:searchLog('web_song','SONG','SO','에잇','5428819');melon.play.playSong('26020103',5428819);" class="fc_gray" title="Reconciliation">Reconciliation</a>
+						</div>
+					</div></td>
+					<td class="t_left"><div class="wrap wrapArtistName">
+						<div id="artistName" class="ellipsis" style="max-width:122px">
+							<a href="javascript:melon.link.goArtistDetail('787822');melon.link.goSearchLog('web_song','SONG', 'AR', '에잇','5428819');" title="Fall On Your Sword - 페이지 이동" class="fc_mgray">Fall On Your Sword</a>
+							<span class="checkEllipsisSongdefaultList" style="display:none"><a href="javascript:melon.link.goArtistDetail('787822');melon.link.goSearchLog('web_song','SONG', 'AR', '에잇','5428819');" title="Fall On Your Sword - 페이지 이동" class="fc_mgray">Fall On Your Sword</a></span>
+						</div>
+						
+					</div></td>
+					<td class="t_left"><div class="wrap">
+						<div class="ellipsis" style="max-width:90%">
+							<a href="javascript:searchLog('web_song','SONG','AL','에잇','5428819');melon.link.goAlbumDetail('2287357');" title="28 Hotel Rooms (트웬티 에잇 호텔 룸스) - 페이지 이동" class="fc_mgray">28 Hotel Rooms (트웬티 <b>에잇</b> 호텔 룸스)</a>
+						</div>
+					</div></td>
+					<td class="t_left"><div class="wrap right_none">
+						<button type="button" class="btn_icon like" title="Reconciliation 좋아요 " data-song-no="5428819" data-song-menuId="26020103" onclick="searchLog('web_song','SONG','SO','에잇','5428819');">
+							<span class="odd_span">좋아요</span>
+							<span class="cnt"><span class="none">총건수</span>0</span>
+						</button>
+					</div></td>
+					<td><div class="wrap pd_none left">
+						<button type="button" disabled="disabled" class="btn_icon mv disabled" title="뮤직비디오" onClick="searchLog('web_song','SONG','MV','에잇','5428819');melon.link.goMvDetail('26020103', '5428819','song');"><span class="odd_span">뮤직비디오</span></button>
+					</div></td>
+					<td><div class="wrap pd_none right">
+						<button type="button"  class="btn_icon dl" title="다운로드" onClick="searchLog('web_song','SONG','SO','에잇','5428819');melon.buy.goBuyProduct('frm_defaultList', '5428819', '3C0001', '','0', '26020103');"><span class="odd_span">다운</span></button>
+					</div></td>
+				</tr>
+				
+				<tr >
+					<td><div class="wrap pd_none left">
+						<input type="checkbox" title="그댈까요 곡 선택" class="input_check" name="input_check" value="7857249" />
+					</div></td>
+					<td class="no"><div class="wrap">16</div></td>
+					<td class="t_left"><div class="wrap pd_none">
+						<div class="ellipsis" style="max-width:100%">
+							<button type="button" class="btn_icon play" title="재생" onClick="searchLog('web_song','SONG','SO','에잇','7857249');melon.play.playSong('26020103',7857249);"><span class="odd_span">재생</span></button>
+							<button type="button" class="btn_icon add" title="담기" onClick="searchLog('web_song','SONG','SO','에잇','7857249');melon.play.addPlayList('7857249');"><span class="odd_span">담기</span></button>
+							<a href="javascript:searchLog('web_song','SONG','SO','에잇','7857249');melon.link.goSongDetail('7857249');" title="곡정보 보기" class="btn btn_icon_detail"><span class="odd_span">그댈까요 상세정보 페이지 이동</span></a>
+							<span class="icon_song title">Title</span>
+							
+							
+							
+							
+							
+							<a href="javascript:searchLog('web_song','SONG','SO','에잇','7857249');melon.play.playSong('26020103',7857249);" class="fc_gray" title="그댈까요">그댈까요</a>
+						</div>
+					</div></td>
+					<td class="t_left"><div class="wrap wrapArtistName">
+						<div id="artistName" class="ellipsis" style="max-width:122px">
+							<a href="javascript:melon.link.goArtistDetail('858541');melon.link.goSearchLog('web_song','SONG', 'AR', '에잇','7857249');" title="에잇오클락 (eight o clock) - 페이지 이동" class="fc_mgray"><b>에잇</b>오클락 (eight o clock)</a>
+							<span class="checkEllipsisSongdefaultList" style="display:none"><a href="javascript:melon.link.goArtistDetail('858541');melon.link.goSearchLog('web_song','SONG', 'AR', '에잇','7857249');" title="에잇오클락 (eight o clock) - 페이지 이동" class="fc_mgray"><b>에잇</b>오클락 (eight o clock)</a></span>
+						</div>
+						
+					</div></td>
+					<td class="t_left"><div class="wrap">
+						<div class="ellipsis" style="max-width:90%">
+							<a href="javascript:searchLog('web_song','SONG','AL','에잇','7857249');melon.link.goAlbumDetail('2640661');" title="eight o clock - 페이지 이동" class="fc_mgray">eight o clock</a>
+						</div>
+					</div></td>
+					<td class="t_left"><div class="wrap right_none">
+						<button type="button" class="btn_icon like" title="그댈까요 좋아요 " data-song-no="7857249" data-song-menuId="26020103" onclick="searchLog('web_song','SONG','SO','에잇','7857249');">
+							<span class="odd_span">좋아요</span>
+							<span class="cnt"><span class="none">총건수</span>0</span>
+						</button>
+					</div></td>
+					<td><div class="wrap pd_none left">
+						<button type="button"  class="btn_icon mv" title="뮤직비디오" onClick="searchLog('web_song','SONG','MV','에잇','7857249');melon.link.goMvDetail('26020103', '7857249','song');"><span class="odd_span">뮤직비디오</span></button>
+					</div></td>
+					<td><div class="wrap pd_none right">
+						<button type="button"  class="btn_icon dl" title="다운로드" onClick="searchLog('web_song','SONG','SO','에잇','7857249');melon.buy.goBuyProduct('frm_defaultList', '7857249', '3C0001', '','0', '26020103');"><span class="odd_span">다운</span></button>
+					</div></td>
+				</tr>
+				
+				<tr >
+					<td><div class="wrap pd_none left">
+						<input type="checkbox" title="Fireworks 곡 선택" class="input_check" name="input_check" value="5428810" />
+					</div></td>
+					<td class="no"><div class="wrap">17</div></td>
+					<td class="t_left"><div class="wrap pd_none">
+						<div class="ellipsis" style="max-width:100%">
+							<button type="button" class="btn_icon play" title="재생" onClick="searchLog('web_song','SONG','SO','에잇','5428810');melon.play.playSong('26020103',5428810);"><span class="odd_span">재생</span></button>
+							<button type="button" class="btn_icon add" title="담기" onClick="searchLog('web_song','SONG','SO','에잇','5428810');melon.play.addPlayList('5428810');"><span class="odd_span">담기</span></button>
+							<a href="javascript:searchLog('web_song','SONG','SO','에잇','5428810');melon.link.goSongDetail('5428810');" title="곡정보 보기" class="btn btn_icon_detail"><span class="odd_span">Fireworks 상세정보 페이지 이동</span></a>
+							
+							
+							<span class="icon_song hot">HOT</span>
+							
+							
+							
+							<a href="javascript:searchLog('web_song','SONG','SO','에잇','5428810');melon.play.playSong('26020103',5428810);" class="fc_gray" title="Fireworks">Fireworks</a>
+						</div>
+					</div></td>
+					<td class="t_left"><div class="wrap wrapArtistName">
+						<div id="artistName" class="ellipsis" style="max-width:122px">
+							<a href="javascript:melon.link.goArtistDetail('787822');melon.link.goSearchLog('web_song','SONG', 'AR', '에잇','5428810');" title="Fall On Your Sword - 페이지 이동" class="fc_mgray">Fall On Your Sword</a>
+							<span class="checkEllipsisSongdefaultList" style="display:none"><a href="javascript:melon.link.goArtistDetail('787822');melon.link.goSearchLog('web_song','SONG', 'AR', '에잇','5428810');" title="Fall On Your Sword - 페이지 이동" class="fc_mgray">Fall On Your Sword</a></span>
+						</div>
+						
+					</div></td>
+					<td class="t_left"><div class="wrap">
+						<div class="ellipsis" style="max-width:90%">
+							<a href="javascript:searchLog('web_song','SONG','AL','에잇','5428810');melon.link.goAlbumDetail('2287357');" title="28 Hotel Rooms (트웬티 에잇 호텔 룸스) - 페이지 이동" class="fc_mgray">28 Hotel Rooms (트웬티 <b>에잇</b> 호텔 룸스)</a>
+						</div>
+					</div></td>
+					<td class="t_left"><div class="wrap right_none">
+						<button type="button" class="btn_icon like" title="Fireworks 좋아요 " data-song-no="5428810" data-song-menuId="26020103" onclick="searchLog('web_song','SONG','SO','에잇','5428810');">
+							<span class="odd_span">좋아요</span>
+							<span class="cnt"><span class="none">총건수</span>0</span>
+						</button>
+					</div></td>
+					<td><div class="wrap pd_none left">
+						<button type="button" disabled="disabled" class="btn_icon mv disabled" title="뮤직비디오" onClick="searchLog('web_song','SONG','MV','에잇','5428810');melon.link.goMvDetail('26020103', '5428810','song');"><span class="odd_span">뮤직비디오</span></button>
+					</div></td>
+					<td><div class="wrap pd_none right">
+						<button type="button"  class="btn_icon dl" title="다운로드" onClick="searchLog('web_song','SONG','SO','에잇','5428810');melon.buy.goBuyProduct('frm_defaultList', '5428810', '3C0001', '','0', '26020103');"><span class="odd_span">다운</span></button>
+					</div></td>
+				</tr>
+				
+				<tr >
+					<td><div class="wrap pd_none left">
+						<input type="checkbox" title="진심 / 眞心 (Feat. 아름) 곡 선택" class="input_check" name="input_check" value="30514434" />
+					</div></td>
+					<td class="no"><div class="wrap">18</div></td>
+					<td class="t_left"><div class="wrap pd_none">
+						<div class="ellipsis" style="max-width:100%">
+							<button type="button" class="btn_icon play" title="재생" onClick="searchLog('web_song','SONG','SO','에잇','30514434');melon.play.playSong('26020103',30514434);"><span class="odd_span">재생</span></button>
+							<button type="button" class="btn_icon add" title="담기" onClick="searchLog('web_song','SONG','SO','에잇','30514434');melon.play.addPlayList('30514434');"><span class="odd_span">담기</span></button>
+							<a href="javascript:searchLog('web_song','SONG','SO','에잇','30514434');melon.link.goSongDetail('30514434');" title="곡정보 보기" class="btn btn_icon_detail"><span class="odd_span">진심 / 眞心 (Feat. 아름) 상세정보 페이지 이동</span></a>
+							<span class="icon_song title">Title</span>
+							
+							
+							
+							
+							
+							<a href="javascript:searchLog('web_song','SONG','SO','에잇','30514434');melon.play.playSong('26020103',30514434);" class="fc_gray" title="진심 / 眞心 (Feat. 아름)">진심 / 眞心 (Feat. 아름)</a>
+						</div>
+					</div></td>
+					<td class="t_left"><div class="wrap wrapArtistName">
+						<div id="artistName" class="ellipsis" style="max-width:122px">
+							<a href="javascript:melon.link.goArtistDetail('858541');melon.link.goSearchLog('web_song','SONG', 'AR', '에잇','30514434');" title="에잇오클락 (eight o clock) - 페이지 이동" class="fc_mgray"><b>에잇</b>오클락 (eight o clock)</a>
+							<span class="checkEllipsisSongdefaultList" style="display:none"><a href="javascript:melon.link.goArtistDetail('858541');melon.link.goSearchLog('web_song','SONG', 'AR', '에잇','30514434');" title="에잇오클락 (eight o clock) - 페이지 이동" class="fc_mgray"><b>에잇</b>오클락 (eight o clock)</a></span>
+						</div>
+						
+					</div></td>
+					<td class="t_left"><div class="wrap">
+						<div class="ellipsis" style="max-width:90%">
+							<a href="javascript:searchLog('web_song','SONG','AL','에잇','30514434');melon.link.goAlbumDetail('10078184');" title="진심 / 眞心 - 페이지 이동" class="fc_mgray">진심 / 眞心</a>
+						</div>
+					</div></td>
+					<td class="t_left"><div class="wrap right_none">
+						<button type="button" class="btn_icon like" title="진심 / 眞心 (Feat. 아름) 좋아요 " data-song-no="30514434" data-song-menuId="26020103" onclick="searchLog('web_song','SONG','SO','에잇','30514434');">
+							<span class="odd_span">좋아요</span>
+							<span class="cnt"><span class="none">총건수</span>0</span>
+						</button>
+					</div></td>
+					<td><div class="wrap pd_none left">
+						<button type="button" disabled="disabled" class="btn_icon mv disabled" title="뮤직비디오" onClick="searchLog('web_song','SONG','MV','에잇','30514434');melon.link.goMvDetail('26020103', '30514434','song');"><span class="odd_span">뮤직비디오</span></button>
+					</div></td>
+					<td><div class="wrap pd_none right">
+						<button type="button"  class="btn_icon dl" title="다운로드" onClick="searchLog('web_song','SONG','SO','에잇','30514434');melon.buy.goBuyProduct('frm_defaultList', '30514434', '3C0001', '','0', '26020103');"><span class="odd_span">다운</span></button>
+					</div></td>
+				</tr>
+				
+				<tr >
+					<td><div class="wrap pd_none left">
+						<input type="checkbox" title="오늘 어땠어? 곡 선택" class="input_check" name="input_check" value="30383019" />
+					</div></td>
+					<td class="no"><div class="wrap">19</div></td>
+					<td class="t_left"><div class="wrap pd_none">
+						<div class="ellipsis" style="max-width:100%">
+							<button type="button" class="btn_icon play" title="재생" onClick="searchLog('web_song','SONG','SO','에잇','30383019');melon.play.playSong('26020103',30383019);"><span class="odd_span">재생</span></button>
+							<button type="button" class="btn_icon add" title="담기" onClick="searchLog('web_song','SONG','SO','에잇','30383019');melon.play.addPlayList('30383019');"><span class="odd_span">담기</span></button>
+							<a href="javascript:searchLog('web_song','SONG','SO','에잇','30383019');melon.link.goSongDetail('30383019');" title="곡정보 보기" class="btn btn_icon_detail"><span class="odd_span">오늘 어땠어? 상세정보 페이지 이동</span></a>
+							
+							
+							
+							
+							
+							
+							<a href="javascript:searchLog('web_song','SONG','SO','에잇','30383019');melon.play.playSong('26020103',30383019);" class="fc_gray" title="오늘 어땠어?">오늘 어땠어?</a>
+						</div>
+					</div></td>
+					<td class="t_left"><div class="wrap wrapArtistName">
+						<div id="artistName" class="ellipsis" style="max-width:122px">
+							<a href="javascript:melon.link.goArtistDetail('1702715');melon.link.goSearchLog('web_song','SONG', 'AR', '에잇','30383019');" title="8LOOP (에잇루프) - 페이지 이동" class="fc_mgray">8LOOP (<b>에잇</b>루프)</a>
+							<span class="checkEllipsisSongdefaultList" style="display:none"><a href="javascript:melon.link.goArtistDetail('1702715');melon.link.goSearchLog('web_song','SONG', 'AR', '에잇','30383019');" title="8LOOP (에잇루프) - 페이지 이동" class="fc_mgray">8LOOP (<b>에잇</b>루프)</a></span>
+						</div>
+						
+					</div></td>
+					<td class="t_left"><div class="wrap">
+						<div class="ellipsis" style="max-width:90%">
+							<a href="javascript:searchLog('web_song','SONG','AL','에잇','30383019');melon.link.goAlbumDetail('10057403');" title="[DAWN 01:14] - 페이지 이동" class="fc_mgray">[DAWN 01:14]</a>
+						</div>
+					</div></td>
+					<td class="t_left"><div class="wrap right_none">
+						<button type="button" class="btn_icon like" title="오늘 어땠어? 좋아요 " data-song-no="30383019" data-song-menuId="26020103" onclick="searchLog('web_song','SONG','SO','에잇','30383019');">
+							<span class="odd_span">좋아요</span>
+							<span class="cnt"><span class="none">총건수</span>0</span>
+						</button>
+					</div></td>
+					<td><div class="wrap pd_none left">
+						<button type="button" disabled="disabled" class="btn_icon mv disabled" title="뮤직비디오" onClick="searchLog('web_song','SONG','MV','에잇','30383019');melon.link.goMvDetail('26020103', '30383019','song');"><span class="odd_span">뮤직비디오</span></button>
+					</div></td>
+					<td><div class="wrap pd_none right">
+						<button type="button"  class="btn_icon dl" title="다운로드" onClick="searchLog('web_song','SONG','SO','에잇','30383019');melon.buy.goBuyProduct('frm_defaultList', '30383019', '3C0001', '','0', '26020103');"><span class="odd_span">다운</span></button>
+					</div></td>
+				</tr>
+				
+				<tr >
+					<td><div class="wrap pd_none left">
+						<input type="checkbox" title="DAWN (INTRO) 곡 선택" class="input_check" name="input_check" value="30383016" />
+					</div></td>
+					<td class="no"><div class="wrap">20</div></td>
+					<td class="t_left"><div class="wrap pd_none">
+						<div class="ellipsis" style="max-width:100%">
+							<button type="button" class="btn_icon play" title="재생" onClick="searchLog('web_song','SONG','SO','에잇','30383016');melon.play.playSong('26020103',30383016);"><span class="odd_span">재생</span></button>
+							<button type="button" class="btn_icon add" title="담기" onClick="searchLog('web_song','SONG','SO','에잇','30383016');melon.play.addPlayList('30383016');"><span class="odd_span">담기</span></button>
+							<a href="javascript:searchLog('web_song','SONG','SO','에잇','30383016');melon.link.goSongDetail('30383016');" title="곡정보 보기" class="btn btn_icon_detail"><span class="odd_span">DAWN (INTRO) 상세정보 페이지 이동</span></a>
+							
+							
+							
+							
+							
+							
+							<a href="javascript:searchLog('web_song','SONG','SO','에잇','30383016');melon.play.playSong('26020103',30383016);" class="fc_gray" title="DAWN (INTRO)">DAWN (INTRO)</a>
+						</div>
+					</div></td>
+					<td class="t_left"><div class="wrap wrapArtistName">
+						<div id="artistName" class="ellipsis" style="max-width:122px">
+							<a href="javascript:melon.link.goArtistDetail('1702715');melon.link.goSearchLog('web_song','SONG', 'AR', '에잇','30383016');" title="8LOOP (에잇루프) - 페이지 이동" class="fc_mgray">8LOOP (<b>에잇</b>루프)</a>
+							<span class="checkEllipsisSongdefaultList" style="display:none"><a href="javascript:melon.link.goArtistDetail('1702715');melon.link.goSearchLog('web_song','SONG', 'AR', '에잇','30383016');" title="8LOOP (에잇루프) - 페이지 이동" class="fc_mgray">8LOOP (<b>에잇</b>루프)</a></span>
+						</div>
+						
+					</div></td>
+					<td class="t_left"><div class="wrap">
+						<div class="ellipsis" style="max-width:90%">
+							<a href="javascript:searchLog('web_song','SONG','AL','에잇','30383016');melon.link.goAlbumDetail('10057403');" title="[DAWN 01:14] - 페이지 이동" class="fc_mgray">[DAWN 01:14]</a>
+						</div>
+					</div></td>
+					<td class="t_left"><div class="wrap right_none">
+						<button type="button" class="btn_icon like" title="DAWN (INTRO) 좋아요 " data-song-no="30383016" data-song-menuId="26020103" onclick="searchLog('web_song','SONG','SO','에잇','30383016');">
+							<span class="odd_span">좋아요</span>
+							<span class="cnt"><span class="none">총건수</span>0</span>
+						</button>
+					</div></td>
+					<td><div class="wrap pd_none left">
+						<button type="button" disabled="disabled" class="btn_icon mv disabled" title="뮤직비디오" onClick="searchLog('web_song','SONG','MV','에잇','30383016');melon.link.goMvDetail('26020103', '30383016','song');"><span class="odd_span">뮤직비디오</span></button>
+					</div></td>
+					<td><div class="wrap pd_none right">
+						<button type="button"  class="btn_icon dl" title="다운로드" onClick="searchLog('web_song','SONG','SO','에잇','30383016');melon.buy.goBuyProduct('frm_defaultList', '30383016', '3C0001', '','0', '26020103');"><span class="odd_span">다운</span></button>
+					</div></td>
+				</tr>
+				
+				<tr >
+					<td><div class="wrap pd_none left">
+						<input type="checkbox" title="THRILLER 곡 선택" class="input_check" name="input_check" value="30383018" />
+					</div></td>
+					<td class="no"><div class="wrap">21</div></td>
+					<td class="t_left"><div class="wrap pd_none">
+						<div class="ellipsis" style="max-width:100%">
+							<button type="button" class="btn_icon play" title="재생" onClick="searchLog('web_song','SONG','SO','에잇','30383018');melon.play.playSong('26020103',30383018);"><span class="odd_span">재생</span></button>
+							<button type="button" class="btn_icon add" title="담기" onClick="searchLog('web_song','SONG','SO','에잇','30383018');melon.play.addPlayList('30383018');"><span class="odd_span">담기</span></button>
+							<a href="javascript:searchLog('web_song','SONG','SO','에잇','30383018');melon.link.goSongDetail('30383018');" title="곡정보 보기" class="btn btn_icon_detail"><span class="odd_span">THRILLER 상세정보 페이지 이동</span></a>
+							<span class="icon_song title">Title</span>
+							
+							
+							
+							
+							
+							<a href="javascript:searchLog('web_song','SONG','SO','에잇','30383018');melon.play.playSong('26020103',30383018);" class="fc_gray" title="THRILLER">THRILLER</a>
+						</div>
+					</div></td>
+					<td class="t_left"><div class="wrap wrapArtistName">
+						<div id="artistName" class="ellipsis" style="max-width:122px">
+							<a href="javascript:melon.link.goArtistDetail('1702715');melon.link.goSearchLog('web_song','SONG', 'AR', '에잇','30383018');" title="8LOOP (에잇루프) - 페이지 이동" class="fc_mgray">8LOOP (<b>에잇</b>루프)</a>
+							<span class="checkEllipsisSongdefaultList" style="display:none"><a href="javascript:melon.link.goArtistDetail('1702715');melon.link.goSearchLog('web_song','SONG', 'AR', '에잇','30383018');" title="8LOOP (에잇루프) - 페이지 이동" class="fc_mgray">8LOOP (<b>에잇</b>루프)</a></span>
+						</div>
+						
+					</div></td>
+					<td class="t_left"><div class="wrap">
+						<div class="ellipsis" style="max-width:90%">
+							<a href="javascript:searchLog('web_song','SONG','AL','에잇','30383018');melon.link.goAlbumDetail('10057403');" title="[DAWN 01:14] - 페이지 이동" class="fc_mgray">[DAWN 01:14]</a>
+						</div>
+					</div></td>
+					<td class="t_left"><div class="wrap right_none">
+						<button type="button" class="btn_icon like" title="THRILLER 좋아요 " data-song-no="30383018" data-song-menuId="26020103" onclick="searchLog('web_song','SONG','SO','에잇','30383018');">
+							<span class="odd_span">좋아요</span>
+							<span class="cnt"><span class="none">총건수</span>0</span>
+						</button>
+					</div></td>
+					<td><div class="wrap pd_none left">
+						<button type="button"  class="btn_icon mv" title="뮤직비디오" onClick="searchLog('web_song','SONG','MV','에잇','30383018');melon.link.goMvDetail('26020103', '30383018','song');"><span class="odd_span">뮤직비디오</span></button>
+					</div></td>
+					<td><div class="wrap pd_none right">
+						<button type="button"  class="btn_icon dl" title="다운로드" onClick="searchLog('web_song','SONG','SO','에잇','30383018');melon.buy.goBuyProduct('frm_defaultList', '30383018', '3C0001', '','0', '26020103');"><span class="odd_span">다운</span></button>
+					</div></td>
+				</tr>
+				
+				<tr >
+					<td><div class="wrap pd_none left">
+						<input type="checkbox" title="기억에게 (Inst.) 곡 선택" class="input_check" name="input_check" value="30024003" />
+					</div></td>
+					<td class="no"><div class="wrap">22</div></td>
+					<td class="t_left"><div class="wrap pd_none">
+						<div class="ellipsis" style="max-width:100%">
+							<button type="button" class="btn_icon play" title="재생" onClick="searchLog('web_song','SONG','SO','에잇','30024003');melon.play.playSong('26020103',30024003);"><span class="odd_span">재생</span></button>
+							<button type="button" class="btn_icon add" title="담기" onClick="searchLog('web_song','SONG','SO','에잇','30024003');melon.play.addPlayList('30024003');"><span class="odd_span">담기</span></button>
+							<a href="javascript:searchLog('web_song','SONG','SO','에잇','30024003');melon.link.goSongDetail('30024003');" title="곡정보 보기" class="btn btn_icon_detail"><span class="odd_span">기억에게 (Inst.) 상세정보 페이지 이동</span></a>
+							
+							
+							
+							
+							
+							
+							<a href="javascript:searchLog('web_song','SONG','SO','에잇','30024003');melon.play.playSong('26020103',30024003);" class="fc_gray" title="기억에게 (Inst.)">기억에게 (Inst.)</a>
+						</div>
+					</div></td>
+					<td class="t_left"><div class="wrap wrapArtistName">
+						<div id="artistName" class="ellipsis" style="max-width:122px">
+							<a href="javascript:melon.link.goArtistDetail('858541');melon.link.goSearchLog('web_song','SONG', 'AR', '에잇','30024003');" title="에잇오클락 (eight o clock) - 페이지 이동" class="fc_mgray"><b>에잇</b>오클락 (eight o clock)</a>
+							<span class="checkEllipsisSongdefaultList" style="display:none"><a href="javascript:melon.link.goArtistDetail('858541');melon.link.goSearchLog('web_song','SONG', 'AR', '에잇','30024003');" title="에잇오클락 (eight o clock) - 페이지 이동" class="fc_mgray"><b>에잇</b>오클락 (eight o clock)</a></span>
+						</div>
+						
+					</div></td>
+					<td class="t_left"><div class="wrap">
+						<div class="ellipsis" style="max-width:90%">
+							<a href="javascript:searchLog('web_song','SONG','AL','에잇','30024003');melon.link.goAlbumDetail('10003993');" title="기억에게 - 페이지 이동" class="fc_mgray">기억에게</a>
+						</div>
+					</div></td>
+					<td class="t_left"><div class="wrap right_none">
+						<button type="button" class="btn_icon like" title="기억에게 (Inst.) 좋아요 " data-song-no="30024003" data-song-menuId="26020103" onclick="searchLog('web_song','SONG','SO','에잇','30024003');">
+							<span class="odd_span">좋아요</span>
+							<span class="cnt"><span class="none">총건수</span>0</span>
+						</button>
+					</div></td>
+					<td><div class="wrap pd_none left">
+						<button type="button" disabled="disabled" class="btn_icon mv disabled" title="뮤직비디오" onClick="searchLog('web_song','SONG','MV','에잇','30024003');melon.link.goMvDetail('26020103', '30024003','song');"><span class="odd_span">뮤직비디오</span></button>
+					</div></td>
+					<td><div class="wrap pd_none right">
+						<button type="button"  class="btn_icon dl" title="다운로드" onClick="searchLog('web_song','SONG','SO','에잇','30024003');melon.buy.goBuyProduct('frm_defaultList', '30024003', '3C0001', '','0', '26020103');"><span class="odd_span">다운</span></button>
+					</div></td>
+				</tr>
+				
+				<tr >
+					<td><div class="wrap pd_none left">
+						<input type="checkbox" title="그댈까요 (Inst.) 곡 선택" class="input_check" name="input_check" value="7857250" />
+					</div></td>
+					<td class="no"><div class="wrap">23</div></td>
+					<td class="t_left"><div class="wrap pd_none">
+						<div class="ellipsis" style="max-width:100%">
+							<button type="button" class="btn_icon play" title="재생" onClick="searchLog('web_song','SONG','SO','에잇','7857250');melon.play.playSong('26020103',7857250);"><span class="odd_span">재생</span></button>
+							<button type="button" class="btn_icon add" title="담기" onClick="searchLog('web_song','SONG','SO','에잇','7857250');melon.play.addPlayList('7857250');"><span class="odd_span">담기</span></button>
+							<a href="javascript:searchLog('web_song','SONG','SO','에잇','7857250');melon.link.goSongDetail('7857250');" title="곡정보 보기" class="btn btn_icon_detail"><span class="odd_span">그댈까요 (Inst.) 상세정보 페이지 이동</span></a>
+							
+							
+							
+							
+							
+							
+							<a href="javascript:searchLog('web_song','SONG','SO','에잇','7857250');melon.play.playSong('26020103',7857250);" class="fc_gray" title="그댈까요 (Inst.)">그댈까요 (Inst.)</a>
+						</div>
+					</div></td>
+					<td class="t_left"><div class="wrap wrapArtistName">
+						<div id="artistName" class="ellipsis" style="max-width:122px">
+							<a href="javascript:melon.link.goArtistDetail('858541');melon.link.goSearchLog('web_song','SONG', 'AR', '에잇','7857250');" title="에잇오클락 (eight o clock) - 페이지 이동" class="fc_mgray"><b>에잇</b>오클락 (eight o clock)</a>
+							<span class="checkEllipsisSongdefaultList" style="display:none"><a href="javascript:melon.link.goArtistDetail('858541');melon.link.goSearchLog('web_song','SONG', 'AR', '에잇','7857250');" title="에잇오클락 (eight o clock) - 페이지 이동" class="fc_mgray"><b>에잇</b>오클락 (eight o clock)</a></span>
+						</div>
+						
+					</div></td>
+					<td class="t_left"><div class="wrap">
+						<div class="ellipsis" style="max-width:90%">
+							<a href="javascript:searchLog('web_song','SONG','AL','에잇','7857250');melon.link.goAlbumDetail('2640661');" title="eight o clock - 페이지 이동" class="fc_mgray">eight o clock</a>
+						</div>
+					</div></td>
+					<td class="t_left"><div class="wrap right_none">
+						<button type="button" class="btn_icon like" title="그댈까요 (Inst.) 좋아요 " data-song-no="7857250" data-song-menuId="26020103" onclick="searchLog('web_song','SONG','SO','에잇','7857250');">
+							<span class="odd_span">좋아요</span>
+							<span class="cnt"><span class="none">총건수</span>0</span>
+						</button>
+					</div></td>
+					<td><div class="wrap pd_none left">
+						<button type="button" disabled="disabled" class="btn_icon mv disabled" title="뮤직비디오" onClick="searchLog('web_song','SONG','MV','에잇','7857250');melon.link.goMvDetail('26020103', '7857250','song');"><span class="odd_span">뮤직비디오</span></button>
+					</div></td>
+					<td><div class="wrap pd_none right">
+						<button type="button"  class="btn_icon dl" title="다운로드" onClick="searchLog('web_song','SONG','SO','에잇','7857250');melon.buy.goBuyProduct('frm_defaultList', '7857250', '3C0001', '','0', '26020103');"><span class="odd_span">다운</span></button>
+					</div></td>
+				</tr>
+				
+				<tr >
+					<td><div class="wrap pd_none left">
+						<input type="checkbox" title="그렇게 흐른다 곡 선택" class="input_check" name="input_check" value="5657867" />
+					</div></td>
+					<td class="no"><div class="wrap">24</div></td>
+					<td class="t_left"><div class="wrap pd_none">
+						<div class="ellipsis" style="max-width:100%">
+							<button type="button" class="btn_icon play" title="재생" onClick="searchLog('web_song','SONG','SO','에잇','5657867');melon.play.playSong('26020103',5657867);"><span class="odd_span">재생</span></button>
+							<button type="button" class="btn_icon add" title="담기" onClick="searchLog('web_song','SONG','SO','에잇','5657867');melon.play.addPlayList('5657867');"><span class="odd_span">담기</span></button>
+							<a href="javascript:searchLog('web_song','SONG','SO','에잇','5657867');melon.link.goSongDetail('5657867');" title="곡정보 보기" class="btn btn_icon_detail"><span class="odd_span">그렇게 흐른다 상세정보 페이지 이동</span></a>
+							
+							
+							
+							
+							
+							
+							<a href="javascript:searchLog('web_song','SONG','SO','에잇','5657867');melon.play.playSong('26020103',5657867);" class="fc_gray" title="그렇게 흐른다">그렇게 흐른다</a>
+						</div>
+					</div></td>
+					<td class="t_left"><div class="wrap wrapArtistName">
+						<div id="artistName" class="ellipsis" style="max-width:122px">
+							<a href="javascript:melon.link.goArtistDetail('858541');melon.link.goSearchLog('web_song','SONG', 'AR', '에잇','5657867');" title="에잇오클락 (eight o clock) - 페이지 이동" class="fc_mgray"><b>에잇</b>오클락 (eight o clock)</a>
+							<span class="checkEllipsisSongdefaultList" style="display:none"><a href="javascript:melon.link.goArtistDetail('858541');melon.link.goSearchLog('web_song','SONG', 'AR', '에잇','5657867');" title="에잇오클락 (eight o clock) - 페이지 이동" class="fc_mgray"><b>에잇</b>오클락 (eight o clock)</a></span>
+						</div>
+						
+					</div></td>
+					<td class="t_left"><div class="wrap">
+						<div class="ellipsis" style="max-width:90%">
+							<a href="javascript:searchLog('web_song','SONG','AL','에잇','5657867');melon.link.goAlbumDetail('2313342');" title="Eight O Clock - 페이지 이동" class="fc_mgray">Eight O Clock</a>
+						</div>
+					</div></td>
+					<td class="t_left"><div class="wrap right_none">
+						<button type="button" class="btn_icon like" title="그렇게 흐른다 좋아요 " data-song-no="5657867" data-song-menuId="26020103" onclick="searchLog('web_song','SONG','SO','에잇','5657867');">
+							<span class="odd_span">좋아요</span>
+							<span class="cnt"><span class="none">총건수</span>0</span>
+						</button>
+					</div></td>
+					<td><div class="wrap pd_none left">
+						<button type="button" disabled="disabled" class="btn_icon mv disabled" title="뮤직비디오" onClick="searchLog('web_song','SONG','MV','에잇','5657867');melon.link.goMvDetail('26020103', '5657867','song');"><span class="odd_span">뮤직비디오</span></button>
+					</div></td>
+					<td><div class="wrap pd_none right">
+						<button type="button"  class="btn_icon dl" title="다운로드" onClick="searchLog('web_song','SONG','SO','에잇','5657867');melon.buy.goBuyProduct('frm_defaultList', '5657867', '3C0001', '','0', '26020103');"><span class="odd_span">다운</span></button>
+					</div></td>
+				</tr>
+				
+				<tr >
+					<td><div class="wrap pd_none left">
+						<input type="checkbox" title="새벽 곡 선택" class="input_check" name="input_check" value="5657865" />
+					</div></td>
+					<td class="no"><div class="wrap">25</div></td>
+					<td class="t_left"><div class="wrap pd_none">
+						<div class="ellipsis" style="max-width:100%">
+							<button type="button" class="btn_icon play" title="재생" onClick="searchLog('web_song','SONG','SO','에잇','5657865');melon.play.playSong('26020103',5657865);"><span class="odd_span">재생</span></button>
+							<button type="button" class="btn_icon add" title="담기" onClick="searchLog('web_song','SONG','SO','에잇','5657865');melon.play.addPlayList('5657865');"><span class="odd_span">담기</span></button>
+							<a href="javascript:searchLog('web_song','SONG','SO','에잇','5657865');melon.link.goSongDetail('5657865');" title="곡정보 보기" class="btn btn_icon_detail"><span class="odd_span">새벽 상세정보 페이지 이동</span></a>
+							
+							
+							
+							
+							
+							
+							<a href="javascript:searchLog('web_song','SONG','SO','에잇','5657865');melon.play.playSong('26020103',5657865);" class="fc_gray" title="새벽">새벽</a>
+						</div>
+					</div></td>
+					<td class="t_left"><div class="wrap wrapArtistName">
+						<div id="artistName" class="ellipsis" style="max-width:122px">
+							<a href="javascript:melon.link.goArtistDetail('858541');melon.link.goSearchLog('web_song','SONG', 'AR', '에잇','5657865');" title="에잇오클락 (eight o clock) - 페이지 이동" class="fc_mgray"><b>에잇</b>오클락 (eight o clock)</a>
+							<span class="checkEllipsisSongdefaultList" style="display:none"><a href="javascript:melon.link.goArtistDetail('858541');melon.link.goSearchLog('web_song','SONG', 'AR', '에잇','5657865');" title="에잇오클락 (eight o clock) - 페이지 이동" class="fc_mgray"><b>에잇</b>오클락 (eight o clock)</a></span>
+						</div>
+						
+					</div></td>
+					<td class="t_left"><div class="wrap">
+						<div class="ellipsis" style="max-width:90%">
+							<a href="javascript:searchLog('web_song','SONG','AL','에잇','5657865');melon.link.goAlbumDetail('2313342');" title="Eight O Clock - 페이지 이동" class="fc_mgray">Eight O Clock</a>
+						</div>
+					</div></td>
+					<td class="t_left"><div class="wrap right_none">
+						<button type="button" class="btn_icon like" title="새벽 좋아요 " data-song-no="5657865" data-song-menuId="26020103" onclick="searchLog('web_song','SONG','SO','에잇','5657865');">
+							<span class="odd_span">좋아요</span>
+							<span class="cnt"><span class="none">총건수</span>0</span>
+						</button>
+					</div></td>
+					<td><div class="wrap pd_none left">
+						<button type="button" disabled="disabled" class="btn_icon mv disabled" title="뮤직비디오" onClick="searchLog('web_song','SONG','MV','에잇','5657865');melon.link.goMvDetail('26020103', '5657865','song');"><span class="odd_span">뮤직비디오</span></button>
+					</div></td>
+					<td><div class="wrap pd_none right">
+						<button type="button"  class="btn_icon dl" title="다운로드" onClick="searchLog('web_song','SONG','SO','에잇','5657865');melon.buy.goBuyProduct('frm_defaultList', '5657865', '3C0001', '','0', '26020103');"><span class="odd_span">다운</span></button>
+					</div></td>
+				</tr>
+				
+				<tr >
+					<td><div class="wrap pd_none left">
+						<input type="checkbox" title="Seaward (시워드) 곡 선택" class="input_check" name="input_check" value="5657868" />
+					</div></td>
+					<td class="no"><div class="wrap">26</div></td>
+					<td class="t_left"><div class="wrap pd_none">
+						<div class="ellipsis" style="max-width:100%">
+							<button type="button" class="btn_icon play" title="재생" onClick="searchLog('web_song','SONG','SO','에잇','5657868');melon.play.playSong('26020103',5657868);"><span class="odd_span">재생</span></button>
+							<button type="button" class="btn_icon add" title="담기" onClick="searchLog('web_song','SONG','SO','에잇','5657868');melon.play.addPlayList('5657868');"><span class="odd_span">담기</span></button>
+							<a href="javascript:searchLog('web_song','SONG','SO','에잇','5657868');melon.link.goSongDetail('5657868');" title="곡정보 보기" class="btn btn_icon_detail"><span class="odd_span">Seaward (시워드) 상세정보 페이지 이동</span></a>
+							
+							
+							
+							
+							
+							
+							<a href="javascript:searchLog('web_song','SONG','SO','에잇','5657868');melon.play.playSong('26020103',5657868);" class="fc_gray" title="Seaward (시워드)">Seaward (시워드)</a>
+						</div>
+					</div></td>
+					<td class="t_left"><div class="wrap wrapArtistName">
+						<div id="artistName" class="ellipsis" style="max-width:122px">
+							<a href="javascript:melon.link.goArtistDetail('858541');melon.link.goSearchLog('web_song','SONG', 'AR', '에잇','5657868');" title="에잇오클락 (eight o clock) - 페이지 이동" class="fc_mgray"><b>에잇</b>오클락 (eight o clock)</a>
+							<span class="checkEllipsisSongdefaultList" style="display:none"><a href="javascript:melon.link.goArtistDetail('858541');melon.link.goSearchLog('web_song','SONG', 'AR', '에잇','5657868');" title="에잇오클락 (eight o clock) - 페이지 이동" class="fc_mgray"><b>에잇</b>오클락 (eight o clock)</a></span>
+						</div>
+						
+					</div></td>
+					<td class="t_left"><div class="wrap">
+						<div class="ellipsis" style="max-width:90%">
+							<a href="javascript:searchLog('web_song','SONG','AL','에잇','5657868');melon.link.goAlbumDetail('2313342');" title="Eight O Clock - 페이지 이동" class="fc_mgray">Eight O Clock</a>
+						</div>
+					</div></td>
+					<td class="t_left"><div class="wrap right_none">
+						<button type="button" class="btn_icon like" title="Seaward (시워드) 좋아요 " data-song-no="5657868" data-song-menuId="26020103" onclick="searchLog('web_song','SONG','SO','에잇','5657868');">
+							<span class="odd_span">좋아요</span>
+							<span class="cnt"><span class="none">총건수</span>0</span>
+						</button>
+					</div></td>
+					<td><div class="wrap pd_none left">
+						<button type="button" disabled="disabled" class="btn_icon mv disabled" title="뮤직비디오" onClick="searchLog('web_song','SONG','MV','에잇','5657868');melon.link.goMvDetail('26020103', '5657868','song');"><span class="odd_span">뮤직비디오</span></button>
+					</div></td>
+					<td><div class="wrap pd_none right">
+						<button type="button"  class="btn_icon dl" title="다운로드" onClick="searchLog('web_song','SONG','SO','에잇','5657868');melon.buy.goBuyProduct('frm_defaultList', '5657868', '3C0001', '','0', '26020103');"><span class="odd_span">다운</span></button>
+					</div></td>
+				</tr>
+				
+				<tr >
+					<td><div class="wrap pd_none left">
+						<input type="checkbox" title="첫눈 곡 선택" class="input_check" name="input_check" value="5657869" />
+					</div></td>
+					<td class="no"><div class="wrap">27</div></td>
+					<td class="t_left"><div class="wrap pd_none">
+						<div class="ellipsis" style="max-width:100%">
+							<button type="button" class="btn_icon play" title="재생" onClick="searchLog('web_song','SONG','SO','에잇','5657869');melon.play.playSong('26020103',5657869);"><span class="odd_span">재생</span></button>
+							<button type="button" class="btn_icon add" title="담기" onClick="searchLog('web_song','SONG','SO','에잇','5657869');melon.play.addPlayList('5657869');"><span class="odd_span">담기</span></button>
+							<a href="javascript:searchLog('web_song','SONG','SO','에잇','5657869');melon.link.goSongDetail('5657869');" title="곡정보 보기" class="btn btn_icon_detail"><span class="odd_span">첫눈 상세정보 페이지 이동</span></a>
+							
+							
+							
+							
+							
+							
+							<a href="javascript:searchLog('web_song','SONG','SO','에잇','5657869');melon.play.playSong('26020103',5657869);" class="fc_gray" title="첫눈">첫눈</a>
+						</div>
+					</div></td>
+					<td class="t_left"><div class="wrap wrapArtistName">
+						<div id="artistName" class="ellipsis" style="max-width:122px">
+							<a href="javascript:melon.link.goArtistDetail('858541');melon.link.goSearchLog('web_song','SONG', 'AR', '에잇','5657869');" title="에잇오클락 (eight o clock) - 페이지 이동" class="fc_mgray"><b>에잇</b>오클락 (eight o clock)</a>
+							<span class="checkEllipsisSongdefaultList" style="display:none"><a href="javascript:melon.link.goArtistDetail('858541');melon.link.goSearchLog('web_song','SONG', 'AR', '에잇','5657869');" title="에잇오클락 (eight o clock) - 페이지 이동" class="fc_mgray"><b>에잇</b>오클락 (eight o clock)</a></span>
+						</div>
+						
+					</div></td>
+					<td class="t_left"><div class="wrap">
+						<div class="ellipsis" style="max-width:90%">
+							<a href="javascript:searchLog('web_song','SONG','AL','에잇','5657869');melon.link.goAlbumDetail('2313342');" title="Eight O Clock - 페이지 이동" class="fc_mgray">Eight O Clock</a>
+						</div>
+					</div></td>
+					<td class="t_left"><div class="wrap right_none">
+						<button type="button" class="btn_icon like" title="첫눈 좋아요 " data-song-no="5657869" data-song-menuId="26020103" onclick="searchLog('web_song','SONG','SO','에잇','5657869');">
+							<span class="odd_span">좋아요</span>
+							<span class="cnt"><span class="none">총건수</span>0</span>
+						</button>
+					</div></td>
+					<td><div class="wrap pd_none left">
+						<button type="button" disabled="disabled" class="btn_icon mv disabled" title="뮤직비디오" onClick="searchLog('web_song','SONG','MV','에잇','5657869');melon.link.goMvDetail('26020103', '5657869','song');"><span class="odd_span">뮤직비디오</span></button>
+					</div></td>
+					<td><div class="wrap pd_none right">
+						<button type="button"  class="btn_icon dl" title="다운로드" onClick="searchLog('web_song','SONG','SO','에잇','5657869');melon.buy.goBuyProduct('frm_defaultList', '5657869', '3C0001', '','0', '26020103');"><span class="odd_span">다운</span></button>
+					</div></td>
+				</tr>
+				
+				<tr >
+					<td><div class="wrap pd_none left">
+						<input type="checkbox" title="Five Night Stand 곡 선택" class="input_check" name="input_check" value="5428818" />
+					</div></td>
+					<td class="no"><div class="wrap">28</div></td>
+					<td class="t_left"><div class="wrap pd_none">
+						<div class="ellipsis" style="max-width:100%">
+							<button type="button" class="btn_icon play" title="재생" onClick="searchLog('web_song','SONG','SO','에잇','5428818');melon.play.playSong('26020103',5428818);"><span class="odd_span">재생</span></button>
+							<button type="button" class="btn_icon add" title="담기" onClick="searchLog('web_song','SONG','SO','에잇','5428818');melon.play.addPlayList('5428818');"><span class="odd_span">담기</span></button>
+							<a href="javascript:searchLog('web_song','SONG','SO','에잇','5428818');melon.link.goSongDetail('5428818');" title="곡정보 보기" class="btn btn_icon_detail"><span class="odd_span">Five Night Stand 상세정보 페이지 이동</span></a>
+							
+							
+							
+							
+							
+							
+							<a href="javascript:searchLog('web_song','SONG','SO','에잇','5428818');melon.play.playSong('26020103',5428818);" class="fc_gray" title="Five Night Stand">Five Night Stand</a>
+						</div>
+					</div></td>
+					<td class="t_left"><div class="wrap wrapArtistName">
+						<div id="artistName" class="ellipsis" style="max-width:122px">
+							<a href="javascript:melon.link.goArtistDetail('787822');melon.link.goSearchLog('web_song','SONG', 'AR', '에잇','5428818');" title="Fall On Your Sword - 페이지 이동" class="fc_mgray">Fall On Your Sword</a>
+							<span class="checkEllipsisSongdefaultList" style="display:none"><a href="javascript:melon.link.goArtistDetail('787822');melon.link.goSearchLog('web_song','SONG', 'AR', '에잇','5428818');" title="Fall On Your Sword - 페이지 이동" class="fc_mgray">Fall On Your Sword</a></span>
+						</div>
+						
+					</div></td>
+					<td class="t_left"><div class="wrap">
+						<div class="ellipsis" style="max-width:90%">
+							<a href="javascript:searchLog('web_song','SONG','AL','에잇','5428818');melon.link.goAlbumDetail('2287357');" title="28 Hotel Rooms (트웬티 에잇 호텔 룸스) - 페이지 이동" class="fc_mgray">28 Hotel Rooms (트웬티 <b>에잇</b> 호텔 룸스)</a>
+						</div>
+					</div></td>
+					<td class="t_left"><div class="wrap right_none">
+						<button type="button" class="btn_icon like" title="Five Night Stand 좋아요 " data-song-no="5428818" data-song-menuId="26020103" onclick="searchLog('web_song','SONG','SO','에잇','5428818');">
+							<span class="odd_span">좋아요</span>
+							<span class="cnt"><span class="none">총건수</span>0</span>
+						</button>
+					</div></td>
+					<td><div class="wrap pd_none left">
+						<button type="button" disabled="disabled" class="btn_icon mv disabled" title="뮤직비디오" onClick="searchLog('web_song','SONG','MV','에잇','5428818');melon.link.goMvDetail('26020103', '5428818','song');"><span class="odd_span">뮤직비디오</span></button>
+					</div></td>
+					<td><div class="wrap pd_none right">
+						<button type="button"  class="btn_icon dl" title="다운로드" onClick="searchLog('web_song','SONG','SO','에잇','5428818');melon.buy.goBuyProduct('frm_defaultList', '5428818', '3C0001', '','0', '26020103');"><span class="odd_span">다운</span></button>
+					</div></td>
+				</tr>
+				
+				<tr >
+					<td><div class="wrap pd_none left">
+						<input type="checkbox" title="Over The City 곡 선택" class="input_check" name="input_check" value="5428816" />
+					</div></td>
+					<td class="no"><div class="wrap">29</div></td>
+					<td class="t_left"><div class="wrap pd_none">
+						<div class="ellipsis" style="max-width:100%">
+							<button type="button" class="btn_icon play" title="재생" onClick="searchLog('web_song','SONG','SO','에잇','5428816');melon.play.playSong('26020103',5428816);"><span class="odd_span">재생</span></button>
+							<button type="button" class="btn_icon add" title="담기" onClick="searchLog('web_song','SONG','SO','에잇','5428816');melon.play.addPlayList('5428816');"><span class="odd_span">담기</span></button>
+							<a href="javascript:searchLog('web_song','SONG','SO','에잇','5428816');melon.link.goSongDetail('5428816');" title="곡정보 보기" class="btn btn_icon_detail"><span class="odd_span">Over The City 상세정보 페이지 이동</span></a>
+							
+							
+							
+							
+							
+							
+							<a href="javascript:searchLog('web_song','SONG','SO','에잇','5428816');melon.play.playSong('26020103',5428816);" class="fc_gray" title="Over The City">Over The City</a>
+						</div>
+					</div></td>
+					<td class="t_left"><div class="wrap wrapArtistName">
+						<div id="artistName" class="ellipsis" style="max-width:122px">
+							<a href="javascript:melon.link.goArtistDetail('787822');melon.link.goSearchLog('web_song','SONG', 'AR', '에잇','5428816');" title="Fall On Your Sword - 페이지 이동" class="fc_mgray">Fall On Your Sword</a>
+							<span class="checkEllipsisSongdefaultList" style="display:none"><a href="javascript:melon.link.goArtistDetail('787822');melon.link.goSearchLog('web_song','SONG', 'AR', '에잇','5428816');" title="Fall On Your Sword - 페이지 이동" class="fc_mgray">Fall On Your Sword</a></span>
+						</div>
+						
+					</div></td>
+					<td class="t_left"><div class="wrap">
+						<div class="ellipsis" style="max-width:90%">
+							<a href="javascript:searchLog('web_song','SONG','AL','에잇','5428816');melon.link.goAlbumDetail('2287357');" title="28 Hotel Rooms (트웬티 에잇 호텔 룸스) - 페이지 이동" class="fc_mgray">28 Hotel Rooms (트웬티 <b>에잇</b> 호텔 룸스)</a>
+						</div>
+					</div></td>
+					<td class="t_left"><div class="wrap right_none">
+						<button type="button" class="btn_icon like" title="Over The City 좋아요 " data-song-no="5428816" data-song-menuId="26020103" onclick="searchLog('web_song','SONG','SO','에잇','5428816');">
+							<span class="odd_span">좋아요</span>
+							<span class="cnt"><span class="none">총건수</span>0</span>
+						</button>
+					</div></td>
+					<td><div class="wrap pd_none left">
+						<button type="button" disabled="disabled" class="btn_icon mv disabled" title="뮤직비디오" onClick="searchLog('web_song','SONG','MV','에잇','5428816');melon.link.goMvDetail('26020103', '5428816','song');"><span class="odd_span">뮤직비디오</span></button>
+					</div></td>
+					<td><div class="wrap pd_none right">
+						<button type="button"  class="btn_icon dl" title="다운로드" onClick="searchLog('web_song','SONG','SO','에잇','5428816');melon.buy.goBuyProduct('frm_defaultList', '5428816', '3C0001', '','0', '26020103');"><span class="odd_span">다운</span></button>
+					</div></td>
+				</tr>
+				
+				<tr >
+					<td><div class="wrap pd_none left">
+						<input type="checkbox" title="Running Through Hallways 곡 선택" class="input_check" name="input_check" value="5428813" />
+					</div></td>
+					<td class="no"><div class="wrap">30</div></td>
+					<td class="t_left"><div class="wrap pd_none">
+						<div class="ellipsis" style="max-width:100%">
+							<button type="button" class="btn_icon play" title="재생" onClick="searchLog('web_song','SONG','SO','에잇','5428813');melon.play.playSong('26020103',5428813);"><span class="odd_span">재생</span></button>
+							<button type="button" class="btn_icon add" title="담기" onClick="searchLog('web_song','SONG','SO','에잇','5428813');melon.play.addPlayList('5428813');"><span class="odd_span">담기</span></button>
+							<a href="javascript:searchLog('web_song','SONG','SO','에잇','5428813');melon.link.goSongDetail('5428813');" title="곡정보 보기" class="btn btn_icon_detail"><span class="odd_span">Running Through Hallways 상세정보 페이지 이동</span></a>
+							
+							
+							
+							
+							
+							
+							<a href="javascript:searchLog('web_song','SONG','SO','에잇','5428813');melon.play.playSong('26020103',5428813);" class="fc_gray" title="Running Through Hallways">Running Through Hallways</a>
+						</div>
+					</div></td>
+					<td class="t_left"><div class="wrap wrapArtistName">
+						<div id="artistName" class="ellipsis" style="max-width:122px">
+							<a href="javascript:melon.link.goArtistDetail('787822');melon.link.goSearchLog('web_song','SONG', 'AR', '에잇','5428813');" title="Fall On Your Sword - 페이지 이동" class="fc_mgray">Fall On Your Sword</a>
+							<span class="checkEllipsisSongdefaultList" style="display:none"><a href="javascript:melon.link.goArtistDetail('787822');melon.link.goSearchLog('web_song','SONG', 'AR', '에잇','5428813');" title="Fall On Your Sword - 페이지 이동" class="fc_mgray">Fall On Your Sword</a></span>
+						</div>
+						
+					</div></td>
+					<td class="t_left"><div class="wrap">
+						<div class="ellipsis" style="max-width:90%">
+							<a href="javascript:searchLog('web_song','SONG','AL','에잇','5428813');melon.link.goAlbumDetail('2287357');" title="28 Hotel Rooms (트웬티 에잇 호텔 룸스) - 페이지 이동" class="fc_mgray">28 Hotel Rooms (트웬티 <b>에잇</b> 호텔 룸스)</a>
+						</div>
+					</div></td>
+					<td class="t_left"><div class="wrap right_none">
+						<button type="button" class="btn_icon like" title="Running Through Hallways 좋아요 " data-song-no="5428813" data-song-menuId="26020103" onclick="searchLog('web_song','SONG','SO','에잇','5428813');">
+							<span class="odd_span">좋아요</span>
+							<span class="cnt"><span class="none">총건수</span>0</span>
+						</button>
+					</div></td>
+					<td><div class="wrap pd_none left">
+						<button type="button" disabled="disabled" class="btn_icon mv disabled" title="뮤직비디오" onClick="searchLog('web_song','SONG','MV','에잇','5428813');melon.link.goMvDetail('26020103', '5428813','song');"><span class="odd_span">뮤직비디오</span></button>
+					</div></td>
+					<td><div class="wrap pd_none right">
+						<button type="button"  class="btn_icon dl" title="다운로드" onClick="searchLog('web_song','SONG','SO','에잇','5428813');melon.buy.goBuyProduct('frm_defaultList', '5428813', '3C0001', '','0', '26020103');"><span class="odd_span">다운</span></button>
+					</div></td>
+				</tr>
+				
+				<tr >
+					<td><div class="wrap pd_none left">
+						<input type="checkbox" title="A Dash Of Pixie Dust (Feat. Lindsey Haun, Jeff Thall) 곡 선택" class="input_check" name="input_check" value="5428821" />
+					</div></td>
+					<td class="no"><div class="wrap">31</div></td>
+					<td class="t_left"><div class="wrap pd_none">
+						<div class="ellipsis" style="max-width:100%">
+							<button type="button" class="btn_icon play" title="재생" onClick="searchLog('web_song','SONG','SO','에잇','5428821');melon.play.playSong('26020103',5428821);"><span class="odd_span">재생</span></button>
+							<button type="button" class="btn_icon add" title="담기" onClick="searchLog('web_song','SONG','SO','에잇','5428821');melon.play.addPlayList('5428821');"><span class="odd_span">담기</span></button>
+							<a href="javascript:searchLog('web_song','SONG','SO','에잇','5428821');melon.link.goSongDetail('5428821');" title="곡정보 보기" class="btn btn_icon_detail"><span class="odd_span">A Dash Of Pixie Dust (Feat. Lindsey Haun, Jeff Thall) 상세정보 페이지 이동</span></a>
+							<span class="icon_song title">Title</span>
+							
+							
+							
+							
+							
+							<a href="javascript:searchLog('web_song','SONG','SO','에잇','5428821');melon.play.playSong('26020103',5428821);" class="fc_gray" title="A Dash Of Pixie Dust (Feat. Lindsey Haun, Jeff Thall)">A Dash Of Pixie Dust (Feat. Lindsey Haun, Jeff Thall)</a>
+						</div>
+					</div></td>
+					<td class="t_left"><div class="wrap wrapArtistName">
+						<div id="artistName" class="ellipsis" style="max-width:122px">
+							<a href="javascript:melon.link.goArtistDetail('788242');melon.link.goSearchLog('web_song','SONG', 'AR', '에잇','5428821');" title="Kirk Ross - 페이지 이동" class="fc_mgray">Kirk Ross</a>
+							<span class="checkEllipsisSongdefaultList" style="display:none"><a href="javascript:melon.link.goArtistDetail('788242');melon.link.goSearchLog('web_song','SONG', 'AR', '에잇','5428821');" title="Kirk Ross - 페이지 이동" class="fc_mgray">Kirk Ross</a></span>
+						</div>
+						
+					</div></td>
+					<td class="t_left"><div class="wrap">
+						<div class="ellipsis" style="max-width:90%">
+							<a href="javascript:searchLog('web_song','SONG','AL','에잇','5428821');melon.link.goAlbumDetail('2287357');" title="28 Hotel Rooms (트웬티 에잇 호텔 룸스) - 페이지 이동" class="fc_mgray">28 Hotel Rooms (트웬티 <b>에잇</b> 호텔 룸스)</a>
+						</div>
+					</div></td>
+					<td class="t_left"><div class="wrap right_none">
+						<button type="button" class="btn_icon like" title="A Dash Of Pixie Dust (Feat. Lindsey Haun, Jeff Thall) 좋아요 " data-song-no="5428821" data-song-menuId="26020103" onclick="searchLog('web_song','SONG','SO','에잇','5428821');">
+							<span class="odd_span">좋아요</span>
+							<span class="cnt"><span class="none">총건수</span>0</span>
+						</button>
+					</div></td>
+					<td><div class="wrap pd_none left">
+						<button type="button" disabled="disabled" class="btn_icon mv disabled" title="뮤직비디오" onClick="searchLog('web_song','SONG','MV','에잇','5428821');melon.link.goMvDetail('26020103', '5428821','song');"><span class="odd_span">뮤직비디오</span></button>
+					</div></td>
+					<td><div class="wrap pd_none right">
+						<button type="button"  class="btn_icon dl" title="다운로드" onClick="searchLog('web_song','SONG','SO','에잇','5428821');melon.buy.goBuyProduct('frm_defaultList', '5428821', '3C0001', '','0', '26020103');"><span class="odd_span">다운</span></button>
+					</div></td>
+				</tr>
+				
+				<tr >
+					<td><div class="wrap pd_none left">
+						<input type="checkbox" title="I`m Never Gonna Call You 곡 선택" class="input_check" name="input_check" value="5428808" />
+					</div></td>
+					<td class="no"><div class="wrap">32</div></td>
+					<td class="t_left"><div class="wrap pd_none">
+						<div class="ellipsis" style="max-width:100%">
+							<button type="button" class="btn_icon play" title="재생" onClick="searchLog('web_song','SONG','SO','에잇','5428808');melon.play.playSong('26020103',5428808);"><span class="odd_span">재생</span></button>
+							<button type="button" class="btn_icon add" title="담기" onClick="searchLog('web_song','SONG','SO','에잇','5428808');melon.play.addPlayList('5428808');"><span class="odd_span">담기</span></button>
+							<a href="javascript:searchLog('web_song','SONG','SO','에잇','5428808');melon.link.goSongDetail('5428808');" title="곡정보 보기" class="btn btn_icon_detail"><span class="odd_span">I`m Never Gonna Call You 상세정보 페이지 이동</span></a>
+							
+							
+							
+							
+							
+							
+							<a href="javascript:searchLog('web_song','SONG','SO','에잇','5428808');melon.play.playSong('26020103',5428808);" class="fc_gray" title="I`m Never Gonna Call You">I`m Never Gonna Call You</a>
+						</div>
+					</div></td>
+					<td class="t_left"><div class="wrap wrapArtistName">
+						<div id="artistName" class="ellipsis" style="max-width:122px">
+							<a href="javascript:melon.link.goArtistDetail('787822');melon.link.goSearchLog('web_song','SONG', 'AR', '에잇','5428808');" title="Fall On Your Sword - 페이지 이동" class="fc_mgray">Fall On Your Sword</a>
+							<span class="checkEllipsisSongdefaultList" style="display:none"><a href="javascript:melon.link.goArtistDetail('787822');melon.link.goSearchLog('web_song','SONG', 'AR', '에잇','5428808');" title="Fall On Your Sword - 페이지 이동" class="fc_mgray">Fall On Your Sword</a></span>
+						</div>
+						
+					</div></td>
+					<td class="t_left"><div class="wrap">
+						<div class="ellipsis" style="max-width:90%">
+							<a href="javascript:searchLog('web_song','SONG','AL','에잇','5428808');melon.link.goAlbumDetail('2287357');" title="28 Hotel Rooms (트웬티 에잇 호텔 룸스) - 페이지 이동" class="fc_mgray">28 Hotel Rooms (트웬티 <b>에잇</b> 호텔 룸스)</a>
+						</div>
+					</div></td>
+					<td class="t_left"><div class="wrap right_none">
+						<button type="button" class="btn_icon like" title="I`m Never Gonna Call You 좋아요 " data-song-no="5428808" data-song-menuId="26020103" onclick="searchLog('web_song','SONG','SO','에잇','5428808');">
+							<span class="odd_span">좋아요</span>
+							<span class="cnt"><span class="none">총건수</span>0</span>
+						</button>
+					</div></td>
+					<td><div class="wrap pd_none left">
+						<button type="button" disabled="disabled" class="btn_icon mv disabled" title="뮤직비디오" onClick="searchLog('web_song','SONG','MV','에잇','5428808');melon.link.goMvDetail('26020103', '5428808','song');"><span class="odd_span">뮤직비디오</span></button>
+					</div></td>
+					<td><div class="wrap pd_none right">
+						<button type="button"  class="btn_icon dl" title="다운로드" onClick="searchLog('web_song','SONG','SO','에잇','5428808');melon.buy.goBuyProduct('frm_defaultList', '5428808', '3C0001', '','0', '26020103');"><span class="odd_span">다운</span></button>
+					</div></td>
+				</tr>
+				
+				<tr >
+					<td><div class="wrap pd_none left">
+						<input type="checkbox" title="Looking At You 곡 선택" class="input_check" name="input_check" value="5428820" />
+					</div></td>
+					<td class="no"><div class="wrap">33</div></td>
+					<td class="t_left"><div class="wrap pd_none">
+						<div class="ellipsis" style="max-width:100%">
+							<button type="button" class="btn_icon play" title="재생" onClick="searchLog('web_song','SONG','SO','에잇','5428820');melon.play.playSong('26020103',5428820);"><span class="odd_span">재생</span></button>
+							<button type="button" class="btn_icon add" title="담기" onClick="searchLog('web_song','SONG','SO','에잇','5428820');melon.play.addPlayList('5428820');"><span class="odd_span">담기</span></button>
+							<a href="javascript:searchLog('web_song','SONG','SO','에잇','5428820');melon.link.goSongDetail('5428820');" title="곡정보 보기" class="btn btn_icon_detail"><span class="odd_span">Looking At You 상세정보 페이지 이동</span></a>
+							
+							
+							
+							
+							
+							
+							<a href="javascript:searchLog('web_song','SONG','SO','에잇','5428820');melon.play.playSong('26020103',5428820);" class="fc_gray" title="Looking At You">Looking At You</a>
+						</div>
+					</div></td>
+					<td class="t_left"><div class="wrap wrapArtistName">
+						<div id="artistName" class="ellipsis" style="max-width:122px">
+							<a href="javascript:melon.link.goArtistDetail('788237');melon.link.goSearchLog('web_song','SONG', 'AR', '에잇','5428820');" title="Lindsey Haun - 페이지 이동" class="fc_mgray">Lindsey Haun</a>
+							<span class="checkEllipsisSongdefaultList" style="display:none"><a href="javascript:melon.link.goArtistDetail('788237');melon.link.goSearchLog('web_song','SONG', 'AR', '에잇','5428820');" title="Lindsey Haun - 페이지 이동" class="fc_mgray">Lindsey Haun</a></span>
+						</div>
+						
+					</div></td>
+					<td class="t_left"><div class="wrap">
+						<div class="ellipsis" style="max-width:90%">
+							<a href="javascript:searchLog('web_song','SONG','AL','에잇','5428820');melon.link.goAlbumDetail('2287357');" title="28 Hotel Rooms (트웬티 에잇 호텔 룸스) - 페이지 이동" class="fc_mgray">28 Hotel Rooms (트웬티 <b>에잇</b> 호텔 룸스)</a>
+						</div>
+					</div></td>
+					<td class="t_left"><div class="wrap right_none">
+						<button type="button" class="btn_icon like" title="Looking At You 좋아요 " data-song-no="5428820" data-song-menuId="26020103" onclick="searchLog('web_song','SONG','SO','에잇','5428820');">
+							<span class="odd_span">좋아요</span>
+							<span class="cnt"><span class="none">총건수</span>0</span>
+						</button>
+					</div></td>
+					<td><div class="wrap pd_none left">
+						<button type="button" disabled="disabled" class="btn_icon mv disabled" title="뮤직비디오" onClick="searchLog('web_song','SONG','MV','에잇','5428820');melon.link.goMvDetail('26020103', '5428820','song');"><span class="odd_span">뮤직비디오</span></button>
+					</div></td>
+					<td><div class="wrap pd_none right">
+						<button type="button"  class="btn_icon dl" title="다운로드" onClick="searchLog('web_song','SONG','SO','에잇','5428820');melon.buy.goBuyProduct('frm_defaultList', '5428820', '3C0001', '','0', '26020103');"><span class="odd_span">다운</span></button>
+					</div></td>
+				</tr>
+				
+				<tr >
+					<td><div class="wrap pd_none left">
+						<input type="checkbox" title="First Night 곡 선택" class="input_check" name="input_check" value="5428815" />
+					</div></td>
+					<td class="no"><div class="wrap">34</div></td>
+					<td class="t_left"><div class="wrap pd_none">
+						<div class="ellipsis" style="max-width:100%">
+							<button type="button" class="btn_icon play" title="재생" onClick="searchLog('web_song','SONG','SO','에잇','5428815');melon.play.playSong('26020103',5428815);"><span class="odd_span">재생</span></button>
+							<button type="button" class="btn_icon add" title="담기" onClick="searchLog('web_song','SONG','SO','에잇','5428815');melon.play.addPlayList('5428815');"><span class="odd_span">담기</span></button>
+							<a href="javascript:searchLog('web_song','SONG','SO','에잇','5428815');melon.link.goSongDetail('5428815');" title="곡정보 보기" class="btn btn_icon_detail"><span class="odd_span">First Night 상세정보 페이지 이동</span></a>
+							
+							
+							
+							
+							
+							
+							<a href="javascript:searchLog('web_song','SONG','SO','에잇','5428815');melon.play.playSong('26020103',5428815);" class="fc_gray" title="First Night">First Night</a>
+						</div>
+					</div></td>
+					<td class="t_left"><div class="wrap wrapArtistName">
+						<div id="artistName" class="ellipsis" style="max-width:122px">
+							<a href="javascript:melon.link.goArtistDetail('787822');melon.link.goSearchLog('web_song','SONG', 'AR', '에잇','5428815');" title="Fall On Your Sword - 페이지 이동" class="fc_mgray">Fall On Your Sword</a>
+							<span class="checkEllipsisSongdefaultList" style="display:none"><a href="javascript:melon.link.goArtistDetail('787822');melon.link.goSearchLog('web_song','SONG', 'AR', '에잇','5428815');" title="Fall On Your Sword - 페이지 이동" class="fc_mgray">Fall On Your Sword</a></span>
+						</div>
+						
+					</div></td>
+					<td class="t_left"><div class="wrap">
+						<div class="ellipsis" style="max-width:90%">
+							<a href="javascript:searchLog('web_song','SONG','AL','에잇','5428815');melon.link.goAlbumDetail('2287357');" title="28 Hotel Rooms (트웬티 에잇 호텔 룸스) - 페이지 이동" class="fc_mgray">28 Hotel Rooms (트웬티 <b>에잇</b> 호텔 룸스)</a>
+						</div>
+					</div></td>
+					<td class="t_left"><div class="wrap right_none">
+						<button type="button" class="btn_icon like" title="First Night 좋아요 " data-song-no="5428815" data-song-menuId="26020103" onclick="searchLog('web_song','SONG','SO','에잇','5428815');">
+							<span class="odd_span">좋아요</span>
+							<span class="cnt"><span class="none">총건수</span>0</span>
+						</button>
+					</div></td>
+					<td><div class="wrap pd_none left">
+						<button type="button" disabled="disabled" class="btn_icon mv disabled" title="뮤직비디오" onClick="searchLog('web_song','SONG','MV','에잇','5428815');melon.link.goMvDetail('26020103', '5428815','song');"><span class="odd_span">뮤직비디오</span></button>
+					</div></td>
+					<td><div class="wrap pd_none right">
+						<button type="button"  class="btn_icon dl" title="다운로드" onClick="searchLog('web_song','SONG','SO','에잇','5428815');melon.buy.goBuyProduct('frm_defaultList', '5428815', '3C0001', '','0', '26020103');"><span class="odd_span">다운</span></button>
+					</div></td>
+				</tr>
+				
+				<tr >
+					<td><div class="wrap pd_none left">
+						<input type="checkbox" title="Between The Sheets 곡 선택" class="input_check" name="input_check" value="5428811" />
+					</div></td>
+					<td class="no"><div class="wrap">35</div></td>
+					<td class="t_left"><div class="wrap pd_none">
+						<div class="ellipsis" style="max-width:100%">
+							<button type="button" class="btn_icon play" title="재생" onClick="searchLog('web_song','SONG','SO','에잇','5428811');melon.play.playSong('26020103',5428811);"><span class="odd_span">재생</span></button>
+							<button type="button" class="btn_icon add" title="담기" onClick="searchLog('web_song','SONG','SO','에잇','5428811');melon.play.addPlayList('5428811');"><span class="odd_span">담기</span></button>
+							<a href="javascript:searchLog('web_song','SONG','SO','에잇','5428811');melon.link.goSongDetail('5428811');" title="곡정보 보기" class="btn btn_icon_detail"><span class="odd_span">Between The Sheets 상세정보 페이지 이동</span></a>
+							
+							
+							
+							
+							
+							
+							<a href="javascript:searchLog('web_song','SONG','SO','에잇','5428811');melon.play.playSong('26020103',5428811);" class="fc_gray" title="Between The Sheets">Between The Sheets</a>
+						</div>
+					</div></td>
+					<td class="t_left"><div class="wrap wrapArtistName">
+						<div id="artistName" class="ellipsis" style="max-width:122px">
+							<a href="javascript:melon.link.goArtistDetail('787822');melon.link.goSearchLog('web_song','SONG', 'AR', '에잇','5428811');" title="Fall On Your Sword - 페이지 이동" class="fc_mgray">Fall On Your Sword</a>
+							<span class="checkEllipsisSongdefaultList" style="display:none"><a href="javascript:melon.link.goArtistDetail('787822');melon.link.goSearchLog('web_song','SONG', 'AR', '에잇','5428811');" title="Fall On Your Sword - 페이지 이동" class="fc_mgray">Fall On Your Sword</a></span>
+						</div>
+						
+					</div></td>
+					<td class="t_left"><div class="wrap">
+						<div class="ellipsis" style="max-width:90%">
+							<a href="javascript:searchLog('web_song','SONG','AL','에잇','5428811');melon.link.goAlbumDetail('2287357');" title="28 Hotel Rooms (트웬티 에잇 호텔 룸스) - 페이지 이동" class="fc_mgray">28 Hotel Rooms (트웬티 <b>에잇</b> 호텔 룸스)</a>
+						</div>
+					</div></td>
+					<td class="t_left"><div class="wrap right_none">
+						<button type="button" class="btn_icon like" title="Between The Sheets 좋아요 " data-song-no="5428811" data-song-menuId="26020103" onclick="searchLog('web_song','SONG','SO','에잇','5428811');">
+							<span class="odd_span">좋아요</span>
+							<span class="cnt"><span class="none">총건수</span>0</span>
+						</button>
+					</div></td>
+					<td><div class="wrap pd_none left">
+						<button type="button" disabled="disabled" class="btn_icon mv disabled" title="뮤직비디오" onClick="searchLog('web_song','SONG','MV','에잇','5428811');melon.link.goMvDetail('26020103', '5428811','song');"><span class="odd_span">뮤직비디오</span></button>
+					</div></td>
+					<td><div class="wrap pd_none right">
+						<button type="button"  class="btn_icon dl" title="다운로드" onClick="searchLog('web_song','SONG','SO','에잇','5428811');melon.buy.goBuyProduct('frm_defaultList', '5428811', '3C0001', '','0', '26020103');"><span class="odd_span">다운</span></button>
+					</div></td>
+				</tr>
+				
+				<tr >
+					<td><div class="wrap pd_none left">
+						<input type="checkbox" title="The B*****b Chronicles 곡 선택" class="input_check" name="input_check" value="5428812" />
+					</div></td>
+					<td class="no"><div class="wrap">36</div></td>
+					<td class="t_left"><div class="wrap pd_none">
+						<div class="ellipsis" style="max-width:100%">
+							<button type="button" class="btn_icon play" title="재생" onClick="searchLog('web_song','SONG','SO','에잇','5428812');melon.play.playSong('26020103',5428812);"><span class="odd_span">재생</span></button>
+							<button type="button" class="btn_icon add" title="담기" onClick="searchLog('web_song','SONG','SO','에잇','5428812');melon.play.addPlayList('5428812');"><span class="odd_span">담기</span></button>
+							<a href="javascript:searchLog('web_song','SONG','SO','에잇','5428812');melon.link.goSongDetail('5428812');" title="곡정보 보기" class="btn btn_icon_detail"><span class="odd_span">The B*****b Chronicles 상세정보 페이지 이동</span></a>
+							
+							
+							
+							
+							
+							
+							<a href="javascript:searchLog('web_song','SONG','SO','에잇','5428812');melon.play.playSong('26020103',5428812);" class="fc_gray" title="The B*****b Chronicles">The B*****b Chronicles</a>
+						</div>
+					</div></td>
+					<td class="t_left"><div class="wrap wrapArtistName">
+						<div id="artistName" class="ellipsis" style="max-width:122px">
+							<a href="javascript:melon.link.goArtistDetail('787822');melon.link.goSearchLog('web_song','SONG', 'AR', '에잇','5428812');" title="Fall On Your Sword - 페이지 이동" class="fc_mgray">Fall On Your Sword</a>
+							<span class="checkEllipsisSongdefaultList" style="display:none"><a href="javascript:melon.link.goArtistDetail('787822');melon.link.goSearchLog('web_song','SONG', 'AR', '에잇','5428812');" title="Fall On Your Sword - 페이지 이동" class="fc_mgray">Fall On Your Sword</a></span>
+						</div>
+						
+					</div></td>
+					<td class="t_left"><div class="wrap">
+						<div class="ellipsis" style="max-width:90%">
+							<a href="javascript:searchLog('web_song','SONG','AL','에잇','5428812');melon.link.goAlbumDetail('2287357');" title="28 Hotel Rooms (트웬티 에잇 호텔 룸스) - 페이지 이동" class="fc_mgray">28 Hotel Rooms (트웬티 <b>에잇</b> 호텔 룸스)</a>
+						</div>
+					</div></td>
+					<td class="t_left"><div class="wrap right_none">
+						<button type="button" class="btn_icon like" title="The B*****b Chronicles 좋아요 " data-song-no="5428812" data-song-menuId="26020103" onclick="searchLog('web_song','SONG','SO','에잇','5428812');">
+							<span class="odd_span">좋아요</span>
+							<span class="cnt"><span class="none">총건수</span>0</span>
+						</button>
+					</div></td>
+					<td><div class="wrap pd_none left">
+						<button type="button" disabled="disabled" class="btn_icon mv disabled" title="뮤직비디오" onClick="searchLog('web_song','SONG','MV','에잇','5428812');melon.link.goMvDetail('26020103', '5428812','song');"><span class="odd_span">뮤직비디오</span></button>
+					</div></td>
+					<td><div class="wrap pd_none right">
+						<button type="button"  class="btn_icon dl" title="다운로드" onClick="searchLog('web_song','SONG','SO','에잇','5428812');melon.buy.goBuyProduct('frm_defaultList', '5428812', '3C0001', '','0', '26020103');"><span class="odd_span">다운</span></button>
+					</div></td>
+				</tr>
+				
+				<tr >
+					<td><div class="wrap pd_none left">
+						<input type="checkbox" title="Naked On The Balcony 곡 선택" class="input_check" name="input_check" value="5428817" />
+					</div></td>
+					<td class="no"><div class="wrap">37</div></td>
+					<td class="t_left"><div class="wrap pd_none">
+						<div class="ellipsis" style="max-width:100%">
+							<button type="button" class="btn_icon play" title="재생" onClick="searchLog('web_song','SONG','SO','에잇','5428817');melon.play.playSong('26020103',5428817);"><span class="odd_span">재생</span></button>
+							<button type="button" class="btn_icon add" title="담기" onClick="searchLog('web_song','SONG','SO','에잇','5428817');melon.play.addPlayList('5428817');"><span class="odd_span">담기</span></button>
+							<a href="javascript:searchLog('web_song','SONG','SO','에잇','5428817');melon.link.goSongDetail('5428817');" title="곡정보 보기" class="btn btn_icon_detail"><span class="odd_span">Naked On The Balcony 상세정보 페이지 이동</span></a>
+							
+							
+							
+							
+							
+							
+							<a href="javascript:searchLog('web_song','SONG','SO','에잇','5428817');melon.play.playSong('26020103',5428817);" class="fc_gray" title="Naked On The Balcony">Naked On The Balcony</a>
+						</div>
+					</div></td>
+					<td class="t_left"><div class="wrap wrapArtistName">
+						<div id="artistName" class="ellipsis" style="max-width:122px">
+							<a href="javascript:melon.link.goArtistDetail('787822');melon.link.goSearchLog('web_song','SONG', 'AR', '에잇','5428817');" title="Fall On Your Sword - 페이지 이동" class="fc_mgray">Fall On Your Sword</a>
+							<span class="checkEllipsisSongdefaultList" style="display:none"><a href="javascript:melon.link.goArtistDetail('787822');melon.link.goSearchLog('web_song','SONG', 'AR', '에잇','5428817');" title="Fall On Your Sword - 페이지 이동" class="fc_mgray">Fall On Your Sword</a></span>
+						</div>
+						
+					</div></td>
+					<td class="t_left"><div class="wrap">
+						<div class="ellipsis" style="max-width:90%">
+							<a href="javascript:searchLog('web_song','SONG','AL','에잇','5428817');melon.link.goAlbumDetail('2287357');" title="28 Hotel Rooms (트웬티 에잇 호텔 룸스) - 페이지 이동" class="fc_mgray">28 Hotel Rooms (트웬티 <b>에잇</b> 호텔 룸스)</a>
+						</div>
+					</div></td>
+					<td class="t_left"><div class="wrap right_none">
+						<button type="button" class="btn_icon like" title="Naked On The Balcony 좋아요 " data-song-no="5428817" data-song-menuId="26020103" onclick="searchLog('web_song','SONG','SO','에잇','5428817');">
+							<span class="odd_span">좋아요</span>
+							<span class="cnt"><span class="none">총건수</span>0</span>
+						</button>
+					</div></td>
+					<td><div class="wrap pd_none left">
+						<button type="button" disabled="disabled" class="btn_icon mv disabled" title="뮤직비디오" onClick="searchLog('web_song','SONG','MV','에잇','5428817');melon.link.goMvDetail('26020103', '5428817','song');"><span class="odd_span">뮤직비디오</span></button>
+					</div></td>
+					<td><div class="wrap pd_none right">
+						<button type="button"  class="btn_icon dl" title="다운로드" onClick="searchLog('web_song','SONG','SO','에잇','5428817');melon.buy.goBuyProduct('frm_defaultList', '5428817', '3C0001', '','0', '26020103');"><span class="odd_span">다운</span></button>
+					</div></td>
+				</tr>
+				
+				
+			</tbody>
+		</table>
+		<div class="wrap_btn_tb bottom">
+			<button type="button" title="곡 목록 전체 선택" class="btn_base short check_all d_checkall"><span class="odd_span"><span class="even_span">전체선택</span></span></button>
+			<button type="button" title="선택된 곡 재생 - 새 창" class="btn_base short play d_listen" onClick="searchLog('web_song','SONG','SO','에잇','','frm_defaultList');melon.play.playFormSong('26020103','frm_defaultList');"><span class="odd_span"><span class="even_span">듣기</span></span></button>
+			<button type="button" title="선택된 곡 다운로드 - 새 창" class="btn_base short download d_download" onClick="searchLog('web_song','SONG','SO','에잇','','frm_defaultList');melon.buy.goBuyProduct('frm_defaultList','','3C0001','input_check','0','26020103');"><span class="odd_span"><span class="even_span">다운</span></span></button>
+			<button type="button" title="선택된 곡 담기 - 새 창" class="btn_base short scrap d_scrap" onClick="searchLog('web_song','SONG','SO','에잇','','frm_defaultList');melon.play.addFormPlayList('frm_defaultList');"><span class="odd_span"><span class="even_span">담기</span></span></button>
+			<button type="button" title="선택된 곡 선물하기 - 새 창" class="btn_base short gift d_gift" onClick="searchLog('web_song','SONG','SO','에잇','','frm_defaultList');melon.buy.goPresent('song', 'frm_defaultList', '26020103');"><span class="odd_span"><span class="even_span">선물</span></span></button>
+		</div>
+	</div>
+	</form>
+	<!-- 곡1 목록 -->
+	<script type="text/javascript">
+	$(function(){
+		var isTotalPage = false;
+		if('song' == 'total'){
+			isTotalPage = true;
+		}
+		//isTotalPage = false;
+		if(!isTotalPage){
+			/* 좋아요 셋팅부 */
+			var LIKE_SET = {
+				likeCnt  : "<span class=\"odd_span\">{TXT}</span>\n<span class=\"cnt\">\n<span class=\"none\">총건수</span>\n{CNT}</span>",
+				likeObj  : $('div.d_song_list button.like'),
+				likeAttr : 'data-song-no',
+				likeUrl  : '/commonlike/getSongLike.json'
+			};
+
+			/* 좋아요 공통부 */
+			var contsIdList = LIKE_SET['likeObj'].map(function() { return $(this).attr(LIKE_SET['likeAttr']); }).get().join(',');
+			var tmpl, title;
+			if ( contsIdList === '' || contsIdList === null  ) { return; }
+			$.get(LIKE_SET['likeUrl'], { contsIds : contsIdList }, function(data) {
+				var robj;
+				$.each(data.contsLike, function(i, v) {
+					var SUMMCNT = MELON.WEBSVC.number.addComma(v.SUMMCNT);
+					robj  = LIKE_SET['likeObj'].eq(i);
+					tmpl  = LIKE_SET['likeCnt'];
+					title = robj.attr('title').split(' 좋아요');
+					robj[v.LIKEYN == 'Y' ? 'addClass' : 'removeClass']('on').attr('title', title[0] + (v.LIKEYN == 'Y' ? ' 좋아요 취소' : ' 좋아요'));
+					robj.html(
+						tmpl.replace(/\{TXT\}/g, (v.LIKEYN == 'Y' ? '좋아요 취소' : '좋아요')).replace(/\{CNT\}/g, SUMMCNT)
+					);
+				});
+			}).done(function(){
+				var ellipsisObj = $('div.d_song_list .checkEllipsisSongdefaultList');
+				WEBELLIPSIS.ellipsis(ellipsisObj,"songType",122);
+			});
+		}else{
+			var ellipsisObj = $('div.d_song_list .checkEllipsisSongdefaultList');
+			WEBELLIPSIS.ellipsis(ellipsisObj,"songType",122);
+		}
+
+		/* 리스트 다중 선택 */
+		$('.input_check').optShift();
+	});
+	</script>
+<script type="text/javascript">
+$(document).ready(function(){
+$('#pageObjNavgation').html("\u003Cdiv class=\"paginate\"\u003E\u003Ca href=\"javascript:;\" class=\"btn_first disabled\"\u003E\u003Cspan\u003E맨처음\u003C\/span\u003E\u003C\/a\u003E \u003Ca href=\"javascript:;\" class=\"btn_pre disabled\"\u003E\u003Cspan\u003E이전\u003C\/span\u003E\u003C\/a\u003E \u003Cspan class=\"page_num\"\u003E\u003Cstrong\u003E\u003Cspan class=\"none\"\u003E현재페이지\u003C\/span\u003E1\u003C\/strong\u003E\u003C\/span\u003E \u003Ca href=\"javascript:;\" class=\"btn_next disabled\"\u003E\u003Cspan\u003E다음\u003C\/span\u003E\u003C\/a\u003E \u003Ca href=\"javascript:;\" class=\"btn_last disabled\"\u003E\u003Cspan\u003E맨끝\u003C\/span\u003E\u003C\/a\u003E\u003C\/div\u003E")
+});
+</script>
+
+	<script type="text/javascript">
+		$('#pageObjNavgation').show();
+	</script>
+

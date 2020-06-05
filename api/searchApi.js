@@ -2,7 +2,7 @@ import express from 'express';
 import { melon, ytMusic, mediaSearch } from "../modules";
 const getPList = melon.getPList;
 const getListInfo = melon.getListInfo;
-const searchMelon = melon.searchMelon;
+const searchMelon = melon;
 const searchYT = ytMusic.searchYt;
 const searchMedia = mediaSearch.searchMedia;
 import crypto from 'crypto';
@@ -196,65 +196,110 @@ app.post("/searchQuery", (req, res) => {
     const option = req.body.searchOption.replace(/(\s*)/g,"");
     const query = req.body.searchQuery;
     if (!option || !query) {
-    res.status(400);
-    return res.end("Bad Request");
+        res.status(400);
+        return res.end("Bad Request");
     }
 
-    // let selected = [];
+    let stCode = 200;
 
-    // switch (option) {
-    //   case "*":
-    //     console.log("Full option inbounded");
-    //     selected = searchOptions;
-
-    //   default:
-    //     console.log(`${option} selected`);
-    //     option.split(",").forEach((val) => selected.push(val));
-    // }
-
-    let result = [];
-    let searchMediaC = false;
-    let searchYTC = false;
-    let searchMelonC = false;
+    let searchResult = {
+        "media": "",
+        "yt": "",
+        "melon": ""
+    };
 
     searchMedia(query)
     .then((mediaResult) => {
-        console.log(mediaResult);
-        searchMediaC = mediaResult;
+        searchComplete("media", mediaResult);
     })
     .catch((e) => {
         console.error(e);
-        searchMediaC = "ERR";
+        searchComplete("media", null, e);
     })
 
     searchYT(query)
-    .then((data) => {
-        console.log(mediaResult);
-        searchMediaC = mediaResult;
+    .then((ytResult) => {
+        searchComplete("yt", ytResult);
     })
     .catch((e) => {
         console.error(e);
-        searchMediaC = "ERR";
+        searchComplete("yt", null, e);
     })
 
-    
+    searchMelon(query)
+    .then((ytResult) => {
+        searchComplete("melon", ytResult);
+    })
+    .catch((e) => {
+        console.error(e);
+        searchComplete("melon", null, e);
+    })
 
-    
+    let tried_counter = 0;
 
-    searchMediaC.registerListener(function (val) {
-        if (val == "ERR") a // return response error
-        else console.log("media searching complete");
-    });
-
-    switch (option) {
-
+    function searchComplete(type, data, err) {
+        if (err) { 
+            stCode = 500;
+            searchResult[type].err = err;
+         }
+        if (data) searchResult[type].data = data;
+        tried_counter++;
+        if (tried_counter == 3) {
+            searchFiltering(searchResult, option.split(","))
+            .then((filterData) => {
+                // console.log(filterData);    
+                res.status(stCode).json(filterData);
+            });
+        }
     }
+
+    // searchMediaC.registerListener(function (val) {
+    //     if (val.stat == "ERR") res.status(500).end(`ERR: ${val.errCont}`) // return response error
+    //     else console.log("media searching complete");
+    // });
   
 
   
 
 
 })
+
+
+function searchFiltering(searchResult, filter) {
+
+    // filter not ready
+
+    let isEnd = false;
+    return new Promise((resolve, reject) => {
+        const wildcard = ["*", "_"];
+        filter.find((obj) => {
+            if (wildcard.includes(obj) && !isEnd) {
+                isEnd = true;
+                resolve(searchResult);
+            }
+        })
+        if (!isEnd) switch (filter) {
+            case "title":
+                
+                // resolve();
+                // break;
+
+            case "lyrics":
+
+                // resolve();
+                // break;
+
+            case "singer":
+
+                // resolve();
+                // break;
+
+            default:
+                resolve(searchResult);
+        }
+    })
+}
+
 
 // app.post('/searchQuery', (req, res) => {
 //   console.log("searchQuery API");
