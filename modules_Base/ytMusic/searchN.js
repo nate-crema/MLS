@@ -85,12 +85,14 @@ function searchYTM(searchKey, filter) {
             headers: searchData.headers
         })
         .then(({data}) => {
-            // fs.appendFileSync("test.json", JSON.stringify(data));
+            fs.appendFileSync("test.json", JSON.stringify(data.contents.sectionListRenderer.contents));
             // console.log(data);
             const ytData = data.contents.sectionListRenderer.contents;
             // console.log(ytData);
             let songObjs = [];
             let videoObjs = [];
+            let artistObjs = [];
+            let albumObjs = [];
             ytData.forEach((value, index) => {
                 // console.log(songs);
                 if (value.musicShelfRenderer.title) switch (value.musicShelfRenderer.title.runs[0].text) {
@@ -177,15 +179,108 @@ function searchYTM(searchKey, filter) {
                         })
                         break;
                     case "아티스트":
+                        const artists = value.musicShelfRenderer.contents;
+                        artists.forEach((artist, index) => {
+                            let artistObj = {}
+                            // console.log(song);
+                            let dataObj = artist.musicResponsiveListItemRenderer.flexColumns;
+                            // let menuObj = artist.musicResponsiveListItemRenderer.menu.items;
+                            // console.log(dataObj);
+                            dataObj.forEach((specData, specIndex) => {
+                                // console.log(specData);
+                                let contData = specData.musicResponsiveListItemFlexColumnRenderer;
+                                switch (specIndex) {
+                                    case 0:
+                                        artistObj.name = contData.text.runs[0].text;
+                                        break;
+                                    case 2:
+                                        artistObj.subscriber = contData.text.runs[0].text.replace("구독자 ", "").replace("명", "");
+                                        artistObj.subscriberConvert = artistObj.subscriber.replace("만", "") * 10000;
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            })
+                            // menuObj.forEach((menuCont, index) => {
+                            //     switch (index) {
+                            //         case 0:
+                            //             // artistObj.artistMix = menuCont.navigationEndpoint.watchPlaylistEndpoint.playlistId;
+                            //             break;
+                            //     }
+                            // })
+                            artistObj.servicePageId = artist.musicResponsiveListItemRenderer.navigationEndpoint.browseEndpoint.browseId;
+                            artistObj.servicePageURL = `https://music.youtube.com/channel/${artist.musicResponsiveListItemRenderer.navigationEndpoint.browseEndpoint.browseId}`;
+
+                            let thumbnailObj = artist.musicResponsiveListItemRenderer.thumbnail;
+                            artistObj.thumbnail = thumbnailObj.musicThumbnailRenderer.thumbnail.thumbnails;
+
+                            artistObjs.push(artistObj);
+                        })
+                        break;
                     case "앨범":
+                        const albums = value.musicShelfRenderer.contents;
+                        albums.forEach((album, index) => {
+                            let albumObj = {}
+                            // console.log(song);
+                            let dataObj = album.musicResponsiveListItemRenderer.flexColumns;
+                            // let menuObj = album.musicResponsiveListItemRenderer.menu.items;
+                            // console.log(dataObj);
+                            dataObj.forEach((specData, specIndex) => {
+                                // console.log(specData);
+                                let contData = specData.musicResponsiveListItemFlexColumnRenderer;
+                                switch (specIndex) {
+                                    case 0:
+                                        albumObj.title = contData.text.runs[0].text;
+                                        break;
+                                    case 1:
+                                        albumObj.type = contData.text.runs[0].text;
+                                        break;
+                                    case 2:
+                                        albumObj.artist = contData.text.runs[0].text;
+                                        break;
+                                    case 3:
+                                        albumObj.openDate = contData.text.runs[0].text;
+                                        break;
+                                    default:
+                                        break;
+                                }
+                                console.log(Object.keys(album.musicResponsiveListItemRenderer));
+                                if (album.musicResponsiveListItemRenderer.overlay) {
+                                    albumObj.albumId = album.musicResponsiveListItemRenderer.overlay.musicItemThumbnailOverlayRenderer.content.musicPlayButtonRenderer.playNavigationEndpoint.watchPlaylistEndpoint.playlistId;
+                                    albumObj.albumURL = `https://music.youtube.com/playlist?list=${albumObj.albumId}`;
+                                }
+                            })
+                            // menuObj.forEach((menuCont, index) => {
+                            //     switch (index) {
+                            //         case 0:
+                            //             // albumObj.albumMix = menuCont.navigationEndpoint.watchPlaylistEndpoint.playlistId;
+                            //             break;
+                            //     }
+                            // })
+                            albumObj.servicePageId = album.musicResponsiveListItemRenderer.navigationEndpoint.browseEndpoint.browseId;
+                            albumObj.servicePageURL = `https://music.youtube.com/channel/${album.musicResponsiveListItemRenderer.navigationEndpoint.browseEndpoint.browseId}`;
+
+                            let thumbnailObj = album.musicResponsiveListItemRenderer.thumbnail;
+                            albumObj.thumbnail = thumbnailObj.musicThumbnailRenderer.thumbnail.thumbnails;
+
+                            albumObjs.push(albumObj);
+                        })
                     case "재생목록":
                     default: break;
                 }
 
                 if (index == ytData.length - 1) { //end
                     // console.log(songObjs);
-                    console.log(videoObjs);
-                    // fs.appendFileSync("result.json", JSON.stringify(songObjs));
+                    // console.log(videoObjs);
+                    // console.log(artistObjs);
+                    console.log(albumObjs);
+                    
+                    fs.appendFileSync("result.json", JSON.stringify({
+                        songObjs: songObjs,
+                        videoObjs: videoObjs,
+                        artistObjs: artistObjs,
+                        albumObjs: albumObjs
+                    }));
                 }
             });
 
