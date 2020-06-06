@@ -2,7 +2,7 @@ const axios = require("axios");
 const cheerio = require("cheerio");
 const fs = require("fs");
 
-searchYTM("eight", "*");
+searchYTM("사랑하게 될 줄 알았어", "*");
 
 function searchYTM(searchKey, filter) {
 
@@ -85,11 +85,12 @@ function searchYTM(searchKey, filter) {
             headers: searchData.headers
         })
         .then(({data}) => {
-            fs.appendFileSync("test.json", JSON.stringify(data));
+            // fs.appendFileSync("test.json", JSON.stringify(data));
             // console.log(data);
             const ytData = data.contents.sectionListRenderer.contents;
             // console.log(ytData);
             let songObjs = [];
+            let videoObjs = [];
             ytData.forEach((value, index) => {
                 // console.log(songs);
                 if (value.musicShelfRenderer.title) switch (value.musicShelfRenderer.title.runs[0].text) {
@@ -136,7 +137,45 @@ function searchYTM(searchKey, filter) {
 
                             songObjs.push(songObj);
                         })
+                        break;
                     case "동영상":
+                        const videos = value.musicShelfRenderer.contents;
+                        videos.forEach((video, index) => {
+                            let videoObj = {}
+                            // console.log(song);
+                            let dataObj = video.musicResponsiveListItemRenderer.flexColumns;
+                            // console.log(dataObj);
+                            dataObj.forEach((specData, specIndex) => {
+                                // console.log(specData);
+                                let contData = specData.musicResponsiveListItemFlexColumnRenderer;
+                                switch (specIndex) {
+                                    case 0:
+                                        videoObj.title = contData.text.runs[0].text;
+                                        break;
+                                    case 2:
+                                        videoObj.uploader = contData.text.runs[0].text;
+                                        // videoObj.servicePageId = contData.text.runs[0].navigationEndpoint.browseEndpoint.browseId;
+                                        // videoObj.servicePageURL = "https://music.youtube.com/channel/" + contData.text.runs[0].navigationEndpoint.browseEndpoint.browseId;
+                                        break;
+                                    case 3:
+                                        var viewcount = contData.text.runs[0].text.replace("조회수 ", "").replace("회", "");
+                                        videoObj.viewCount = viewcount;
+                                        viewcount.includes("만") ? videoObj.viewCountConvert = viewcount.replace("만", "") * 10000 : viewcount;
+                                        break;
+                                    case 4:
+                                        videoObj.duration = contData.text.runs[0].text;
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            })
+                            // console.log(value.musicShelfRenderer.title);
+                            let thumbnailObj = video.musicResponsiveListItemRenderer.thumbnail;
+                            videoObj.thumbnail = thumbnailObj.musicThumbnailRenderer.thumbnail.thumbnails;
+
+                            videoObjs.push(videoObj);
+                        })
+                        break;
                     case "아티스트":
                     case "앨범":
                     case "재생목록":
@@ -144,8 +183,9 @@ function searchYTM(searchKey, filter) {
                 }
 
                 if (index == ytData.length - 1) { //end
-                    console.log(songObjs);
-                    fs.appendFileSync("result.json", JSON.stringify(songObjs));
+                    // console.log(songObjs);
+                    console.log(videoObjs);
+                    // fs.appendFileSync("result.json", JSON.stringify(songObjs));
                 }
             });
 
@@ -156,6 +196,6 @@ function searchYTM(searchKey, filter) {
     }) 
 }
 
-export default {
-    searchYTM
-}
+// export default {
+//     searchYTM
+// }
