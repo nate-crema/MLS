@@ -6,7 +6,7 @@ const async = require("async");
 
 // searchMelonTitle("IU 시간의 바깥");
 
-function searchMelonTitle(searchKey) {
+function searchMelonArtist(searchKey) {
 
     return new Promise((resolve, reject) => {
         let song = [];
@@ -91,5 +91,5 @@ function searchMelonTitle(searchKey) {
 }
 
 export default {
-    searchMelonTitle
+    searchMelonArtist
 }
