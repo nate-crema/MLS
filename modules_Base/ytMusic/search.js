@@ -157,6 +157,6 @@ function searchYTM(searchKey, filter) {
     }) 
 }
 
-// export default {
-//     searchYTM
-// }
+export default {
+    searchYTM
+}

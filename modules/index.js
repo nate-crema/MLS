@@ -10,7 +10,7 @@ module.exports = {
         getPList,
         getListInfo,
         // searchMelon: searchMelon.default.searchMelon
-        searchMelon: searchMelonN.title
+        searchMelon: searchMelonN.title.default.searchMelonTitle
     },
     ytMusic: {
         searchYt: searchYt.default.searchYTM

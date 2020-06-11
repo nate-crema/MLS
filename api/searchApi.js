@@ -1,9 +1,9 @@
 import express from 'express';
-import { melon, ytMusic, mediaSearch } from "../modules";
+import { melon, ytMusic, mediaSearch } from "../modules_Base";
 const getPList = melon.getPList;
 const getListInfo = melon.getListInfo;
-const searchMelon = melon;
-const searchYT = ytMusic.searchYt;
+const searchMelon = melon.search.title;
+const searchYT = ytMusic.search.searchYt;
 const searchMedia = mediaSearch.searchMedia;
 import crypto from 'crypto';
 import axios from "axios";
@@ -199,57 +199,71 @@ app.post("/searchQuery", (req, res) => {
         res.status(400);
         return res.end("Bad Request");
     }
+    
+    let tried_counter = 0;
 
     let stCode = 200;
 
     let searchResult = {
-        "media": "",
-        "yt": "",
-        "melon": ""
+        "media": {},
+        "yt": {},
+        "melon": {}
     };
 
     searchMedia(query)
     .then((mediaResult) => {
+        console.log(`Search Requested: Media`);
         searchComplete("media", mediaResult);
     })
     .catch((e) => {
+        console.log(`Error Occured: media`);
         console.error(e);
         searchComplete("media", null, e);
     })
 
-    searchYT(query)
-    .then((ytResult) => {
-        searchComplete("yt", ytResult);
-    })
-    .catch((e) => {
-        console.error(e);
-        searchComplete("yt", null, e);
-    })
-
+    console.log(`Search Requested: Melon`);
     searchMelon(query)
-    .then((ytResult) => {
-        searchComplete("melon", ytResult);
+    .then((melonResult) => {
+        console.log(`Search Complete: Melon`);
+        searchComplete("melon", melonResult);
     })
     .catch((e) => {
+        console.log(`Error Occured: melon`);
         console.error(e);
         searchComplete("melon", null, e);
     })
 
-    let tried_counter = 0;
+    searchYT(query)
+    .then((ytResult) => {
+        console.log(`Search Requested: YTM`);
+        searchComplete("yt", ytResult);
+    })
+    .catch((e) => {
+        console.log(`Error Occured: ytm`);
+        console.error(e);
+        searchComplete("yt", null, e);
+    })
+
 
     function searchComplete(type, data, err) {
         if (err) { 
             stCode = 500;
             searchResult[type].err = err;
-         }
+        }
+        console.log(`${type} completes || total finish: ${++tried_counter}`);
         if (data) searchResult[type].data = data;
-        tried_counter++;
         if (tried_counter == 3) {
-            searchFiltering(searchResult, option.split(","))
+            const searchAllianced = searchAlliance(searchResult);
+            searchFiltering(searchAllianced, option.split(","), "*")
             .then((filterData) => {
-                // console.log(filterData);    
-                res.status(stCode).json(filterData);
-            });
+                console.log(filterData);    
+                // res.status(stCode).json(filterData);
+                res.status(200).json(filterData);
+            })
+            .catch((e) => {
+                console.error(e);
+                res.status(stCode).json({});
+            })
         }
     }
 
@@ -264,38 +278,57 @@ app.post("/searchQuery", (req, res) => {
 
 })
 
+function searchAlliance(searchResult) {
+    let resData = [];
+    if (!searchResult.melon) return new Array(0);
+    // searchResult.melon.data.forEach((song, index) => {
+    //     // album
+    //     const { albumId, albumImg, albumTitle } = song.album;
+    //     // artist
+    //     const { artistName, artistId, artistImg } = song.artist;
+    //     // song
+    //     const { lyrics, songId, songImg, songTitle } = song.song;
+    //     const songKey = util.getUid(20);
+        
+    //     searchYT(`${songTitle}  ${artistName}`)
+    //     .then((ytspecSearch) => {
+    //         ytspecSearch.songObj
+    //     })
+
+    // })
+    return searchResult;
+}
 
 function searchFiltering(searchResult, filter) {
 
     // filter not ready
 
-    let isEnd = false;
     return new Promise((resolve, reject) => {
-        const wildcard = ["*", "_"];
-        filter.find((obj) => {
-            if (wildcard.includes(obj) && !isEnd) {
-                isEnd = true;
-                resolve(searchResult);
-            }
-        })
-        if (!isEnd) switch (filter) {
+        if (filter.includes("*")) {
+            resolve(searchResult);
+        } else if (filter.includes("_")) {
+            resolve({});
+        } else switch (filter) {
             case "title":
+
                 
-                // resolve();
-                // break;
+            
+            // resolve();
+            // break;
 
             case "lyrics":
 
-                // resolve();
-                // break;
+            // resolve();
+            // break;
 
             case "singer":
 
-                // resolve();
-                // break;
+            // resolve();
+            // break;
 
             default:
-                resolve(searchResult);
+                // resolve(searchResult);
+                break;
         }
     })
 }

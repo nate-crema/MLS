@@ -23,7 +23,7 @@ const async = require("async");
 
 function searchMelonSong(searchKey) {
 
-    console.log("prepare for searching...");
+    console.log("prepare for searching... : melon");
 
     let endCounter = {
         aInternal: 0,
@@ -43,13 +43,13 @@ function searchMelonSong(searchKey) {
     return new Promise((resolve, reject) => {
         let song = [];
         axios.get("https://www.melon.com/search/song/index.htm?q=" + encodeURI(searchKey))
-        .then(({data}) => {
+        .then(({ data }) => {
             // fs.writeFileSync(path.join(__dirname, "test.html"), data, {encoding: "UTF-8"});
             const $ = cheerio.load(data);
             const songInfos = $("tr td.t_left");
             var counter = 0;
             // console.log(songInfos.length);
-
+            console.log("start filtering... : melon");
             for (var i = 0; i < songInfos.length; i += 4) {
 
                 async.waterfall([
@@ -62,6 +62,7 @@ function searchMelonSong(searchKey) {
                             if (possibility.includes(checkbody[z])) artistId += checkbody[z];
                             else break;
                         }
+                        console.log(`artistId: ${artistId}`);
                         const artistName = songInfos[i + 1].children[0].children[1].children[1].attribs.title.replace(" - 페이지 이동","");
                         const menuId = songInfos[i].children[0].children[1].children[1].attribs.onclick.split("melon.play.playSong('")[1].split("',")[0].replace(");", "");
                         const songId = songInfos[i].children[0].children[1].children[1].attribs.onclick.split("melon.play.playSong('")[1].split("',")[1].replace(");", "");
@@ -77,8 +78,9 @@ function searchMelonSong(searchKey) {
                             callback(null, songTitle, artistId, artistName, menuId, songId, albumId, albumTitle, songImg);
                         })
                         .catch((e) => {
-                            // callback(e);
-                            callback(null, songTitle, artistId, artistName, menuId, songId, albumId, albumTitle, null);
+                            console.log("MELON_API_ERROR: " + e);
+                            callback(e);
+                            // callback(null, songTitle, artistId, artistName, menuId, songId, albumId, albumTitle, null);
                         })
                     },
                     (songTitle, artistId, artistName, menuId, songId, albumId, albumTitle, songImg, callback) => {
@@ -89,8 +91,9 @@ function searchMelonSong(searchKey) {
                             callback(null, songTitle, artistId, artistName, menuId, songId, albumId, albumTitle, songImg, albumImg);
                         })
                         .catch((e) => {
-                            // callback(e);
-                            callback(null, songTitle, artistId, artistName, menuId, songId, albumId, albumTitle, songImg, null);
+                            console.log("MELON_API_ERROR: " + e);
+                            callback(e);
+                            // callback(null, songTitle, artistId, artistName, menuId, songId, albumId, albumTitle, songImg, null);
                         })
                     },
                     (songTitle, artistId, artistName, menuId, songId, albumId, albumTitle, songImg, albumImg, callback) => {
@@ -102,11 +105,23 @@ function searchMelonSong(searchKey) {
                             callback(null, songTitle, artistId, artistName, menuId, songId, albumId, albumTitle, songImg, albumImg, artistImg);
                         })
                         .catch((e) => {
-                            // callback(e);
-                            callback(null, songTitle, artistId, artistName, menuId, songId, albumId, albumTitle, songImg, albumImg, null);
+                            console.log("MELON_API_ERROR: " + e);
+                            callback(e);
+                            // callback(null, songTitle, artistId, artistName, menuId, songId, albumId, albumTitle, songImg, albumImg, null);
+                        })
+                    },
+                    (songTitle, artistId, artistName, menuId, songId, albumId, albumTitle, songImg, albumImg, artistImg, callback) => {
+                        axios.get(`https://www.melon.com/webplayer/getLyrics.json?songId=${songId}`)
+                        .then(({ data }) => {
+                            callback(null, songTitle, artistId, artistName, menuId, songId, albumId, albumTitle, songImg, albumImg, artistImg, data)                            
+                        })
+                        .catch((e) => {
+                            console.log("MELON_API_ERROR: " + e);
+                            callback(e);
+                            // callback(null, songTitle, artistId, artistName, menuId, songId, albumId, albumTitle, songImg, albumImg, artistImg, null);
                         })
                     }
-                ], (err,  songTitle, artistId, artistName, menuId, songId, albumId, albumTitle, songImg, albumImg, artistImg) => {
+                ], (err,  songTitle, artistId, artistName, menuId, songId, albumId, albumTitle, songImg, albumImg, artistImg, lyrics) => {
                         if (err) {
                             console.error(err);
                         } else {
@@ -127,6 +142,7 @@ function searchMelonSong(searchKey) {
                                     menuId,
                                     songId,
                                     songImg,
+                                    lyrics,
                                     linkConvert: "https://www.melon.com/song/detail.htm?songId=" + songId
                                 }
                             })

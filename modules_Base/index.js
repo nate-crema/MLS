@@ -1,7 +1,7 @@
 const getPList = require("./melon/getPList");
 const getListInfo = require("./melon/getListInfo");
 const searchMelonN = require("./melonN");
-const searchYt = require("./ytMusic/search");
+const searchYt = require("./ytMusic/searchN");
 const searchMedia = require("./justWatch/findMedia");
 
 module.exports = {
@@ -11,12 +11,12 @@ module.exports = {
             getListInfo
         },
         search: {
-            title: searchMelonN.title
+            title: searchMelonN.title.default.searchMelonSong
         }
     },
     youtube: {
         search: {
-
+            
         }
     },
     ytMusic: {

@@ -1,11 +1,11 @@
 <template>
   <div>
       <isMediaComp :mediaTypeText="mediaTypeText"></isMediaComp>
-      <div class="artists" id="artists">
-      </div>
-      <div class="songObjs">
-        <div class="songObj" v-for="(indivSong, index) in searchResult.melonSearch" :key="index">
-          <svg version="1.1" id="lg_imgA" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
+      <!-- <div class="artists" id="artists">
+      </div> -->
+      <div class="songObjs" v-if="searchResult.melon">
+        <div class="songObj" v-for="(indivSong, index) in searchResult.melon.data" :key="index">
+          <!-- <svg version="1.1" id="lg_imgA" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
           y="0px" viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve">
             <circle cx="50.79" cy="50.79" r="36.79"/>
             <g opacity="0.13">
@@ -16,12 +16,28 @@
             <circle opacity="0.81" fill="#FFFFFF" cx="50.79" cy="50.79" r="4.16"/>
             <circle fill="none" stroke="#000000" stroke-width="0.75" stroke-miterlimit="10" cx="50.79" cy="50.79" r="31.7"/>
             <circle fill="none" stroke="#000000" stroke-width="6" stroke-miterlimit="10" cx="50.79" cy="50.79" r="36.79"/>
+          </svg> -->
+          <svg version="1.1" id="lg_imgA" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
+          y="0px" enable-background="new 0 0 100 100" xml:space="preserve">
+              <g id="prefix__lp" transform="translate(-2 -5)">
+                  <circle id="prefix__타원_7" cx="63.759" cy="63.759" r="63.759" data-name="타원 7" transform="translate(14 14)"/>
+                  <g id="prefix__그룹_34" data-name="그룹 34" opacity="0.13" transform="translate(57.274 14)">
+                      <path id="prefix__패스_7" d="M79.957 17.362a64.138 64.138 0 0 0-40.987 0l20.485 60.4z" class="prefix__cls-2" data-name="패스 7" transform="translate(-38.97 -14)"/>
+                      <path id="prefix__패스_8" d="M38.97 111.2a64.086 64.086 0 0 0 40.97 0L59.455 50.79z" class="prefix__cls-2" data-name="패스 8" transform="translate(-38.97 12.969)"/>
+                  </g>
+                  <circle id="prefix__타원_10" cx="54.938" cy="54.938" r="54.938" fill="none" stroke="#000" stroke-miterlimit="10" stroke-width="0.75px" data-name="타원 10" transform="translate(22.821 22.821)"/>
+                  <g filter="url(#prefix__타원_11)" transform="translate(2 5)">
+                      <circle id="prefix__타원_11-2" cx="63.759" cy="63.759" r="63.759" fill="none" stroke="#000" stroke-miterlimit="10" stroke-width="6px" data-name="타원 11" transform="translate(12 9)"/>
+                  </g>
+              </g>
           </svg>
-          <div class="songCover" style="background-size: contain"
+          <div class="background-lpTop" style="background-size: contain"
           :style="{backgroundImage: `url(${indivSong.song.songImg})`}">
+          </div>
+          <div class="songCover">
             <div class="songInfo">
-              <p class="songTitle"></p>
-              <p class="songArtist"></p>
+              <p class="songTitle">{{indivSong.song.songTitle.length > 6 ? indivSong.song.songTitle.substr(0, 5) + "..." : indivSong.song.songTitle}}</p>
+              <p class="songArtist">{{indivSong.artist.artistName.length > 6 ? indivSong.artist.artistName.substr(0, 5) + "..." : indivSong.artist.artistName}}</p>
             </div>
           </div>
         </div>
@@ -182,8 +198,17 @@ export default {
 .songObjs .songObj {
   position: relative;
   display: inline-block;
-  width: 250px;
-  height: 120px;
+  width: 230px;
+  height: 150px;
+}
+.songObjs .background-lpTop {
+  width: 100px;
+  height: 100px;
+  position: absolute;
+  border-radius: 50px;
+  z-index: 100;
+  top: 23px;
+  left: 25px;
 }
 .songObjs #lg_imgA {
   width: 120px;
@@ -191,12 +216,32 @@ export default {
   z-index: 2;
 }
 .songObjs .songCover {
-  width: 120px;
-  height: 120px;
-  border: 1px solid black;
+  width: 140px;
+  height: 140px;
+  /* border: 1px solid black; */
   position: absolute;
-  left: 30px;
+  top: 0px;
+  left: 50px;
   background-color: white;
-  z-index: 5;
+  z-index: 200;
+  border-radius: 9px;
+  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.49);
+}
+.songObjs .songCover .songInfo {
+  border: 1px solid black;
+  width: 80%;
+  height: 80%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.songObjs .songCover .songInfo .songTitle {
+  font-size: 16px;
+  font-weight: 500;
+}
+.songObjs .songCover .songInfo .songArtist {
+  font-size: 12px;
+  font-weight: 300;
 }
 </style>
