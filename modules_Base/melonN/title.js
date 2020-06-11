@@ -66,6 +66,8 @@ function searchMelonSong(searchKey) {
                         const artistName = songInfos[i + 1].children[0].children[1].children[1].attribs.title.replace(" - 페이지 이동","");
                         const menuId = songInfos[i].children[0].children[1].children[1].attribs.onclick.split("melon.play.playSong('")[1].split("',")[0].replace(");", "");
                         const songId = songInfos[i].children[0].children[1].children[1].attribs.onclick.split("melon.play.playSong('")[1].split("',")[1].replace(");", "");
+                        console.log(`songId: ${songId}`);
+                        console.log(`songTitle: ${songTitle}`);
                         const albumId = songInfos[i+2].children[0].children[1].children[1].attribs.href.split("melon.link.goAlbumDetail('")[1].replace("');", "");
                         const albumTitle = songInfos[i + 2].children[0].children[1].children[1].children[0].data;
                         callback(null, songTitle, artistId, artistName, menuId, songId, albumId, albumTitle);
@@ -78,7 +80,8 @@ function searchMelonSong(searchKey) {
                             callback(null, songTitle, artistId, artistName, menuId, songId, albumId, albumTitle, songImg);
                         })
                         .catch((e) => {
-                            console.log("MELON_API_ERROR: " + e);
+                            console.log("MELON_API_ERROR[songDetail]: " + e);
+                            // console.log("MELON_API_ERROR[songDetail]: requestRoute: " + `https://www.melon.com/song/detail.htm?songId=${songId}`);
                             callback(e);
                             // callback(null, songTitle, artistId, artistName, menuId, songId, albumId, albumTitle, null);
                         })
@@ -91,7 +94,7 @@ function searchMelonSong(searchKey) {
                             callback(null, songTitle, artistId, artistName, menuId, songId, albumId, albumTitle, songImg, albumImg);
                         })
                         .catch((e) => {
-                            console.log("MELON_API_ERROR: " + e);
+                            console.log("MELON_API_ERROR[albumInfo]: " + e);
                             callback(e);
                             // callback(null, songTitle, artistId, artistName, menuId, songId, albumId, albumTitle, songImg, null);
                         })
@@ -105,7 +108,7 @@ function searchMelonSong(searchKey) {
                             callback(null, songTitle, artistId, artistName, menuId, songId, albumId, albumTitle, songImg, albumImg, artistImg);
                         })
                         .catch((e) => {
-                            console.log("MELON_API_ERROR: " + e);
+                            console.log("MELON_API_ERROR[artistInfo]: " + e);
                             callback(e);
                             // callback(null, songTitle, artistId, artistName, menuId, songId, albumId, albumTitle, songImg, albumImg, null);
                         })
@@ -116,14 +119,14 @@ function searchMelonSong(searchKey) {
                             callback(null, songTitle, artistId, artistName, menuId, songId, albumId, albumTitle, songImg, albumImg, artistImg, data)                            
                         })
                         .catch((e) => {
-                            console.log("MELON_API_ERROR: " + e);
+                            console.log("MELON_API_ERROR[lyricsInfo]: " + e);
                             callback(e);
                             // callback(null, songTitle, artistId, artistName, menuId, songId, albumId, albumTitle, songImg, albumImg, artistImg, null);
                         })
                     }
                 ], (err,  songTitle, artistId, artistName, menuId, songId, albumId, albumTitle, songImg, albumImg, artistImg, lyrics) => {
                         if (err) {
-                            console.error(err);
+                            // console.error(err);
                         } else {
                             song.push({
                                 artist: {

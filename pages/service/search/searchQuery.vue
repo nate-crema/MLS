@@ -18,7 +18,8 @@
             <circle fill="none" stroke="#000000" stroke-width="6" stroke-miterlimit="10" cx="50.79" cy="50.79" r="36.79"/>
           </svg> -->
           <svg version="1.1" id="lg_imgA" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
-          y="0px" enable-background="new 0 0 100 100" xml:space="preserve">
+          y="0px" enable-background="new 0 0 100 100" xml:space="preserve"
+          :class="`id_${indivSong.song.songId}_lp`">
               <g id="prefix__lp" transform="translate(-2 -5)">
                   <circle id="prefix__타원_7" cx="63.759" cy="63.759" r="63.759" data-name="타원 7" transform="translate(14 14)"/>
                   <g id="prefix__그룹_34" data-name="그룹 34" opacity="0.13" transform="translate(57.274 14)">
@@ -34,7 +35,11 @@
           <div class="background-lpTop" style="background-size: contain"
           :style="{backgroundImage: `url(${indivSong.song.songImg})`}">
           </div>
-          <div class="songCover">
+          <div class="lpFTop">
+            <div class="smallLpFTop"></div>
+          </div>
+          <div class="songCover" @mouseover="mouseOver"
+          :class="`id_${indivSong.song.songId}_contBox`">
             <div class="songInfo">
               <p class="songTitle">{{indivSong.song.songTitle.length > 6 ? indivSong.song.songTitle.substr(0, 5) + "..." : indivSong.song.songTitle}}</p>
               <p class="songArtist">{{indivSong.artist.artistName.length > 6 ? indivSong.artist.artistName.substr(0, 5) + "..." : indivSong.artist.artistName}}</p>
@@ -54,6 +59,13 @@ export default {
 
     components: {
       isMediaComp
+    },
+    methods: {
+      mouseOver: function(element) {
+        // console.log(this);
+        console.log(element.relatedTarget.classList);
+        // console.log(Object.keys(this));
+      }
     },
     data() {
       return {
@@ -143,6 +155,8 @@ export default {
         $("#searchData").focusout(() => {
           $(".searchArea").css("width", "50%");
         })
+
+
       })
 
 
@@ -194,6 +208,7 @@ export default {
   position: relative;
   top: 20px;
   overflow-x: hidden;
+  background-color: rgba(0, 0, 0, 0);
 }
 .songObjs .songObj {
   position: relative;
@@ -211,6 +226,7 @@ export default {
   left: 25px;
 }
 .songObjs #lg_imgA {
+  top: 0;
   width: 120px;
   position: absolute;
   z-index: 2;
@@ -221,16 +237,24 @@ export default {
   /* border: 1px solid black; */
   position: absolute;
   top: 0px;
-  left: 50px;
+  left: 60px;
   background-color: white;
   z-index: 200;
   border-radius: 9px;
   box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.49);
 }
+.songObjs .songCover:hover {
+  width: 160px;
+  height: 160px;
+  transition: all .5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.songCover:hover .songObjs {
+  background-color: black;
+}
 .songObjs .songCover .songInfo {
-  border: 1px solid black;
-  width: 80%;
-  height: 80%;
+  /* border: 1px solid black; */
+  width: 70%;
+  height: 70%;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -243,5 +267,25 @@ export default {
 .songObjs .songCover .songInfo .songArtist {
   font-size: 12px;
   font-weight: 300;
+}
+.songObjs .lpFTop {
+  width: 65px;
+  height: 65px;
+  border-radius: 35px;
+  background-color: rgb(17, 80, 180);
+  z-index: 150;
+  position: absolute;
+  top: 40px;
+  left: 43px;
+}
+.songObjs .lpFTop .smallLpFTop {
+  width: 42px;
+  height: 42px;
+  border-radius: 30px;
+  background-color: rgb(201, 201, 201);
+  z-index: 150;
+  position: absolute;
+  top: 12px;
+  left: 10px;
 }
 </style>
