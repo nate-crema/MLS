@@ -195,8 +195,10 @@ function searchYTM(searchKey, filter) {
                                             artistObj.name = contData.text.runs[0].text;
                                             break;
                                         case 2:
-                                            artistObj.subscriber = contData.text.runs[0].text.replace("구독자 ", "").replace("명", "");
-                                            artistObj.subscriberConvert = artistObj.subscriber.replace("만", "") * 10000;
+                                            if (contData.text) {
+                                                artistObj.subscriber = contData.text.runs[0].text.replace("구독자 ", "").replace("명", "");
+                                                artistObj.subscriberConvert = artistObj.subscriber.replace("만", "") * 10000;
+                                            }
                                             break;
                                         default:
                                             break;
@@ -245,7 +247,7 @@ function searchYTM(searchKey, filter) {
                                         default:
                                             break;
                                     }
-                                    console.log(Object.keys(album.musicResponsiveListItemRenderer));
+                                    // console.log(Object.keys(album.musicResponsiveListItemRenderer));
                                     if (album.musicResponsiveListItemRenderer.overlay) {
                                         albumObj.albumId = album.musicResponsiveListItemRenderer.overlay.musicItemThumbnailOverlayRenderer.content.musicPlayButtonRenderer.playNavigationEndpoint.watchPlaylistEndpoint.playlistId;
                                         albumObj.albumURL = `https://music.youtube.com/playlist?list=${albumObj.albumId}`;

@@ -95,17 +95,17 @@ export default {
                             $("#phoneNumPH").css("opacity", "1");
                         }, 120);
                     } else {
-                        if (pn.length != 11) {
-                            alert("입력 형식에 맞지 않습니다. 전화번호는 11자리 입니다.");
-                            document.getElementById("phoneNumIN").value = "";
-                            $("#phoneNumPH").css("opacity", "0");
-                            document.getElementById("phoneNumIN").focus();
-                        } else if (pn.substr(0, 3) != "010") {
-                            alert("올바르지 않은 전화번호 입니다.");
-                            document.getElementById("phoneNumIN").value = "";
-                            $("#phoneNumPH").css("opacity", "0");
-                            document.getElementById("phoneNumIN").focus();
-                        } else {
+                        // if (pn.length != 11) {
+                        //     alert("입력 형식에 맞지 않습니다. 전화번호는 11자리 입니다.");
+                        //     document.getElementById("phoneNumIN").value = "";
+                        //     $("#phoneNumPH").css("opacity", "0");
+                        //     document.getElementById("phoneNumIN").focus();
+                        // } else if (pn.substr(0, 3) != "010") {
+                        //     alert("올바르지 않은 전화번호 입니다.");
+                        //     document.getElementById("phoneNumIN").value = "";
+                        //     $("#phoneNumPH").css("opacity", "0");
+                        //     document.getElementById("phoneNumIN").focus();
+                        // } else {
                             axios.post('/api/login', {
                                 pn: document.getElementById("phoneNumIN").value
                             })
@@ -123,8 +123,7 @@ export default {
                                             $("#authCodePH").click();
                                         }, 500);
                                     }, 500);
-                                }
-                                else{
+                                } else{
                                     document.getElementById("phoneNumIN").value = "등록되지 않은 전화번호입니다.";
                                     document.getElementById("phoneNumIN").style.color = "#9c0c0c";
                                     setTimeout(() => {
@@ -139,7 +138,7 @@ export default {
                                     location.reload();
                                 }, 500);  
                             })
-                        }
+                        // }
                     }
                 }
                 

@@ -12,28 +12,59 @@ import path from "path";
 import mysql from "mysql";
 import util from '../util';
 import async from 'async';
+import { isUndefined } from 'util';
+// import { RSA_NO_PADDING } from 'constants';
 // import { callbackify } from 'util';
 // import { STATUS_CODES } from 'http';
+
+// run when server started first
+
+
+// const speedTest = require('speedtest-net');
+ 
+// (async () => {
+//   try {
+//     console.log(await speedTest());
+//   } catch (err) {
+//     console.log(err.message);
+//   }
+// })();
+
+
+// run when server started first
 
 
 // mysql functions
 
   const mysqlConnKEYINFO = JSON.parse(fs.readFileSync(path.join(__dirname, "../security/dbConnection.json"), {encoding: "UTF-8"}));
-  console.log(mysqlConnKEYINFO);
+console.log(mysqlConnKEYINFO);
 
-  function mysql_query(q_comm) {
-    
-      const conn_mysql = mysql.createConnection(mysqlConnKEYINFO);
+const conn_mysql = mysql.createConnection(mysqlConnKEYINFO);
+conn_mysql.connect();
 
-      conn_mysql.connect();
+function mysql_query(q_comm) {
+    //   console.log(isConnected);
+//   console.log(connSqlObj);
+    return new Promise((resolve, reject) => {
+        conn_mysql.query(q_comm, (err, rows, fields) => {
+        if (err) {
+                reject("Query ERR: " + err);
+            } else {
+                resolve(rows);
+            }
+        })
+    })
+}
 
-      return new Promise((resolve, reject) => {
-          conn_mysql.query(q_comm, (err, rows, fields) => {
-              if (err) reject("Query ERR: " + err);
-              else resolve(rows);
-          })
-      })
-  }
+function emptyQuery() { 
+    conn_mysql.query("show databases");
+    setTimeout(() => {
+        console.log("empty query sent");
+        emptyQuery();
+    }, 1000000);
+}
+
+emptyQuery();
 
   const sqlFnc = {
 
@@ -54,17 +85,17 @@ import async from 'async';
     // const Insert = (table, data:{columns: Object, values: Object}, done) => {
     Insert: (table, data, done) => {
       let command = "INSERT INTO " + table + " (" + Object.keys(data).toString() + ")";
-      console.log(Object.values(data));
+    //   console.log(Object.values(data));
       if (Object.values(data).length > 1) {
           command += " VALUES (";
           Object.values(data).forEach((element, index) => {
-              command += (util.isNumber(element) ? element : "'" + element + "'");
+              command += (element == "null" ? element : (util.isNumber(element) ? element : "\"" + element + "\""));
               // console.log(index);
               index != Object.values(data).length-1 ? command += ", " : command += ");";
           });
       } else if (Object.values(data).length == 1) {
           // console.log("frd");
-          command += " VALUES (" + (util.isNumber(Object.values(data)[0]) ? Object.values(data)[0] : "'" + Object.values(data)[0] + "'");
+          command += " VALUES (" + (element == "null" ? element : (util.isNumber(Object.values(data)[0]) ? Object.values(data)[0] : "\"" + Object.values(data)[0] + "\""));
       } else return done(new Error("Unvalid Insert"));
       // console.log(command);
       mysql_query(command)
@@ -72,8 +103,54 @@ import async from 'async';
           return done(null, res_sql);
       })
       .catch((e) => {
+          console.log(command);
           return done(e);
       })
+    },
+    
+    // const Insert = (table, data:{columns: Object, values: Object}, done) => {
+    InsertMany: (table, dataArr, done) => {
+        let counter = 1;
+        let command = "INSERT INTO " + table + " (" + Object.keys(dataArr[0]).toString() + ") VALUES ";
+        for (var data of dataArr) {
+            console.log(`${counter} / ${dataArr.length}`);
+        //   console.log(Object.values(data));
+            if (Object.values(data).length > 1) {
+                command += "(";
+                Object.values(data).forEach((element, index) => {
+                    if (element != "null" && element != null) {
+                        command += (util.isNumber(element) ? element : "\"" + element + "\"");
+                    } else command += element
+                    // console.log(index);
+                    index != Object.values(data).length-1 ? command += ", " : command += "),";
+                });
+            } else if (Object.values(data).length == 1) {
+                // console.log("frd");
+                if (element != "null" && element != null) {
+                    command += "(" + (util.isNumber(Object.values(data)[0]) ? Object.values(data)[0] : "\"" + Object.values(data)[0] + "\"");
+                } else {
+                    command += "(" + element;
+                }
+            } else return done(new Error("Unvalid Insert"));
+            // console.log(command);
+            if (dataArr.length == counter++) command = command.substr(0, command.length - 1) + ";";
+        }
+        mysql_query(command)
+        .then((res_sql) => {
+            return done(null, res_sql);
+        })
+        .catch((e) => {
+            // console.error(`Error occured: InsertMany "${command}"`)
+            let prevC = "";
+            while (true) {
+                command.replace("),", "),\n\n");
+                if (command == prevC) break;
+                else prevC = command;
+            }
+            fs.appendFileSync(`errorCommand${Date.now()}.txt`, command, { encoding: "UTF-8" });
+            fs.appendFileSync(`errorData${Date.now()}.txt`, e, { encoding: "UTF-8" });
+            return done(e);
+        })
     },
 
     // const Update = (table, base:{columns: Object, values: Object}, alter:{columns: Object, values: Object}) => {
@@ -144,7 +221,7 @@ import async from 'async';
             command += " WHERE " + Object.keys(filter)[0] + "=" + (util.isNumber(Object.values(filter)[0]) ? Object.values(filter)[0] : "'" + Object.values(filter)[0] + "'");
         }
 
-        // console.log(command);
+        console.log(command);
 
         mysql_query(command)
         .then((res_sql) => {
@@ -199,73 +276,37 @@ app.post("/searchQuery", (req, res) => {
         res.status(400);
         return res.end("Bad Request");
     }
-    
-    let tried_counter = 0;
 
-    let stCode = 200;
+    const searchId = util.getUid(15);
+    console.log(`SearchId: '${searchId}'`);
+    console.log(`SearchKey: '${query}'`);
 
-    let searchResult = {
-        "media": {},
-        "yt": {},
-        "melon": {}
-    };
-
-    searchMedia(query)
-    .then((mediaResult) => {
-        console.log(`Search Requested: Media`);
-        searchComplete("media", mediaResult);
-    })
-    .catch((e) => {
-        console.log(`Error Occured: media`);
-        console.error(e);
-        searchComplete("media", null, e);
-    })
-
-    console.log(`Search Requested: Melon`);
-    searchMelon(query)
-    .then((melonResult) => {
-        console.log(`Search Complete: Melon`);
-        searchComplete("melon", melonResult);
-    })
-    .catch((e) => {
-        console.log(`Error Occured: melon`);
-        console.error(e);
-        searchComplete("melon", null, e);
-    })
-
-    searchYT(query)
-    .then((ytResult) => {
-        console.log(`Search Requested: YTM`);
-        searchComplete("yt", ytResult);
-    })
-    .catch((e) => {
-        console.log(`Error Occured: ytm`);
-        console.error(e);
-        searchComplete("yt", null, e);
-    })
-
-
-    function searchComplete(type, data, err) {
-        if (err) { 
-            stCode = 500;
-            searchResult[type].err = err;
-        }
-        console.log(`${type} completes || total finish: ${++tried_counter}`);
-        if (data) searchResult[type].data = data;
-        if (tried_counter == 3) {
-            const searchAllianced = searchAlliance(searchResult);
-            searchFiltering(searchAllianced, option.split(","), "*")
-            .then((filterData) => {
-                console.log(filterData);    
-                // res.status(stCode).json(filterData);
-                res.status(200).json(filterData);
+    sqlFnc.Read('searchtb', "", { searchKey: query })
+    .then((data) => {
+        console.log(`prev searchData: ${data}`);
+        if (data.length == 0) {
+            console.log("no prev search data found");
+            searchNew(searchId, query, req.ip, option)
+            .then(({ stCode, json }) => {
+                res.status(stCode).json(json);
             })
             .catch((e) => {
                 console.error(e);
-                res.status(stCode).json({});
+                res.status(500).end("Internal Server Error");
+            });
+        } else {
+            console.log(JSON.stringify(data));
+            console.log(`${data.length} previous result found in db`);
+            getPrevRes(data)
+            .then((prevData) => {
+                console.log(prevData);
+                res.status(200).json(prevData);
             })
         }
-    }
+    })
+    .catch((e) => {
+        console.error(e);
+    })
 
     // searchMediaC.registerListener(function (val) {
     //     if (val.stat == "ERR") res.status(500).end(`ERR: ${val.errCont}`) // return response error
@@ -277,6 +318,362 @@ app.post("/searchQuery", (req, res) => {
 
 
 })
+
+function getPrevRes(data) {
+    return new Promise((resolve, reject) => {
+        // let returnObjCounter = 0;
+        let returnObjCounter = {
+            rocInternal: 0,
+            rocListener: function(val) {},
+            set roc(val) {
+              this.rocInternal = val;
+              this.rocListener(val);
+            },
+            get roc() {
+              return this.rocInternal;
+            },
+            registerListener: function(listener) {
+              this.rocListener = listener;
+            }
+        }
+        returnObjCounter.registerListener(function (val) {
+            console.log(`returnObjCounter: ${val}`);
+            if (val == 1) resolve(returnData);
+        })
+        
+        let returnData = {
+            "med": {},
+            "yt": {},
+            "melon": {}
+        }
+        // returnData.registerListener(function (val) {
+        //     // console.log(val);
+        //     returnObjCounter++;
+        //     console.log(`returnObjCounter: ${returnObjCounter}`);
+        //     if (returnObjCounter == 1) resolve(returnData.a);
+        // })
+        data.forEach((searchData, index) => {
+            console.log(index);
+            // definition
+            const { searchKey, melonRes, ytRes, medRes, addDate } = searchData;
+    
+            // isLyricsget total end
+            let isLyricsEndTotal = {
+                boolInternal: false,
+                boolListener: function(val) {},
+                set bool(val) {
+                    this.boolInternal = val;
+                    this.boolListener(val);
+                },
+                get bool() {
+                    return this.boolInternal;
+                },
+                registerListener: function(listener) {
+                    this.boolListener = listener;
+                }
+            }
+        
+            // search: melonRes
+            sqlFnc.Read('melonRes', "", { melonRes })
+            .then((prevMelonRes) => {
+                // console.log(JSON.stringify(prevMelonRes));
+                let melonDatas = [];
+                console.log(`${prevMelonRes.length} previous melon result found (timestamp: ${addDate})`);
+    
+                // let lyricsObj;
+                let lyricsObj = {};
+                prevMelonRes.forEach((prevMelonResIndiv, indexMR) => {
+                    let pushData;
+                    // console.log(prevMelonResIndiv.lyricsId);
+                    if (prevMelonResIndiv.lyricsId) {
+                        sqlFnc.Read('lyrics', "", { lyricsId: prevMelonResIndiv.lyricsId, addService: "melon" })
+                        .then((lylicsPDataArr) => {
+                            // console.log(lylicsPDataArr);    
+                            // console.log(`${prevMelonResIndiv.songTitle} lyrics found (song-save timestamp: ${addDate})`);
+                            let lylicsTextArr = lylicsPDataArr[0].lyrics.split("| & |,");
+                            let lylicsTimeArr = lylicsPDataArr[0].timestamps.split("| & |,");
+                            console.log(lyricsObj);
+                            if (!lyricsObj.lylics) {
+                                lyricsObj.lylics = [];
+                                lyricsObj.lylicsNum = lylicsTextArr.length;
+                            }
+                            for (var i = 0; i < lylicsTextArr.length; i++) {
+                                lyricsObj.lylics.push({
+                                    text: lylicsTextArr[i],
+                                    time: lylicsTimeArr[i]
+                                });
+                                if (lylicsTextArr.length - 1 == i) {
+                                    pushData = {
+                                        album: {
+                                            albumId: prevMelonResIndiv.albumIdM,
+                                            albumImg: prevMelonResIndiv.albumImg,
+                                            albumTitle: prevMelonResIndiv.albumTitle,
+                                            linkConvert: `https://www.melon.com/album/detail.htm?albumId=${prevMelonResIndiv.albumIdM}`
+                                        },
+                                        artist: {
+                                            artistId: prevMelonResIndiv.artistIdM,
+                                            artistImg: prevMelonResIndiv.artistImg,
+                                            artistName: prevMelonResIndiv.artist
+                                        },
+                                        song: {
+                                            linkConvert: `https://www.melon.com/song/detail.htm?songId=${prevMelonResIndiv.songIdM}`,
+                                            menuId: prevMelonResIndiv.menuId,
+                                            songId: prevMelonResIndiv.songIdM,
+                                            songImg: prevMelonResIndiv.songImg,
+                                            songTitle: prevMelonResIndiv.songTitle,
+                                            lyrics: lyricsObj
+                                        }
+                                    }
+                                    melonDatas.push(pushData);
+                                    console.log(`pushed! (searchResult recovery completion status: ${melonDatas.length} / ${prevMelonRes.length})`);
+                                    if (melonDatas.length == prevMelonRes.length) isLyricsEndTotal.bool = true;
+                                }
+                            }
+                        })
+                    } else {
+                        pushData = {
+                            album: {
+                                albumId: prevMelonResIndiv.albumIdM,
+                                albumImg: prevMelonResIndiv.albumImg,
+                                albumTitle: prevMelonResIndiv.albumTitle,
+                                linkConvert: `https://www.melon.com/album/detail.htm?albumId=${prevMelonResIndiv.albumIdM}`
+                            },
+                            artist: {
+                                artistId: prevMelonResIndiv.artistIdM,
+                                artistImg: prevMelonResIndiv.artistImg,
+                                artistName: prevMelonResIndiv.artist
+                            },
+                            song: {
+                                linkConvert: `https://www.melon.com/song/detail.htm?songId=${prevMelonResIndiv.songIdM}`,
+                                menuId: prevMelonResIndiv.menuId,
+                                songId: prevMelonResIndiv.songIdM,
+                                songImg: prevMelonResIndiv.songImg,
+                                songTitle: prevMelonResIndiv.songTitle,
+                                lyrics: null
+                            }
+                        }
+                        melonDatas.push(pushData);
+                    }
+
+
+                    // lyricsObj.registerListener(function (val) {
+                    //     console.log("registerListener: lylicsObj");
+                    // });
+                })
+
+                isLyricsEndTotal.registerListener(isEnd)
+
+                function isEnd() {
+                    console.log("isEndFunc");
+                    if (index == data.length - 1) {
+                        returnData.melon.data = melonDatas;
+                        console.log("complete: melon");
+                        returnObjCounter.roc++;
+                    } else {
+                        setTimeout(() => {
+                            isEnd();
+                        }, 500);
+                    }
+                }
+
+                
+            })
+        })
+    })
+}
+
+function searchNew(searchId, query, ip, option) {
+    return new Promise((resolve, reject) => {
+
+        let MdbObj = {
+            searchId,
+            cusId: "gda56GkzsGKixwFRhzgv", // change after activate session login
+            searchKey: query,
+            ip
+        }
+        
+        let tried_counter = 0;
+        
+        let stCode = 200;
+    
+        let searchResult = {
+            "med": {},
+            "yt": {},
+            "melon": {}
+        };
+    
+        searchMedia(query)
+        .then((mediaResult) => {
+            console.log(`Search Requested: Media`);
+            const primaryKeyMedia = "40302" + util.getUid(10, true);
+            searchComplete("med", mediaResult, primaryKeyMedia, null);
+        })
+        .catch((e) => {
+            console.log(`Error Occured: media`);
+            console.error(e);
+            searchComplete("med", null, null, e);
+        })
+    
+        console.log(`Search Requested: Melon`);
+        searchMelon(query)
+        .then((melonResult) => {
+            console.log(`Search Complete: Melon`);
+            const primaryKeyMelon = "40303" + util.getUid(10, true);
+            searchComplete("melon", melonResult, primaryKeyMelon, null);
+        })
+        .catch((e) => {
+            console.log(`Error Occured: melon`);
+            console.error(e);
+            searchComplete("melon", null, null, e);
+        })
+    
+        searchYT(query)
+        .then((ytResult) => {
+            console.log(`Search Requested: YTM`);
+            const primaryKeyYT = "40304" + util.getUid(10, true);
+            searchComplete("yt", ytResult, primaryKeyYT, null);
+        })
+        .catch((e) => {
+            console.log(`Error Occured: ytm`);
+            console.error(e);
+            searchComplete("yt", null, null, e);
+        })
+    
+    
+        function searchComplete(type, data, primaryKey, err) {
+            if (err) { 
+                stCode = 500;
+                searchResult[type].err = err;
+            }
+            console.log(`${type} completes || total finish: ${++tried_counter}`);
+            if (data) {
+                searchResult[type].data = data;
+    
+                console.log(typeof data);
+                
+                let SdbObj = {
+                    searchKey: query,
+                    searchResArr: JSON.stringify(data)
+                };
+                
+                // save search result in db
+                
+                var columnName = type + "Res";
+                var tableName = type + "res";
+                MdbObj[columnName] = primaryKey;
+                SdbObj[columnName] = primaryKey;
+    
+    
+                
+                // resultobj.song.lyrics.lylics ? JSON.stringify(resultobj.song.lyrics.lylics) : resultobj.song.lyrics.lylics,
+    
+    
+                try {
+                    if (type == "melon") {
+                        let z = 0;
+                        SdbObj = [];
+                        for (var resultobj of data) {
+                            let lyricsId;
+                            let timestamps = [];
+                            let lylics = [];
+                            if (resultobj.song.lyrics.lylics) {
+                                lyricsId = util.getUid(15, true);
+                                resultobj.song.lyrics.lylics.forEach((value, index) => {
+                                    timestamps.push(value.time + "| & |");
+                                    lylics.push(value.text + "| & |");
+                                })
+                                sqlFnc.Insert('lyrics', {
+                                    lyricsId,
+                                    addService: "melon",
+                                    timestamps: timestamps.toString(),
+                                    lyrics: lylics.toString()
+                                }, function (err, result) {
+                                    if (err) throw err;
+                                });
+                            }
+                            else lyricsId = null;
+
+                            console.log(resultobj.song.songId);
+
+                            SdbObj.push({
+                                searchId,
+                                melonRes: primaryKey,
+                                melonResNum: primaryKey + z,
+                                numOfRes: z++,
+                                songIdM: lyricsId == null ? resultobj.song.songId : resultobj.song.lyrics.songInfo.SONGID,
+                                songIdB: util.getUid(10),
+                                menuIdM: resultobj.song.menuId,
+                                songImg: resultobj.song.songImg,
+                                songTitle: resultobj.song.songTitle,
+                                lyricsId,
+                                artist: resultobj.artist.artistName,
+                                artistImg: resultobj.artist.artistImg,
+                                artistIdM: resultobj.artist.artistId,
+                                albumTitle: lyricsId == null ? resultobj.album.albumTitle : resultobj.song.lyrics.songInfo.ALBUMNAME,
+                                albumIdM: lyricsId == null ? resultobj.album.albumId : resultobj.song.lyrics.songInfo.ALBUMID,
+                                albumImg: resultobj.album.albumImg
+                            });
+                        }
+                        sqlFnc.InsertMany(tableName, SdbObj, function (err, result) {
+                            if (err) throw err;
+                        })
+                    } else {
+                        sqlFnc.Insert(tableName, SdbObj, function (err, result) {
+                            if (err) throw err;
+                        });
+                    }
+                } catch (e) {
+                    console.error(e);
+                }
+            }
+            if (tried_counter == 3) {
+    
+                // save search result in db
+    
+                if (!MdbObj.ytRes) {
+                    MdbObj.ytRes = "44444";
+                }
+                if (!MdbObj.melonRes) {
+                    MdbObj.melonRes = "44444";
+                }
+                if (!MdbObj.medRes) {
+                    MdbObj.medRes = "44444";
+                }
+    
+                setTimeout(() => {
+                    try { 
+                        console.log(MdbObj);
+                        sqlFnc.Insert("searchtb", MdbObj, function (err, result) {
+                            if (err) throw err;
+                        });
+                    } catch (e) {
+                        console.error(e);
+                    }
+                }, 100);
+    
+    
+    
+    
+                const searchAllianced = searchAlliance(searchResult);
+                searchFiltering(searchAllianced, option.split(","), "*")
+                .then((filterData) => {
+                    resolve({
+                        stCode,
+                        json: filterData
+                    })
+                })
+                .catch((e) => {
+                    console.error(e);
+                    // res.status(stCode).json({});
+                    resolve({
+                        stCode,
+                        json: {}
+                    })
+                })
+            }
+        }
+    })
+}
 
 function searchAlliance(searchResult) {
     let resData = [];

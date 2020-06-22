@@ -1,0 +1,35 @@
+<template>
+  <div>
+      <nuxt-child class="musicCont"/>
+  </div>
+</template>
+
+<script>
+
+export default {
+  mounted() {
+    $(document).ready(() => {
+        resizeAction();
+    })
+
+    $(window).resize(() => {
+        resizeAction();
+    })
+
+    function resizeAction() {
+        $("div.musicCont").css("width", $(window).width()-350);
+        $("div.musicCont").css("height", $(window).height());
+    }
+  }
+}
+</script>
+
+<style>
+.musicCont {
+  position: absolute;
+  top: 150px;
+  width: 80%;
+  height: 100%;
+  right: 0;
+}
+</style>

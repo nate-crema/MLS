@@ -42,8 +42,8 @@ module.exports.getTime = (key, data) => {
     let returnobj = "";
 
     if (key == undefined || key == "") returnobj += getYear() + getMonth() + getDate() + "-" + getHours() + ":" + getMinutes() + ":" + getSeconds();
-    else if (key == "date") returnobj += getYear() + getMonth() + 
-    getDate();
+    else if (key == "date") returnobj += getYear() + getMonth() +
+        getDate();
     else if (key == "time") returnobj += getHours() + ":" + getMinutes() + ":" + getSeconds();
     else {
         option = data.split(",");
@@ -57,6 +57,23 @@ module.exports.getTime = (key, data) => {
     }
 
     return returnobj;
+}
+
+module.exports.calcTime = (baseTime, operator, seconds) => {
+    let date = new Date(baseTime);
+    switch (operator) {
+        case "+":
+            date.setSeconds(date.getSeconds() + seconds);
+            return date;
+    }
+}
+
+module.exports.compTime = (A, B) => {
+    const a_Time = new Date(A);
+    const b_Time = new Date(B);
+
+    if (a_Time.getTime() - b_Time.getTime() > 0) return A;
+    else return B;
 }
 
 // Origin: http://mwultong.blogspot.com/2007/01/isnum-isnumeric-isnumber-javascript.html
@@ -78,9 +95,11 @@ module.exports.isNumber = (s) => {
  * @return {String}
  * @api private
  */
-module.exports.getUid = function(length) {
+module.exports.getUid = function (length, isNumOnly) {
+    let chars;
+    if (isNumOnly) chars = '0123456789';
+    else chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     let uid = '';
-    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     const charsLength = chars.length;
   
     for (let i = 0; i < length; ++i) {

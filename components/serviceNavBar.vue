@@ -88,12 +88,13 @@ export default {
 
 
 .navBar {
-    width: 350px;
+    width: 280px;
     height: 100%;
     position: absolute;
     top: 0;
     left: 0;
-    border: 1px solid black;
+    /* border: 1px solid black; */
+    box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.49);
 }
 .navBar .serviceTitle {
     position: absolute;
@@ -109,7 +110,7 @@ export default {
 .navBar .playList {
     position: absolute;
     top: 250px;
-    right: 0;
+    right: 20px;
     /* border: 1px solid black; */
     width: 78%;
     height: 250px;
@@ -144,7 +145,7 @@ export default {
 .navBar .record {
     position: absolute;
     top: 550px;
-    right: 0;
+    right: 20px;
     /* border: 1px solid black; */
     width: 78%;
     height: 250px;
