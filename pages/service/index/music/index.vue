@@ -1,6 +1,21 @@
 <template>
   <div>
-      riogdfjsiojo
+      <div class="songDetail">
+        <nuxt-link class="backPageRed"
+        :to="`/service/search/searchQuery?searchKey=${searchKey}`"> &lt; 검색 결과로 이동</nuxt-link>
+        <div class="songTitle">
+          <p id="songTitle" class="songTitleText">{{searchResult.songTitle}}</p>
+          <p id="songArtist" class="songArtistText">{{searchResult.artist}}</p>
+        </div>
+        <div class="songImage">
+          <div class="lpMiddle" id="lpMiddle">
+            <div class="lpMiddleC" id="lpMiddleC"></div>
+          </div>
+          <div class="lpImgCover"></div>
+          <img id="lpCover"
+          :src="searchResult.songImg"/>
+        </div>
+      </div>
   </div>
 </template>
 
@@ -24,18 +39,31 @@ export default {
         // console.log(Object.keys(this));
       }
     },
+    beforeMount() {
+      const songId = location.search.split("?")[1].split("=")[1].split("&")[0];
+      const this_out = this;
+      this_out.searchKey = location.search.split("&")[1].split("=")[1];
+      axios.post("/api/songDetail", {
+        reqService: "BASE_WEB_ARCHITEC",
+        songId
+      })
+      .then(({data}) => {
+        console.log(data);
+        this_out.searchResult = data;
+      })
+    },
     data() {
       return {
-        searchResult: [],
+        searchResult: {},
         mediaTypeText: "",
-        isArtistYT: false
+        isArtistYT: false,
+        searchKey: ""
       }
     },
     mounted() {
 
       
       const this_out = this;
-
       
 
       $(document).ready(() => {
@@ -45,7 +73,49 @@ export default {
               $(".selectedObjF").css("width", $(widnow).width());
               $(".selectedObjF").css("height", $(widnow).height());
           }
+          const songId = location.search.split("?")[1].split("=")[1];
+          // axios.post("/api/songDetail", {
+          //   reqService: "BASE_WEB_ARCHITEC",
+          //   songId
+          // })
+          // .then(({data}) => {
+          //   console.log(data);
+          // })
+
+
+          const colorThief = new ColorThief();
+          const img = document.getElementById("lpCover");
+
+          // Make sure image is finished loading
+          if (img.complete) {
+            setTimeout(() => {
+              const colorMains = colorThief.getColor(img);
+              console.log(colorMains);
+              // console.log(document.getElementById("songTitle").style.textDecorationColor);
+              $("#songTitle").css("color", `rgba(${colorMains.toString()})`);
+              $("#songArtist").css("color", `rgba(${colorMains.toString()})`);
+              $("#lpMiddle").css("background-color", `rgba(${colorMains.toString()})`);
+              // $("#lpMiddleC").css("background-color", `rgba(${colorMains.toString()})`);
+            }, 2000);
+          } else {
+            image.addEventListener('load', function() {
+              console.log(colorThief.getColor(img));
+            });
+          }
       })
+
+      $(document).ready(() => {
+        resizeAction();
+      })
+
+      $(window).resize(() => {
+          resizeAction();
+      })
+
+      function resizeAction() {
+          // $("div.songDetail").css("width", $(window).width()-350);
+          $("div.songDetail").css("height", $(window).height()-200);
+      }
 
 
       
@@ -54,127 +124,82 @@ export default {
 </script>
 
 <style>
-.artists {
+.songDetail {
   width: 100%;
-  height: 300px;
-  border: 1px solid rgb(15, 63, 141);
-  border-radius: 15px;
+  /* height: 300px; */
+  /* background-color: rgba(0, 0, 0, 1); */
+  /* border: 1px solid black; */
+}
+.songDetail .backPageRed {
+  font-size: 15px;
+  font-weight: 300;
+  color: #0F326A;
+  text-decoration: none;
   position: relative;
   top: 20px;
-  overflow-x: auto;
+  left: 20px;
 }
-.artists .artist {
-  width: 200px;
-  height: 200px;
-  /* border: 1px solid black; */
-  display: inline-block;
-  margin: 0px 20px 0px 20px;
-  border-radius: 40px;
+.songDetail .songTitle {
   position: relative;
-  top: 60%;
-  transform: translateY(-50%);
+  width: 80%;
+  height: auto;
+  top: 50px;
+  left: 20px;
+  /* border: 1px solid black; */
 }
-.artists .artist .artistName {
-  text-align: center;
+.songDetail .songTitle .songTitleText {
+  font-size: 35px;
+  font-weight: 500;
+  color: black;
+  position: relative;
+}
+.songDetail .songTitle .songArtistText {
   font-size: 15px;
-  position: absolute;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 70%;
-  height: 20px;
-  white-space: nowrap;
-  overflow-x: auto;
+  font-weight: 300;
+  color: black;
+  position: relative;
+  top: 20px;
 }
 
-.songObjs {
-  width: 100%;
-  margin: auto;
-  height: 500px;
+.songDetail .songImage {
+  width: 250px;
+  height: 250px;
+  position: relative;
   /* border: 1px solid black; */
-  border-radius: 15px;
-  position: relative;
-  top: 20px;
+  top: 120px;
+  left: 20px;
+  border-radius: 130px;
   overflow-x: hidden;
-  background-color: rgba(0, 0, 0, 0);
+  overflow-y: hidden;
 }
-.songObjs .songObj {
-  position: relative;
-  display: inline-block;
-  width: 230px;
-  height: 150px;
+.songDetail .songImage img {
+  width: 100%;
+  height: 100%;
 }
-.songObjs .background-lpTop {
+.songDetail .songImage .lpMiddle {
   width: 100px;
   height: 100px;
-  position: absolute;
   border-radius: 50px;
-  z-index: 100;
-  top: 23px;
-  left: 25px;
-}
-.songObjs #lg_imgA {
-  top: 0;
-  width: 120px;
-  position: absolute;
-  z-index: 2;
-}
-.songObjs .songCover {
-  width: 140px;
-  height: 140px;
-  /* border: 1px solid black; */
-  position: absolute;
-  top: 0px;
-  left: 60px;
-  background-color: white;
-  z-index: 200;
-  border-radius: 9px;
-  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.49);
-  cursor: pointer;
-}
-.songObjs .songCover:hover {
-  width: 160px;
-  height: 160px;
-  transition: all .5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-.songCover:hover .songObjs {
-  background-color: black;
-}
-.songObjs .songCover .songInfo {
-  /* border: 1px solid black; */
-  width: 70%;
-  height: 70%;
+  background-color: rgba(125, 35, 24);
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
-.songObjs .songCover .songInfo .songTitle {
-  font-size: 16px;
-  font-weight: 500;
-}
-.songObjs .songCover .songInfo .songArtist {
-  font-size: 12px;
-  font-weight: 300;
-}
-.songObjs .lpFTop {
-  width: 65px;
-  height: 65px;
-  border-radius: 35px;
-  background-color: rgb(17, 80, 180);
-  z-index: 150;
+.songDetail .songImage .lpMiddle .lpMiddleC {
+  width: 30px;
+  height: 30px;
+  border-radius: 15px;
+  background-color: rgb(234, 234, 234);
   position: absolute;
-  top: 40px;
-  left: 43px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
-.songObjs .lpFTop .smallLpFTop {
-  width: 42px;
-  height: 42px;
-  border-radius: 30px;
-  background-color: rgb(201, 201, 201);
-  z-index: 150;
+.songDetail .songImage .lpImgCover {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.15);
   position: absolute;
-  top: 12px;
-  left: 10px;
 }
 </style>

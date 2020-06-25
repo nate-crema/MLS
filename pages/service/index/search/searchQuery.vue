@@ -19,7 +19,7 @@
           </svg> -->
           <svg version="1.1" id="lg_imgA" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
           y="0px" enable-background="new 0 0 100 100" xml:space="preserve"
-          :class="`songObjs_${index}_lp id_${indivSong.song.songId}_lp`">
+          :class="`songObjs_${index}_lp id_${indivSong.songIdB}_lp`">
               <g id="prefix__lp" transform="translate(-2 -5)">
                   <circle id="prefix__타원_7" cx="63.759" cy="63.759" r="63.759" data-name="타원 7" transform="translate(14 14)"/>
                   <g id="prefix__그룹_34" data-name="그룹 34" opacity="0.13" transform="translate(57.274 14)">
@@ -41,8 +41,8 @@
             <div class="smallLpFTop"></div>
           </div>
           <div class="songCover" @mouseover="mouseOver" @click="musicSelected"
-          :class="`songObjs_${index} id_${indivSong.song.songId}_contBox`"
-          :id="indivSong.song.songId">
+          :class="`songObjs_${index} id_${indivSong.songIdB}_contBox`"
+          :id="indivSong.songIdB">
             <div class="songInfo">
               <p class="songTitle">{{indivSong.song.songTitle.length > 6 ? indivSong.song.songTitle.substr(0, 5) + "..." : indivSong.song.songTitle}}</p>
               <p class="songArtist">{{indivSong.artist.artistName.length > 6 ? indivSong.artist.artistName.substr(0, 5) + "..." : indivSong.artist.artistName}}</p>
@@ -104,7 +104,7 @@ export default {
             setTimeout(() => {
               $(".searchObj").css("opacity", "0");
               $(".searchObj").css("top", "150px");
-              this_out.to="/service/music?musicId=" + clickedId;
+              this_out.to=`/service/music?musicId=${clickedId}&searchKey=${document.getElementsByClassName("searchTitle")[0].innerText.split("\"")[1]}`;
               setTimeout(() => {
                 console.log(clickedId);
                 console.log($("#nuxt-link-next"));
@@ -272,7 +272,7 @@ export default {
   position: relative;
   display: inline-block;
   width: 230px;
-  height: 150px;
+  height: 250px;
 }
 .songObjs .background-lpTop {
   width: 100px;

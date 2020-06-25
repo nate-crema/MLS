@@ -6,10 +6,11 @@ const searchYT = ytMusic.search;
 import crypto from 'crypto';
 import axios from "axios";
 import fs, { access } from "fs";
-import path from "path";
+import path, { resolve } from "path";
 import mysql from "mysql";
 import util from '../util';
 import async from 'async';
+import https from 'https';
 
 
 // mysql functions
@@ -509,6 +510,72 @@ app.post('/dataRDY', (req, res) => {
       })
     }
   ])
+})
+
+
+// song Information get
+
+app.post('/songDetail', (req, res) => {
+  const songId = req.body.songId;
+  // console.log(songId);
+  if (!songId) return res.status(400).end("ERR: Bad Request");
+  
+  // check validation
+  if (songId.substr(0, 4) != "Base") return res.status(400).end("ERR: Bad Request");
+  sqlFnc.Read("melonRes", "*", { songIdB: songId })
+    .then((data) => {
+      console.log(data);
+      let songDetailData = data[0];
+      songDetailData.melonRes = null;
+      songDetailData.melonResNum = null;
+
+      // download songCover
+      const imageFile = path.join(__dirname, "../static/Cache/image/", `${songDetailData.songIdB}.jpg`);
+      const urlImageFile = path.join("/Cache/image/", `${songDetailData.songIdB}.jpg`);
+      const file = fs.createWriteStream(imageFile);
+      const request = https.get(songDetailData.songImg, function(response) {
+        response.pipe(file);
+        songDetailData.songImg = urlImageFile;
+      });
+
+      // get lyrics
+
+      if (songDetailData.lyricsId) {
+        getLyrics(songDetailData.lyricsId)
+          .then((lyricsObj) => {
+            songDetailData.lyrics = lyricsObj;
+            res.json(songDetailData);
+        })
+      } else {
+        res.json(songDetailData);
+      }
+    })
+  
+  function getLyrics(lyricsId) {
+    return new Promise((resolve, reject) => {
+      sqlFnc.Read("lyrics", "*", { lyricsId })
+        .then((data) => {
+          const lyrics = data[0];
+          let lyricsObj = [];
+          lyrics.lyrics.split("| & |").forEach((value, index) => {
+            lyricsObj.push({
+              time: index == 0 ? lyrics.timestamps.split("| & |")[index] : lyrics.timestamps.split("| & |")[index].substr(1),
+              text: index == 0 ? value : value.substr(1)
+            })
+            if (index == lyrics.lyrics.split("| & |").length - 1) {
+              // lyricsObj.sort((a, b) => a - b);
+              setTimeout(() => {
+                console.log(lyricsObj);
+                resolve(lyricsObj);
+              }, 200);
+            }
+          })
+          // lyricsObj.sort({ time: -1 })
+      })
+    })
+  }
+
+  
 })
 
 

@@ -27,9 +27,9 @@ export default {
 <style>
 .musicCont {
   position: absolute;
-  top: 150px;
+  top: 80px;
   width: 80%;
   height: 100%;
-  right: 0;
+  right: 20px;
 }
 </style>

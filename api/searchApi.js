@@ -338,6 +338,7 @@ function getPrevRes(data) {
         }
         returnObjCounter.registerListener(function (val) {
             console.log(`returnObjCounter: ${val}`);
+            // if (val == 3) resolve(returnData); // activate when all functions complete
             if (val == 1) resolve(returnData);
         })
         
@@ -422,7 +423,8 @@ function getPrevRes(data) {
                                             songImg: prevMelonResIndiv.songImg,
                                             songTitle: prevMelonResIndiv.songTitle,
                                             lyrics: lyricsObj
-                                        }
+                                        },
+                                        songIdB: prevMelonResIndiv.songIdB
                                     }
                                     melonDatas.push(pushData);
                                     console.log(`pushed! (searchResult recovery completion status: ${melonDatas.length} / ${prevMelonRes.length})`);
@@ -450,7 +452,8 @@ function getPrevRes(data) {
                                 songImg: prevMelonResIndiv.songImg,
                                 songTitle: prevMelonResIndiv.songTitle,
                                 lyrics: null
-                            }
+                            },
+                            songIdB: prevMelonResIndiv.songIdB
                         }
                         melonDatas.push(pushData);
                     }
@@ -547,7 +550,6 @@ function searchNew(searchId, query, ip, option) {
             }
             console.log(`${type} completes || total finish: ${++tried_counter}`);
             if (data) {
-                searchResult[type].data = data;
     
                 console.log(typeof data);
                 
@@ -563,7 +565,7 @@ function searchNew(searchId, query, ip, option) {
                 MdbObj[columnName] = primaryKey;
                 SdbObj[columnName] = primaryKey;
     
-    
+                searchResult[type].data = [];
                 
                 // resultobj.song.lyrics.lylics ? JSON.stringify(resultobj.song.lyrics.lylics) : resultobj.song.lyrics.lylics,
     
@@ -576,6 +578,9 @@ function searchNew(searchId, query, ip, option) {
                             let lyricsId;
                             let timestamps = [];
                             let lylics = [];
+                            let dataEdit = resultobj;
+                            const songIdB = "Base" + util.getUid(6);
+                            dataEdit.songIdB = songIdB;
                             if (resultobj.song.lyrics.lylics) {
                                 lyricsId = util.getUid(15, true);
                                 resultobj.song.lyrics.lylics.forEach((value, index) => {
@@ -601,7 +606,7 @@ function searchNew(searchId, query, ip, option) {
                                 melonResNum: primaryKey + z,
                                 numOfRes: z++,
                                 songIdM: lyricsId == null ? resultobj.song.songId : resultobj.song.lyrics.songInfo.SONGID,
-                                songIdB: util.getUid(10),
+                                songIdB,
                                 menuIdM: resultobj.song.menuId,
                                 songImg: resultobj.song.songImg,
                                 songTitle: resultobj.song.songTitle,
@@ -613,6 +618,8 @@ function searchNew(searchId, query, ip, option) {
                                 albumIdM: lyricsId == null ? resultobj.album.albumId : resultobj.song.lyrics.songInfo.ALBUMID,
                                 albumImg: resultobj.album.albumImg
                             });
+
+                            searchResult[type].data.push(dataEdit);
                         }
                         sqlFnc.InsertMany(tableName, SdbObj, function (err, result) {
                             if (err) throw err;
