@@ -12,13 +12,16 @@ const ytdl = require("ytdl-core");
 let link = "";
 
 
-ytdl("https://www.youtube.com/watch?v=euI-C1YONaU&list=OLAK5uy_l-q92A476g8X8juCjo5afAH1kEDwp-mW4")
+// ytdl("https://www.youtube.com/watch?v=euI-C1YONaU&list=OLAK5uy_l-q92A476g8X8juCjo5afAH1kEDwp-mW4")
+ytdl("http://www.youtube.com/watch?v=A02s8omM_hI")
+// ytdl("https://www.youtube.com/watch?v=NnRjwEhFU70")
 .on('info', (info, format) => {
     console.log(typeof info);
     console.log(typeof format);
-    fs.writeFileSync(__dirname + "/IU_video_format.json", JSON.stringify(format));
-    fs.writeFileSync(__dirname + "/IU_video_info.json", JSON.stringify(info));
-    fs.writeFileSync(__dirname + "/IU_video_formats.json", info.player_response.streamingData.formats.toString());
+    console.log(format);
+    // fs.writeFileSync(__dirname + "/IU_nightLetter-video_format.json", JSON.stringify(format));
+    // fs.writeFileSync(__dirname + "/IU_nightLetter-video_info.json", JSON.stringify(info));
+    // fs.writeFileSync(__dirname + "/IU_nightLetter-video_formats.json", info.player_response.streamingData.formats.toString());
     // console.log("Download URL");
     // console.log(format.url);
     // console.log("\n\n Medium Quality Audio URL");

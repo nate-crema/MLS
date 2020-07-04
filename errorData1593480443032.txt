@@ -1,0 +1,1 @@
+Query ERR: Error: ER_BAD_NULL_ERROR: Column 'artist' cannot be null

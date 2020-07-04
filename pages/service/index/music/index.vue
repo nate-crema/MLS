@@ -15,6 +15,26 @@
           <img id="lpCover"
           :src="searchResult.songImg"/>
         </div>
+        <div class="playSong">
+          <div class="playSongN">
+            <p class="text" @click="playSongNow()">지금 바로 재생: {{countService ? `${counterService}로 설정됨` : "음원 집계설정 필요"}}</p>
+          </div>
+          <div class="playSongL">
+            <p class="text">나중에 들을 음악에 추가</p>
+          </div>
+        </div>
+        <div class="songCont">
+          <ul class="dTitle">
+            <li class="album" id="album">앨범</li>
+            <li class="openDate" id="openDate">발매일</li>
+            <li class="genre" id="genre">장르</li>
+          </ul>
+          <ul class="dCont">
+            <li class="album" id="album">{{searchResult.albumTitle}}</li>
+            <li class="openDate" id="openDate">{{searchResult.openDate ? searchResult.openDate : "?"}}</li>
+            <li class="genre" id="genre">{{searchResult.genre ? searchResult.genre : "?"}}</li>
+          </ul>
+        </div>
       </div>
   </div>
 </template>
@@ -30,6 +50,10 @@ export default {
       isMediaComp
     },
     methods: {
+      playSongNow: function() {
+        const songId = this.searchResult.songIdB;
+        location.href = `/player/${songId}`;
+      },
       musicSelected: function(element) {
         console.log(element.target.id);
       },
@@ -90,11 +114,25 @@ export default {
           if (img.complete) {
             setTimeout(() => {
               const colorMains = colorThief.getColor(img);
+              const colorPallets = colorThief.getPalette(img, 5);
+              const setColor = colorMains.toString();
+              // const setColor = colorPallets[3];
+              // let setColor = "";
+              // for (const color of colorMains) {
+              //   console.log(color);
+              //   setColor += 255 - (color * 1) + ",";
+              // }
+              // setColor = setColor.slice(0,-1);
+              console.log(setColor);
               console.log(colorMains);
+              // console.log(colorPallets);
               // console.log(document.getElementById("songTitle").style.textDecorationColor);
-              $("#songTitle").css("color", `rgba(${colorMains.toString()})`);
-              $("#songArtist").css("color", `rgba(${colorMains.toString()})`);
-              $("#lpMiddle").css("background-color", `rgba(${colorMains.toString()})`);
+              $("#songTitle").css("color", `rgba(${setColor})`);
+              $("#songArtist").css("color", `rgba(${setColor})`);
+              $("#lpMiddle").css("background-color", `rgba(${setColor})`);
+              $(".songCont").css("color", `rgba(${setColor})`);
+              $(".playSong").css("color", `rgba(${setColor})`);
+              // $(".songCont").css("background-color", `rgba(${setColor})`);
               // $("#lpMiddleC").css("background-color", `rgba(${colorMains.toString()})`);
             }, 2000);
           } else {
@@ -115,6 +153,7 @@ export default {
       function resizeAction() {
           // $("div.songDetail").css("width", $(window).width()-350);
           $("div.songDetail").css("height", $(window).height()-200);
+          // $("div.musicCont").css("height", $(window).height()-80);
       }
 
 
@@ -202,4 +241,53 @@ export default {
   background-color: rgba(0, 0, 0, 0.15);
   position: absolute;
 }
+
+
+.songDetail .songCont {
+  width: 450px;
+  height: 200px;
+  border: 1px solid black;
+  position: absolute;
+  left: 350px;
+  top: 220px;
+}
+.songDetail .songCont .dTitle {
+  position: absolute;
+  top: 0px;
+  left: 10px;
+  font-size: 20px;
+  font-weight: 500;
+}
+.songDetail .songCont .dTitle li {
+  list-style: none;
+  line-height: 60px;
+}
+
+.songDetail .songCont .dCont {
+  position: absolute;
+  top: 0px;
+  left: 120px;
+  font-size: 20px;
+  font-weight: 300;
+}
+.songDetail .songCont .dCont li {
+  list-style: none;
+  line-height: 60px;
+}
+
+
+.songDetail .playSong {
+  width: 400px;
+  height: auto;
+  border: 1px solid black;
+  position: absolute;
+  top: 520px;
+  font-size: 18px;
+  font-weight: 300;
+  line-height: 40px;
+}
+.songDetail .playSong .playSongN, .playSongL {
+  cursor: pointer;
+}
+
 </style>

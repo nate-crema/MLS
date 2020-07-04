@@ -95,6 +95,7 @@ export default {
     left: 0;
     /* border: 1px solid black; */
     box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.49);
+    overflow-y: auto;
 }
 .navBar .serviceTitle {
     position: absolute;

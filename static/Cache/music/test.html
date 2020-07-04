@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/wavesurfer.js/1.4.0/wavesurfer.min.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <audio id="my-audio" src="/Cache/music/Every End of the Day (하루 끝).mp3"></audio>
+    <div id="waveform"></div>
+    <div id="waveformb"></div>
+    <div id="waveformc"></div>
+    <script>
+        var wavesurfer = WaveSurfer.create({
+            // id="waveform" 인 오브젝트에 파형 생성
+            // 필수 옵션
+            container: '#waveform',
+            // 선택 옵션들 
+            waveColor: 'violet',
+            progressColor: 'purple',
+            barWidth: 0.2
+        });
+        wavesurfer.load('/Cache/music/사랑하게 될 줄 알았어_전미도_슬기로운 의사생활 OST Part 11.mp3');
+        var wavesurfer = WaveSurfer.create({
+            // id="waveform" 인 오브젝트에 파형 생성
+            // 필수 옵션
+            container: '#waveformb',
+            // 선택 옵션들 
+            waveColor: 'violet',
+            progressColor: 'purple'
+        });
+        wavesurfer.load('/Cache/music/전미도-02-사랑하게 될 줄 알았어.mp3');
+        var wavesurfer = WaveSurfer.create({
+            // id="waveform" 인 오브젝트에 파형 생성
+            // 필수 옵션
+            container: '#waveformc',
+            // 선택 옵션들 
+            waveColor: 'violet',
+            progressColor: 'purple'
+        });
+        wavesurfer.load('/Cache/music/I Knew I Love - yt.mp3');
+    </script>
+</body>
+</html>

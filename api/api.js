@@ -1,8 +1,10 @@
 import express from 'express';
-import { melon, ytMusic } from "../modules";
+import { melon } from "../modules";
 const getPList = melon.getPList;
 const getListInfo = melon.getListInfo;
-const searchYT = ytMusic.search;
+// const searchYT = ytMusic.search;
+import {ytMusic} from "../modules_Base";
+const searchYT = ytMusic.search.searchYt;
 import crypto from 'crypto';
 import axios from "axios";
 import fs, { access } from "fs";
@@ -11,6 +13,8 @@ import mysql from "mysql";
 import util from '../util';
 import async from 'async';
 import https from 'https';
+import ytdl from 'ytdl-core';
+
 
 
 // mysql functions
@@ -515,7 +519,7 @@ app.post('/dataRDY', (req, res) => {
 
 // song Information get
 
-app.post('/songDetail', (req, res) => {
+const getSongDetail = function (req, res, next) {
   const songId = req.body.songId;
   // console.log(songId);
   if (!songId) return res.status(400).end("ERR: Bad Request");
@@ -524,19 +528,21 @@ app.post('/songDetail', (req, res) => {
   if (songId.substr(0, 4) != "Base") return res.status(400).end("ERR: Bad Request");
   sqlFnc.Read("melonRes", "*", { songIdB: songId })
     .then((data) => {
-      console.log(data);
+      // console.log(data);
       let songDetailData = data[0];
       songDetailData.melonRes = null;
       songDetailData.melonResNum = null;
 
       // download songCover
-      const imageFile = path.join(__dirname, "../static/Cache/image/", `${songDetailData.songIdB}.jpg`);
-      const urlImageFile = path.join("/Cache/image/", `${songDetailData.songIdB}.jpg`);
-      const file = fs.createWriteStream(imageFile);
-      const request = https.get(songDetailData.songImg, function(response) {
-        response.pipe(file);
-        songDetailData.songImg = urlImageFile;
-      });
+      if (songDetailData.songImg) {
+        const imageFile = path.join(__dirname, "../static/Cache/image/", `${songDetailData.songIdB}.jpg`);
+        const urlImageFile = path.join("/Cache/image/", `${songDetailData.songIdB}.jpg`);
+        const file = fs.createWriteStream(imageFile);
+        const request = https.get(songDetailData.songImg, function(response) {
+          response.pipe(file);
+          songDetailData.songImg = urlImageFile;
+        });
+      }
 
       // get lyrics
 
@@ -544,10 +550,14 @@ app.post('/songDetail', (req, res) => {
         getLyrics(songDetailData.lyricsId)
           .then((lyricsObj) => {
             songDetailData.lyrics = lyricsObj;
-            res.json(songDetailData);
+            // res.json(songDetailData);
+            req.songDetailData = songDetailData;
+            next();
         })
       } else {
-        res.json(songDetailData);
+        // res.json(songDetailData);
+        req.songDetailData = songDetailData;
+        next();
       }
     })
   
@@ -565,7 +575,7 @@ app.post('/songDetail', (req, res) => {
             if (index == lyrics.lyrics.split("| & |").length - 1) {
               // lyricsObj.sort((a, b) => a - b);
               setTimeout(() => {
-                console.log(lyricsObj);
+                // console.log(lyricsObj);
                 resolve(lyricsObj);
               }, 200);
             }
@@ -574,8 +584,46 @@ app.post('/songDetail', (req, res) => {
       })
     })
   }
+}
 
+app.post('/songDetail', getSongDetail, (req, res) => {
+  res.json(req.songDetailData);
+});
+
+
+
+
+ 
+// song play Information get
+
+app.post('/play/songInfo', getSongDetail, (req, res) => {
+  const searchedObj = req.songDetailData;
+  console.log(req.songDetailData);
   
+  const { songTitle, artist } = searchedObj;
+  searchYT(songTitle)
+  .then((ytResult) => {
+    console.log(`Search Requested: YTM`);
+    const primaryKeyYT = "40304" + util.getUid(10, true);
+    // console.log(ytResult);
+    if (ytResult.songObjs.length > 0) {
+      console.log(ytResult.songObjs[0]);
+      let resJson = searchedObj;
+      resJson.ytInfo = ytResult.songObjs[0];
+      ytdl(`https://www.youtube.com/watch?v=${ytResult.songObjs[0].song.videoId}`)
+      .on('info', (info, format) => {
+        console.log(format);
+        resJson.ytInfo.setData = JSON.stringify(format);
+        res.status(200).json(resJson);
+      });
+    } else return res.status(404).end("Not Ready");
+    // searchComplete("yt", ytResult, primaryKeyYT, null);
+  })
+  .catch((e) => {
+      console.log(`Error Occured: ytm`);
+      console.error(e);
+      // searchComplete("yt", null, null, e);
+  })
 })
 
 

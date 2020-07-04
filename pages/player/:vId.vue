@@ -1,15 +1,15 @@
 <template>
-    <div class="playArea">
+    <div class="playArea" v-if="Object.keys(musicInfo).length > 0">
         <div class="albumCover playerSections">
             <div class="albumCoverWrap"></div>
-            <img :src="musicInfo.melon.coverUri" class="albumCover" id="coverUri"/>
+            <img :src="musicInfo.songImg" class="albumCover" id="coverUri"/>
         </div>
         <div class="contArea playerSections">
             <div class="songInfo">
                 <p class="songTitle"
                 :style="{color: basecolor}">{{musicInfo.title}}</p>
                 <p class="songAlbum"
-                :style="{color: basecolor}">{{musicInfo.melon.ALBUMNAME}}</p>
+                :style="{color: basecolor}">{{musicInfo.albumTitle}}</p>
                 <p class="songArtist"
                 :style="{color: basecolor}">{{musicInfo.artist}}</p>
             </div>
@@ -44,94 +44,95 @@ export default {
         return {
             status: false,
             basecolor: "rgb(29, 42, 63)",
-            musicInfo: {
-                title: "마음을 드려요",
-                artist: "IU",
-                melon: {
-                    SONGID: 32378104,
-                    ALBUMID: 10388744,
-                    ALBUMNAME: '사랑의 불시착 OST Part 11',
-                    coverUri: "https://cdnimg.melon.co.kr/cm2/album/images/103/88/744/10388744_20200214175740_500.jpg?edbdd3b688c5f2725769dbcf9ad270b0/melon/quality/80/optimize"
-                },
-                youtube: {
-                    "mimeType": "video/mp4; codecs=\"avc1.42001E, mp4a.40.2\"",
-                    "qualityLabel": "360p",
-                    "bitrate": 203645,
-                    "audioBitrate": 96,
-                    "itag": 18,
-                    "width": 360,
-                    "height": 360,
-                    "lastModified": "1581983558385911",
-                    "contentLength": "7136744",
-                    "quality": "medium",
-                    "projectionType": "RECTANGULAR",
-                    "averageBitrate": 203613,
-                    "audioQuality": "AUDIO_QUALITY_LOW",
-                    "approxDurationMs": "280404",
-                    "audioSampleRate": "44100",
-                    "audioChannels": 2,
-                    "url": "https://r3---sn-3u-bh2lr.googlevideo.com/videoplayback?expire=1583135394&ei=QmZcXt_HNYH84gL3x5fgAQ&ip=183.101.93.222&id=o-AGsjQjCO2JMTqaPz5jdnv9D656LTz91oQDP4B_AikWzz&itag=140&source=youtube&requiressl=yes&mm=31%2C26&mn=sn-3u-bh2lr%2Csn-i3belney&ms=au%2Conr&mv=m&mvi=2&pl=17&gcr=kr&initcwndbps=978750&vprv=1&mime=audio%2Fmp4&gir=yes&clen=4539161&dur=280.359&lmt=1581983496486924&mt=1583113727&fvip=3&keepalive=yes&fexp=23842630&c=WEB&txp=5531432&sparams=expire%2Cei%2Cip%2Cid%2Citag%2Csource%2Crequiressl%2Cgcr%2Cvprv%2Cmime%2Cgir%2Cclen%2Cdur%2Clmt&lsparams=mm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpl%2Cinitcwndbps&lsig=ABSNjpQwRQIhAJsJwlTMT9KiG9umnCsyplcBIIykpecb0rJ07L2SOfK-AiAKPc0DaLMhsL-i7Meh73mYq0RMRItbaFILpRED7zLmQQ%3D%3D&ratebypass=yes&sig=ADKhkGMwRAIgPUAkq6jgS974AK4SNNF9XmKtYOfYN80SxBAdGs7ObGECIBepgfe20y78re3Al8_LEFlFG9mykZqfEfyQEEQmhFWH",
-                    "sp": "sig",
-                    "s": "IDADKhkGMwRQIhANJYs1i1Mkm8Q18vFwMUj-_=be1m0andYwRxRBr4AFiSAiBOT1yRYDTmTGTmBLsI7Q3IOQPExdQscKUAcTtByChNhw=_",
-                    "container": "mp4",
-                    "codecs": "avc1.42001E, mp4a.40.2",
-                    "live": false,
-                    "isHLS": false,
-                    "isDashMPD": false
-                },
-                lyrics: [
-                    { time: 1, text: '마음을 드려요 - 아이유' },
-                    { time: 16595, text: '당신에게 드릴 게 없어서' },
-                    { time: 25027, text: '나의 마음을 드려요' },
-                    { time: 33467, text: '그대에게 받은 게 많아서' },
-                    { time: 41707, text: '표현을 다 할 수가 없어요' },
-                    { time: 50275, text: '나지막한 인사에' },
-                    { time: 54507, text: '수많은 내 마음 고이 담아' },
-                    { time: 59211, text: '그대에게로 건네면' },
-                    { time: 63491, text: '내 마음 조금 알까요' },
-                    { time: 68019, text: '어떤 이유로 만나' },
-                    { time: 72331, text: '나와 사랑을 하고' },
-                    { time: 76419, text: '어떤 이유로 내게 와' },
-                    { time: 81115, text: '함께 있어준 당신' },
-                    { time: 84947, text: '부디 행복한 날도' },
-                    { time: 89235, text: '살다 지치는 날도' },
-                    { time: 93403, text: '모두 그대의 곁에 내가' },
-                    { time: 99707, text: '있어줄 수 있길' },
-                    { time: 106601, text: ' - 연주중 - ' },
-                    { time: 119062, text: '어떤 소식 보다 더' },
-                    { time: 123342, text: '애타게 기다려지는 그대' },
-                    { time: 127964, text: '엇갈리지 않게 여기' },
-                    { time: 132060, text: '기다릴게요' },
-                    { time: 136221, text: '눌러 적은 편지에' },
-                    { time: 140468, text: '수많은 그리움 고이 담아' },
-                    { time: 145221, text: '그대 내게로 올 때면' },
-                    { time: 149388, text: '그 손에 쥐어줄게요' },
-                    { time: 153789, text: '어떤 이유로 만나' },
-                    { time: 157932, text: '나와 사랑을 하고' },
-                    { time: 162292, text: '어떤 이유로 내게 와' },
-                    { time: 166956, text: '함께 있어준 당신' },
-                    { time: 170892, text: '부디 행복한 날도' },
-                    { time: 175148, text: '살다 지치는 날도' },
-                    { time: 179349, text: '모두 그대의 곁에 내가' },
-                    { time: 185516, text: '있어줄 수 있길' },
-                    { time: 189849, text: '네 번의 모든 계절들과' },
-                    { time: 194064, text: '열두 달의 시간을 너와' },
-                    { time: 198392, text: '숨이 차게 매일' },
-                    { time: 203112, text: '사랑하며 함께 할게' },
-                    { time: 211040, text: '어떤 이유로 만나' },
-                    { time: 215337, text: '우리 사랑을 했던' },
-                    { time: 219472, text: '지금 이 순간처럼' },
-                    { time: 223552, text: '매일 바라보며' },
-                    { time: 227048, text: '애써주기를' },
-                    { time: 228441, text: '부디 행복한 날도' },
-                    { time: 232290, text: '살다 지치는 날도' },
-                    { time: 236689, text: '모두 그대의 곁에 내가' },
-                    { time: 242673, text: '있어줄 수 있길' },
-                    { time: 249369, text: '부디' },
-                    { time: 254273, text: '추억만 남지 않길 너완' },
-                    { time: 265273, text: ' ' }
-                ]
-            },
+            musicInfo: {},
+            // musicInfo: {
+            //     title: "마음을 드려요",
+            //     artist: "IU",
+            //     melon: {
+            //         SONGID: 32378104,
+            //         ALBUMID: 10388744,
+            //         ALBUMNAME: '사랑의 불시착 OST Part 11',
+            //         coverUri: "https://cdnimg.melon.co.kr/cm2/album/images/103/88/744/10388744_20200214175740_500.jpg?edbdd3b688c5f2725769dbcf9ad270b0/melon/quality/80/optimize"
+            //     },
+            //     youtube: {
+            //         "mimeType": "video/mp4; codecs=\"avc1.42001E, mp4a.40.2\"",
+            //         "qualityLabel": "360p",
+            //         "bitrate": 203645,
+            //         "audioBitrate": 96,
+            //         "itag": 18,
+            //         "width": 360,
+            //         "height": 360,
+            //         "lastModified": "1581983558385911",
+            //         "contentLength": "7136744",
+            //         "quality": "medium",
+            //         "projectionType": "RECTANGULAR",
+            //         "averageBitrate": 203613,
+            //         "audioQuality": "AUDIO_QUALITY_LOW",
+            //         "approxDurationMs": "280404",
+            //         "audioSampleRate": "44100",
+            //         "audioChannels": 2,
+            //         "url": "https://r3---sn-3u-bh2lr.googlevideo.com/videoplayback?expire=1583135394&ei=QmZcXt_HNYH84gL3x5fgAQ&ip=183.101.93.222&id=o-AGsjQjCO2JMTqaPz5jdnv9D656LTz91oQDP4B_AikWzz&itag=140&source=youtube&requiressl=yes&mm=31%2C26&mn=sn-3u-bh2lr%2Csn-i3belney&ms=au%2Conr&mv=m&mvi=2&pl=17&gcr=kr&initcwndbps=978750&vprv=1&mime=audio%2Fmp4&gir=yes&clen=4539161&dur=280.359&lmt=1581983496486924&mt=1583113727&fvip=3&keepalive=yes&fexp=23842630&c=WEB&txp=5531432&sparams=expire%2Cei%2Cip%2Cid%2Citag%2Csource%2Crequiressl%2Cgcr%2Cvprv%2Cmime%2Cgir%2Cclen%2Cdur%2Clmt&lsparams=mm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpl%2Cinitcwndbps&lsig=ABSNjpQwRQIhAJsJwlTMT9KiG9umnCsyplcBIIykpecb0rJ07L2SOfK-AiAKPc0DaLMhsL-i7Meh73mYq0RMRItbaFILpRED7zLmQQ%3D%3D&ratebypass=yes&sig=ADKhkGMwRAIgPUAkq6jgS974AK4SNNF9XmKtYOfYN80SxBAdGs7ObGECIBepgfe20y78re3Al8_LEFlFG9mykZqfEfyQEEQmhFWH",
+            //         "sp": "sig",
+            //         "s": "IDADKhkGMwRQIhANJYs1i1Mkm8Q18vFwMUj-_=be1m0andYwRxRBr4AFiSAiBOT1yRYDTmTGTmBLsI7Q3IOQPExdQscKUAcTtByChNhw=_",
+            //         "container": "mp4",
+            //         "codecs": "avc1.42001E, mp4a.40.2",
+            //         "live": false,
+            //         "isHLS": false,
+            //         "isDashMPD": false
+            //     },
+            //     lyrics: [
+            //         { time: 1, text: '마음을 드려요 - 아이유' },
+            //         { time: 16595, text: '당신에게 드릴 게 없어서' },
+            //         { time: 25027, text: '나의 마음을 드려요' },
+            //         { time: 33467, text: '그대에게 받은 게 많아서' },
+            //         { time: 41707, text: '표현을 다 할 수가 없어요' },
+            //         { time: 50275, text: '나지막한 인사에' },
+            //         { time: 54507, text: '수많은 내 마음 고이 담아' },
+            //         { time: 59211, text: '그대에게로 건네면' },
+            //         { time: 63491, text: '내 마음 조금 알까요' },
+            //         { time: 68019, text: '어떤 이유로 만나' },
+            //         { time: 72331, text: '나와 사랑을 하고' },
+            //         { time: 76419, text: '어떤 이유로 내게 와' },
+            //         { time: 81115, text: '함께 있어준 당신' },
+            //         { time: 84947, text: '부디 행복한 날도' },
+            //         { time: 89235, text: '살다 지치는 날도' },
+            //         { time: 93403, text: '모두 그대의 곁에 내가' },
+            //         { time: 99707, text: '있어줄 수 있길' },
+            //         { time: 106601, text: ' - 연주중 - ' },
+            //         { time: 119062, text: '어떤 소식 보다 더' },
+            //         { time: 123342, text: '애타게 기다려지는 그대' },
+            //         { time: 127964, text: '엇갈리지 않게 여기' },
+            //         { time: 132060, text: '기다릴게요' },
+            //         { time: 136221, text: '눌러 적은 편지에' },
+            //         { time: 140468, text: '수많은 그리움 고이 담아' },
+            //         { time: 145221, text: '그대 내게로 올 때면' },
+            //         { time: 149388, text: '그 손에 쥐어줄게요' },
+            //         { time: 153789, text: '어떤 이유로 만나' },
+            //         { time: 157932, text: '나와 사랑을 하고' },
+            //         { time: 162292, text: '어떤 이유로 내게 와' },
+            //         { time: 166956, text: '함께 있어준 당신' },
+            //         { time: 170892, text: '부디 행복한 날도' },
+            //         { time: 175148, text: '살다 지치는 날도' },
+            //         { time: 179349, text: '모두 그대의 곁에 내가' },
+            //         { time: 185516, text: '있어줄 수 있길' },
+            //         { time: 189849, text: '네 번의 모든 계절들과' },
+            //         { time: 194064, text: '열두 달의 시간을 너와' },
+            //         { time: 198392, text: '숨이 차게 매일' },
+            //         { time: 203112, text: '사랑하며 함께 할게' },
+            //         { time: 211040, text: '어떤 이유로 만나' },
+            //         { time: 215337, text: '우리 사랑을 했던' },
+            //         { time: 219472, text: '지금 이 순간처럼' },
+            //         { time: 223552, text: '매일 바라보며' },
+            //         { time: 227048, text: '애써주기를' },
+            //         { time: 228441, text: '부디 행복한 날도' },
+            //         { time: 232290, text: '살다 지치는 날도' },
+            //         { time: 236689, text: '모두 그대의 곁에 내가' },
+            //         { time: 242673, text: '있어줄 수 있길' },
+            //         { time: 249369, text: '부디' },
+            //         { time: 254273, text: '추억만 남지 않길 너완' },
+            //         { time: 265273, text: ' ' }
+            //     ]
+            // },
             lyricPoint: [],
             curTime: 0,
             tTime: 0,
@@ -243,31 +244,45 @@ export default {
     },
     beforeMount() {
         // console.log(this);
-        const filtered = [];
-        this.musicInfo.lyrics.forEach(element => {
-            filtered.push(Math.floor(element.time/100));
-        });
-        this.lyricPoint = filtered;
         // console.log(filtered);
         // console.log(this.lyricPoint);
     },
     mounted() {
+        
+        const vId = location.pathname.split("/")[2];
+        const video = document.createElement('video');
+        const this_out = this;
+        $(document).ready(() => {
+            reqMInfo(vId)
+            .then((resultMusic) => {
+                this.musicInfo = resultMusic;
+                const filtered = [];
+                this.musicInfo.lyrics.forEach(element => {
+                    filtered.push(Math.floor(element.time/100));
+                });
+                this.lyricPoint = filtered;
+                setTimeout(() => {
+                    sizeCalculation();
+                    startPlay();
+                }, 150);
+            })
+        })
 
         // console.log(this.musicInfo.lyrics);
 
-        const this_out = this;
 
         // music play functions
 
         // load media
 
-        const vId = location.pathname.split("/")[2];
+        console.log(vId);
 
-        const video = document.createElement('video');
         function startPlay() {
-            video.src = this_out.musicInfo.youtube.url;
+            // video.src = this_out.musicInfo.youtube.url;
+            video.src = `https://www.youtube.com/watch?v=${this_out.musicInfo.ytInfo.song.videoId}`;
             // video.autoplay = true;
             video.load();
+            console.log(video);
             getMusicTime();
         }
         function getMusicTime() {
@@ -277,16 +292,25 @@ export default {
                  getMusicTime();
              }, 100);
         }
+        function reqMInfo(vId) {
+            return new Promise((resolve, reject) => {
+                axios.post("/api/play/songInfo", {songId: vId})
+                .then(({data}) => {
+                    resolve(data);
+                })
+                .catch((e) => {
+                    reject(e);
+                })
+            })
+        }
 
 
         // window layout functions
 
-        $(document).ready(() => {
-            sizeCalculation();
-            startPlay();
-            // controllerFnc("first");
-            // $(".controller").click();
-        })
+        // $(document).ready(() => {
+        //     // controllerFnc("first");
+        //     // $(".controller").click();
+        // })
         $(window).resize(() => {
             sizeCalculation();
         })
