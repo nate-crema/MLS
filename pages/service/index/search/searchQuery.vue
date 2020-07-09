@@ -75,9 +75,9 @@ export default {
         
 
         let this_out = this;
-
+        this.$store.commit("playSong", {songId: clickedId})
         console.log(this_out.searchResult.melon.data);
-
+        
         function designChange(q, index) {
           console.log(index);
           setTimeout(() => {
@@ -113,6 +113,9 @@ export default {
             }, 10);
           }, 500);
         }, 100);
+
+        
+
       },
       mouseOver: function(element) {
         // console.log(this);

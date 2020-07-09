@@ -136,7 +136,7 @@ const sqlFnc = {
                     if (element != "null" && element != null) {
                         //  console.log(element);
                         if (!util.isNumber(element)) {
-                            if (element.split("").includes("\"")) {
+                            if (element.split("").includes("\"") || element.split("").includes("\'")) {
                                 let thisel = "";
                                 element.split("").forEach((value, indexel) => {
                                     if (value == "\'" || value == "\"") {
@@ -145,8 +145,7 @@ const sqlFnc = {
                                     } else thisel += value;
                                 })
                                 command += "\"" + thisel + "\"";
-                            }
-                            else command += "\"" + element + "\"";
+                            } else command += "\"" + element + "\"";
                         }
                         else command += "\"" + element + "\"";
                     } else command += element
@@ -268,7 +267,7 @@ const sqlFnc = {
     },
     // const Delete = (table, filter: {columns: String, values: String}, done) => {
     Delete: (table, filter, done) => {
-      mysql_query("DELETE FROM " + table + " WHERE " + filter.columns + " = " + filter.values)
+      mysql_query("DELETE FROM " + table + " WHERE " + filter.columns + " = '" + filter.values + "'")
       .then((res_sql) => {
           return done(null, true);
       })

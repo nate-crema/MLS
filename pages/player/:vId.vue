@@ -7,7 +7,7 @@
         <div class="contArea playerSections">
             <div class="songInfo">
                 <p class="songTitle"
-                :style="{color: basecolor}">{{musicInfo.title}}</p>
+                :style="{color: basecolor}">{{musicInfo.songTitle}}</p>
                 <p class="songAlbum"
                 :style="{color: basecolor}">{{musicInfo.albumTitle}}</p>
                 <p class="songArtist"
@@ -166,6 +166,10 @@ export default {
             switch(num%5) {
                 case 1:
                     this.designLyrics_A = compArr[num].text;
+                    this.designLyrics_B = num+1 < compArr.length ? compArr[num+1].text : "";
+                    this.designLyrics_C = num+2 < compArr.length ? compArr[num+2].text : "";
+                    this.designLyrics_D = num-2 >= 0 ? compArr[num-2].text : "";
+                    this.designLyrics_E = num-1 >= 0 ? compArr[num-1].text : "";
                     if (num-1 <= 0) {
                         $(".lyrics-a").addClass("mid").removeClass("top topmid midbot bot");
                         $(".lyrics-b").addClass("midbot").removeClass("top topmid mid bot");
@@ -182,7 +186,11 @@ export default {
                     break;
                     
                 case 2:
+                    this.designLyrics_A = num-1 >= 0 ? compArr[num-1].text : "";
                     this.designLyrics_B = compArr[num].text;
+                    this.designLyrics_C = num+1 < compArr.length ? compArr[num+1].text : "";
+                    this.designLyrics_D = num+2 < compArr.length ? compArr[num+2].text : "";
+                    this.designLyrics_E = num-2 >= 0 ? compArr[num-2].text : "";
                     if (num-2 <= 0) {
                         $(".lyrics-a").addClass("topmid").removeClass("top mid midbot bot");
                         $(".lyrics-b").addClass("mid").removeClass("top topmid midbot bot");
@@ -199,7 +207,11 @@ export default {
                     break;
 
                 case 3:
+                    this.designLyrics_A = num-2 >= 0 ? compArr[num-2].text : "";
+                    this.designLyrics_B = num-1 >= 0 ? compArr[num-1].text : "";
                     this.designLyrics_C = compArr[num].text;
+                    this.designLyrics_D = num+1 < compArr.length ? compArr[num+1].text : "";
+                    this.designLyrics_E = num+2 < compArr.length ? compArr[num+2].text : "";
                     $(".lyrics-a").addClass("top").removeClass("topmid mid midbot bot");
                     $(".lyrics-b").addClass("topmid").removeClass("top mid midbot bot");
                     $(".lyrics-c").addClass("mid").removeClass("top topmid midbot bot");
@@ -207,7 +219,11 @@ export default {
                     $(".lyrics-e").addClass("bot").removeClass("top topmid mid midbot");
                     break;
                 case 4:
+                    this.designLyrics_A = num+2 < compArr.length ? compArr[num+2].text : "";
+                    this.designLyrics_B = num-2 >= 0 ? compArr[num-2].text : "";
+                    this.designLyrics_C = num-1 >= 0 ? compArr[num-1].text : "";
                     this.designLyrics_D = compArr[num].text;
+                    this.designLyrics_E = num+1 < compArr.length ? compArr[num+1].text : "";
                     if (num+2 >= compArr.length-1) {
                         $(".lyrics-a").addClass("bot").removeClass("top topmid mid midbot");
                         $(".lyrics-b").removeClass("top topmid mid midbot bot");
@@ -224,6 +240,11 @@ export default {
                     break;
                 case 0:
                 default:
+                    // this.designLyrics_E = compArr[num].text;
+                    this.designLyrics_A = num+1 < compArr.length ? compArr[num+1].text : "";
+                    this.designLyrics_B = num+2 < compArr.length ? compArr[num+2].text : "";
+                    this.designLyrics_C = num-2 >= 0 ? compArr[num-2].text : "";
+                    this.designLyrics_D = num-1 >= 0 ? compArr[num-1].text : "";
                     this.designLyrics_E = compArr[num].text;
                     // if (num-1 >= 0) {
                     //     $(".lyrics-a").addClass("mid").removeClass("top topmid midbot bot");
@@ -279,9 +300,14 @@ export default {
 
         function startPlay() {
             // video.src = this_out.musicInfo.youtube.url;
-            video.src = `https://www.youtube.com/watch?v=${this_out.musicInfo.ytInfo.song.videoId}`;
+            // console.log(this_out);
+            video.src = this_out.musicInfo.ytInfo.setData.url;
+            // video.src = `https://www.youtube.com/watch?v=${this_out.musicInfo.ytInfo.song.videoId}`;
             // video.autoplay = true;
             video.load();
+            setTimeout(() => {
+                controllerFnc();
+            }, 500);
             console.log(video);
             getMusicTime();
         }
@@ -365,8 +391,11 @@ export default {
                 controllerFnc();
             }
         });
+        $(".controller").click(() => {
+            console.log("clicked");
+        });
         function controllerFnc(isFirst) {
-            // console.log(video);
+            console.log(video);
             $(".controller").toggleClass('pause play');
             // console.log(this_out.status);
             if(this_out.status) {
@@ -428,13 +457,15 @@ body {
 }
 
 .playArea .contArea .songInfo {
-    width: 60%;
+    width: 80%;
     height: auto;
     /* border: 1px solid purple; */
-    position: absolute;
+    position: relative;
+    float: right;
     top: 100px;
-    right: 70px;
+    right: 80px;
     text-align: right;
+    margin: 0;
 }
 
 .playArea .contArea .songInfo p {
@@ -462,9 +493,10 @@ body {
     width: 70%;
     height: 400px;
     /* border: 1px solid purple; */
-    position: absolute;
+    position: relative;
     top: 250px;
     right: 70px;
+    float: right;
     text-align: right;
 }
 

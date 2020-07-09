@@ -339,7 +339,10 @@ app.use((req, res, next) => {
 
 const searchOptions = ["singer", "title", "lyrics"];
 
-app.post("/searchQuery", (req, res) => {
+app.post("/searchQuery", searchQuery);
+
+
+function searchQuery (req, res) {
     console.log("---searchQuery API---");
     // search option check
     const option = req.body.searchOption.replace(/(\s*)/g,"");
@@ -369,7 +372,7 @@ app.post("/searchQuery", (req, res) => {
         } else {
             console.log(JSON.stringify(data));
             console.log(`${data.length} previous result found in db`);
-            getPrevRes(data)
+            getPrevRes(data, query, {req, res})
             .then((prevData) => {
                 console.log(prevData);
                 res.status(200).json(prevData);
@@ -389,9 +392,9 @@ app.post("/searchQuery", (req, res) => {
   
 
 
-})
+}
 
-function getPrevRes(data) {
+function getPrevRes(data, searchKeyword, nodeControl) {
     return new Promise((resolve, reject) => {
         // let returnObjCounter = 0;
         let returnObjCounter = {
@@ -448,7 +451,15 @@ function getPrevRes(data) {
         
             // search: melonRes
             sqlFnc.Read('melonRes', "", { melonRes })
-            .then((prevMelonRes) => {
+                .then((prevMelonRes) => {
+                if (prevMelonRes.length == 0) {
+                    // error when registering
+                    // delete previous result
+                    sqlFnc.Delete("searchtb", { columns: "searchKey", values: searchKeyword }, function (err, res) {
+                        if (err) reject(err);
+                        else searchQuery(nodeControl.req, nodeControl.res);
+                    })
+                }
                 // console.log(JSON.stringify(prevMelonRes));
                 let melonDatas = [];
                 console.log(`${prevMelonRes.length} previous melon result found (timestamp: ${addDate})`);
@@ -484,9 +495,9 @@ function getPrevRes(data) {
                                             linkConvert: `https://www.melon.com/album/detail.htm?albumId=${prevMelonResIndiv.albumIdM}`
                                         },
                                         artist: {
-                                            artistId: prevMelonResIndiv.artistIdM,
+                                            artistId: prevMelonResIndiv.artistIdM ? prevMelonResIndiv.artistIdM : "Various Artist",
                                             artistImg: prevMelonResIndiv.artistImg,
-                                            artistName: prevMelonResIndiv.artist
+                                            artistName: prevMelonResIndiv.artist ? prevMelonResIndiv.artist : "Various Artist"
                                         },
                                         song: {
                                             linkConvert: `https://www.melon.com/song/detail.htm?songId=${prevMelonResIndiv.songIdM}`,
@@ -513,9 +524,9 @@ function getPrevRes(data) {
                                 linkConvert: `https://www.melon.com/album/detail.htm?albumId=${prevMelonResIndiv.albumIdM}`
                             },
                             artist: {
-                                artistId: prevMelonResIndiv.artistIdM,
+                                artistId: prevMelonResIndiv.artistIdM ? prevMelonResIndiv.artistIdM : "Various Artist",
                                 artistImg: prevMelonResIndiv.artistImg,
-                                artistName: prevMelonResIndiv.artist
+                                artistName: prevMelonResIndiv.artist ? prevMelonResIndiv.artist : "Various Artist"
                             },
                             song: {
                                 linkConvert: `https://www.melon.com/song/detail.htm?songId=${prevMelonResIndiv.songIdM}`,

@@ -13,42 +13,53 @@ let link = "";
 
 
 // ytdl("https://www.youtube.com/watch?v=euI-C1YONaU&list=OLAK5uy_l-q92A476g8X8juCjo5afAH1kEDwp-mW4")
-ytdl("http://www.youtube.com/watch?v=A02s8omM_hI")
+// ytdl.getInfo("http://www.youtube.com/watch?v=A02s8omM_hI")
+ytdl.getInfo("NnRjwEhFU70", (err, info) => {
+    console.log(info);
+    fs.writeFileSync(__dirname + "/IU_nightLetter-video_info.json", JSON.stringify(info));
+})
+
+// ytdl.videoFormat("https://www.youtube.com/watch?v=NnRjwEhFU70", (err, info) => {
+//     console.log(info);
+//     fs.writeFileSync(__dirname + "/IU_nightLetter-video_info.json", JSON.stringify(info.formats.pop().signatureCipher.split("url=").pop()));
+// })
+    
 // ytdl("https://www.youtube.com/watch?v=NnRjwEhFU70")
-.on('info', (info, format) => {
-    console.log(typeof info);
-    console.log(typeof format);
-    console.log(format);
-    // fs.writeFileSync(__dirname + "/IU_nightLetter-video_format.json", JSON.stringify(format));
-    // fs.writeFileSync(__dirname + "/IU_nightLetter-video_info.json", JSON.stringify(info));
-    // fs.writeFileSync(__dirname + "/IU_nightLetter-video_formats.json", info.player_response.streamingData.formats.toString());
-    // console.log("Download URL");
-    // console.log(format.url);
-    // console.log("\n\n Medium Quality Audio URL");
-    // console.log(info.player_response.streamingData);
-    let data = {};
-    const AUDIO_QUALITY_MEDIUM = info.player_response.streamingData.adaptiveFormats.filter((element) => {
-        // console.log(element);
-        if (element.audioQuality == "AUDIO_QUALITY_MEDIUM") {
-            if (Object.keys(data) == "0") link = element.url;
-            data[Object.keys(data).length] = element;
-            // console.log(element);
-        }
-    })
-    // console.log(AUDIO_QUALITY_MEDIUM);
-    fs.writeFileSync(__dirname + "/maroon5_video_audioMedium.json", JSON.stringify(data));
-})
-.on('progress', (chunk, downloaded, total) => {
-    // console.log(chunk);
-    // console.log(downloaded);
-    // console.log(Math.floor(downloaded/total*100));
-})
-.on('finish', () => {
-    // console.log(chunk);
-    // console.log(downloaded);
-    // console.log(total);
-})
-.pipe(fs.createWriteStream(__dirname + "/maroon5_video.mp4"));
+// ytdl("youtube.com/watch?v=Vw3x1QRCCJc")
+// .on('info', (info, format) => {
+//     // console.log(typeof info);
+//     // console.log(typeof format);
+//     // console.log(format);
+//     // fs.writeFileSync(__dirname + "/IU_nightLetter-video_format.json", JSON.stringify(format));
+//     // fs.writeFileSync(__dirname + "/IU_nightLetter-video_info.json", JSON.stringify(info));
+//     // fs.writeFileSync(__dirname + "/IU_nightLetter-video_formats.json", info.player_response.streamingData.formats.toString());
+//     // console.log("Download URL");
+//     // console.log(format.url);
+//     // console.log("\n\n Medium Quality Audio URL");
+//     // console.log(info.player_response.streamingData);
+//     let data = {};
+//     const AUDIO_QUALITY_MEDIUM = info.player_response.streamingData.adaptiveFormats.filter((element) => {
+//         // console.log(element);
+//         if (element.audioQuality == "AUDIO_QUALITY_MEDIUM") {
+//             if (Object.keys(data) == "0") link = element.url;
+//             data[Object.keys(data).length] = element;
+//             // console.log(element);
+//         }
+//     })
+//     // console.log(AUDIO_QUALITY_MEDIUM);
+//     fs.writeFileSync(__dirname + "/maroon5_video_audioMedium.json", JSON.stringify(data));
+// })
+// .on('progress', (chunk, downloaded, total) => {
+//     // console.log(chunk);
+//     // console.log(downloaded);
+//     // console.log(Math.floor(downloaded/total*100));
+// })
+// .on('finish', () => {
+//     // console.log(chunk);
+//     // console.log(downloaded);
+//     // console.log(total);
+// })
+// .pipe(fs.createWriteStream(__dirname + "/IU_NIGHTLETTER.mp4"));
 
 
 

@@ -1,1 +1,0 @@
-Query ERR: Error: ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'Vampire"", 10327600, "https://cdnimg.melon.co.kr/cm2/album/images/103/27/600/103' at line 1

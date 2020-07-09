@@ -119,13 +119,33 @@ function searchYTM(searchKey, filter) {
                                             break;
                                         case 2:
                                             songObj.singer.name = contData.text.runs[0].text;
-                                            songObj.singer.servicePageId = contData.text.runs[0].navigationEndpoint.browseEndpoint.browseId;
-                                            songObj.singer.servicePageURL = "https://music.youtube.com/channel/" + contData.text.runs[0].navigationEndpoint.browseEndpoint.browseId;
+                                            try {
+                                                songObj.singer.servicePageId = contData.text.runs[0].navigationEndpoint.browseEndpoint.browseId;
+                                            } catch(e) {
+                                                console.log("ERR: singer.servicePageId");
+                                            }
+                                            try {
+                                                songObj.singer.servicePageURL = "https://music.youtube.com/channel/" + contData.text.runs[0].navigationEndpoint.browseEndpoint.browseId;
+                                            } catch(e) {
+                                                console.log("ERR: singer.servicePageURL");
+                                            }
                                             break;
                                         case 3:
-                                            songObj.album.name = contData.text.runs[0].text;
-                                            songObj.album.servicePageId = contData.text.runs[0].navigationEndpoint.browseEndpoint.browseId;
-                                            songObj.album.servicePageURL = "https://music.youtube.com/browse/" + contData.text.runs[0].navigationEndpoint.browseEndpoint.browseId;
+                                            try {
+                                                songObj.album.name = contData.text.runs[0].text;
+                                            } catch(e) {
+                                                console.log("ERR: album.name");
+                                            }
+                                            try {
+                                                songObj.album.servicePageId = contData.text.runs[0].navigationEndpoint.browseEndpoint.browseId;
+                                            } catch(e) {
+                                                console.log("ERR: album.servicePageId");
+                                            }
+                                            try {
+                                                songObj.album.servicePageURL = "https://music.youtube.com/browse/" + contData.text.runs[0].navigationEndpoint.browseEndpoint.browseId;
+                                            } catch(e) {
+                                                console.log("ERR: album.servicePageURL");
+                                            }
                                             break;
                                         case 4:
                                             songObj.song.duration = contData.text.runs[0].text;

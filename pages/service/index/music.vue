@@ -17,8 +17,13 @@ export default {
     })
 
     function resizeAction() {
-        $("div.musicCont").css("width", $(window).width()-350);
-        $("div.musicCont").css("height", $(window).height()-80);
+        if ($(window).width() <= 500 ) {
+            $("div.musicCont").css("width", $(window).width());
+            $("div.musicCont").css("height", $(window).height()+250);
+        } else {
+            $("div.musicCont").css("width", $(window).width()-350);
+            $("div.musicCont").css("height", $(window).height()-80);
+        }
     }
   }
 }
@@ -31,6 +36,7 @@ export default {
   width: 80%;
   height: 100%;
   right: 20px;
+  /* overflow-y: hidden; */
   overflow-y: auto;
 }
 </style>

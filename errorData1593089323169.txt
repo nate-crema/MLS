@@ -1,1 +1,0 @@
-Query ERR: Error: ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ', 403036165100218, 4030361651002180, 0, 32681306, , 26020103, , , 73583684727830' at line 1

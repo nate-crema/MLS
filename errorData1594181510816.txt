@@ -1,0 +1,1 @@
+Query ERR: Error: ER_DATA_TOO_LONG: Data too long for column 'albumTitle' at row 12

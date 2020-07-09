@@ -4,10 +4,20 @@ import axios from 'axios';
 const store = () => new Vuex.Store({
 
   state: {
-      userInfo: {},
-      login: {}
+    userInfo: {},
+    login: {},
+    songPlayer: {
+      songId: "",
+      status: false
+    }
   },
   mutations: {
+    playSong(state, { songId }) {
+      state.songPlayer.songId = songId;
+    },
+    songStat(state, { stat }) {
+      state.songPlayer.status = stat;
+    },
     authed (state, { pn }) {
       console.log("commitx");
       state.userInfo.pn = pn;
@@ -27,7 +37,7 @@ const store = () => new Vuex.Store({
       Object.keys(data).forEach((element, index) => {
         state.userInfo[element] = Object.values(data)[index]
       })
-    }
+    },
   },
   actions: {
     nuxtServerInit ({ commit, dispatch }, { req }) {
@@ -96,6 +106,18 @@ const store = () => new Vuex.Store({
           console.error(reason);
           reject(reason);
         })
+      })
+    },
+    playSong(state, { songId }) {
+      return new Promise((resolve, reject) => {
+        this.commit("playSong", { songId });
+        resolve(true);
+      })
+    },
+    songStat(state, { stat }) {
+      return new Promise((resolve, reject) => {
+        this.commit("songStat", { stat });
+        resolve(true);
       })
     }
   }

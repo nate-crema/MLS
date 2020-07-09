@@ -152,7 +152,12 @@ export default {
 
       function resizeAction() {
           // $("div.songDetail").css("width", $(window).width()-350);
-          $("div.songDetail").css("height", $(window).height()-200);
+          // alert($(window).width());
+          if ($(window).width() <= 500) {
+            // $("div.songDetail").css("height", $(window).height()+200);
+            // alert("wert");
+            // $("div.songDetail").css("height", $(window).height()+150);
+          } else $("div.songDetail").css("height", $(window).height()-200);
           // $("div.musicCont").css("height", $(window).height()-80);
       }
 
@@ -163,6 +168,14 @@ export default {
 </script>
 
 <style>
+@media (max-width: 500px) {
+  .songDetail {
+    width: 90% !important;
+    position: absolute !important;
+    left: 50%;
+    transform: translate(-50%);
+  }
+}
 .songDetail {
   width: 100%;
   /* height: 300px; */
@@ -240,6 +253,23 @@ export default {
   height: 100%;
   background-color: rgba(0, 0, 0, 0.15);
   position: absolute;
+}
+
+
+
+@media (max-width: 500px) {
+  .songDetail .songCont {
+    position: relative !important;
+    left: 0 !important;
+    top: 200px !important;
+  }
+  .songDetail .playSong {
+    position: relative !important;
+    top: 520px !important;
+    font-size: 18px !important;
+    font-weight: 300 !important;
+    line-height: 40px !important;
+  }
 }
 
 

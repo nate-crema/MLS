@@ -14,165 +14,8 @@ import util from '../util';
 import async from 'async';
 import https from 'https';
 import ytdl from 'ytdl-core';
-
-
-
-// mysql functions
-
-  const mysqlConnKEYINFO = JSON.parse(fs.readFileSync(path.join(__dirname, "../security/dbConnection.json"), {encoding: "UTF-8"}));
-  console.log(mysqlConnKEYINFO);
-
-  function mysql_query(q_comm) {
-    
-      const conn_mysql = mysql.createConnection(mysqlConnKEYINFO);
-
-      conn_mysql.connect();
-
-      return new Promise((resolve, reject) => {
-          conn_mysql.query(q_comm, (err, rows, fields) => {
-              if (err) reject("Query ERR: " + err);
-              else resolve(rows);
-          })
-      })
-  }
-
-  const sqlFnc = {
-
-    test: () => {
-      mysql_query("show tables")
-      .then((res) => {
-          console.log(res);
-          if (res.length != 0) {
-              console.log("Connected to Mysql DB. Total table number is " + res.length);
-          }
-      })
-      .catch((err) => {
-          console.log(err);
-      })
-    },
-
-
-    // const Insert = (table, data:{columns: Object, values: Object}, done) => {
-    Insert: (table, data, done) => {
-      let command = "INSERT INTO " + table + " (" + Object.keys(data).toString() + ")";
-      console.log(Object.values(data));
-      if (Object.values(data).length > 1) {
-          command += " VALUES (";
-          Object.values(data).forEach((element, index) => {
-              command += (util.isNumber(element) ? element : "'" + element + "'");
-              // console.log(index);
-              index != Object.values(data).length-1 ? command += ", " : command += ");";
-          });
-      } else if (Object.values(data).length == 1) {
-          // console.log("frd");
-          command += " VALUES (" + (util.isNumber(Object.values(data)[0]) ? Object.values(data)[0] : "'" + Object.values(data)[0] + "'");
-      } else return done(new Error("Unvalid Insert"));
-      // console.log(command);
-      mysql_query(command)
-      .then((res_sql) => {
-          return done(null, res_sql);
-      })
-      .catch((e) => {
-          return done(e);
-      })
-    },
-
-    // const Update = (table, base:{columns: Object, values: Object}, alter:{columns: Object, values: Object}) => {
-    Update: (table, base, alter) => {
-      return new Promise((resolve, reject) => {
-        let command = "UPDATE " + table;
-        // console.log(typeof data.values);
-
-        if (Object.values(alter).length > 1) {
-            command += " SET ";
-            Object.values(alter).forEach((element, index) => {
-                command += "" + Object.keys(alter)[index] + " = " + (util.isNumber(element) ? element : "'" + element + "'");
-                index != Object.values(alter).length-1 ? command += ", " : command += "";
-            });
-        } else if (Object.values(alter).length == 1) {
-            command += " SET " + Object.keys(alter)[0] + " = " + (util.isNumber(Object.values(alter)[0]) ? Object.values(alter)[0] : "'" + Object.values(alter)[0] + "'");
-        }
-
-        if (Object.values(base).length > 1) {
-            command += " WHERE ";
-            Object.values(base).forEach((element, index) => {
-                command += "" + Object.values(base)[index] + " = " + (util.isNumber(element) ? element : "'" + element + "'");
-                index != Object.values(base).length-1 ? command += " AND " : command += ");";
-            });
-        } else if (Object.values(base).length == 1) {
-            command += " WHERE " + "" + Object.keys(base)[0] + " = " + (util.isNumber(Object.values(base)[0]) ? Object.values(base)[0] : "'"  + Object.values(base)[0] + "'");
-        }
-
-        console.log(command);
-        mysql_query(command)
-        .then((res_sql) => {
-            resolve(res_sql);
-        })
-        .catch((e) => {
-            reject(e);
-        })
-      })
-      
-    },
-    // const Alter = (type: String, table: String, column: String, data: String, done) => {
-    Alter: (type, table, column, data, done) => {
-    if (type == "add" || type == "modify") {
-          if (!table || !column || !data) return done(new Error("Required variable not defined properly"))
-          mysql_query("ALTER table " + table + " " + type + " " + column + " " + data)
-          .then((res_sql) => {
-              return done(null, true);
-          })
-          .catch((e) => {
-              return done(e);
-          })
-      } else return done(new Error("Invalid type: " + type));
-    },
-    // const Read = (table: String, output: Object, filter: {columns: String, values: String}) => {
-    Read: (table, output, filter) => {
-      return new Promise((resolve, reject) => {
-        // console.log(table);
-        // console.log(output);
-        // console.log(filter);
-        let command = "SELECT " + (!output ? "*" : output.toString()) + " FROM " + table;
-        // console.log(command);
-        if (Object.values(filter).length > 1) {
-            command += " WHERE ";
-            Object.keys(filter).forEach((element, index) => {
-                command += element + "=" + (util.isNumber(Object.values(filter)[index]) ? Object.values(filter)[index] : "'" + Object.values(filter)[index] + "'");
-                if (Object.keys(filter).indexOf(element) != Object.keys(filter).length-1) command += " AND ";
-            });
-        } else if (Object.values(filter).length == 1) {
-            command += " WHERE " + Object.keys(filter)[0] + "=" + (util.isNumber(Object.values(filter)[0]) ? Object.values(filter)[0] : "'" + Object.values(filter)[0] + "'");
-        }
-
-        // console.log(command);
-
-        mysql_query(command)
-        .then((res_sql) => {
-            // return done(null, res_sql.length == 1 ? res_sql[0] : res_sql);
-            // console.log(res_sql);  
-            resolve(res_sql);
-        })
-        .catch((e) => {
-            console.log("mysql read Error: ");          
-            console.log(e);          
-            reject(e);
-        })
-      })
-    },
-    // const Delete = (table, filter: {columns: String, values: String}, done) => {
-    Delete: (table, filter, done) => {
-      mysql_query("DELETE FROM " + table + " WHERE " + filter.columns + " = " + filter.values)
-      .then((res_sql) => {
-          return done(null, true);
-      })
-      .catch((e) => {
-          return done(e);
-      })
-    }   
-  }
-
-// mysql functions
+import nodeCache from 'node-cache';
+import sqlFnc from '../modules_Base/mysqlFnc';
 
 
 // Create express router
@@ -209,8 +52,10 @@ app.get('/', (req, res) => {
     res.end("HI");
 })
 
+// test account add when server start
 let authArray = [];
-authArray.push({pn: "01000000000", code: "0000", SndBnyCode: "0000뷁"});
+authArray.push({ pn: "01000000000", code: "0000", SndBnyCode: "0000뷁" });
+// test account: end
 
 app.post('/sms', (req, res) => {
   console.log(req.body);
@@ -291,55 +136,38 @@ app.post('/sms', (req, res) => {
 //   }
 // })
 
-app.post('/login', (req, res) => {
-  console.log("login: serverside");
+function login(req, res) { 
   let check = "false";
-  if (!req.body.pn) {
-    res.status(400);
-    return res.end("false");
-  }
-
-  console.log(req.body);
-
+  if (!req.body.pn) return res.status(400).end("false");
   if (!req.body.SndBnyCode) {
     sqlFnc.Read("user", "cusId", {pn: req.body.pn})
     .then((lists) => {
-      if (lists.length >= 1) {
-        res.status(200);
-        return res.end("true");
-      } else {
-        res.status(400);
-        return res.end("false");
-      }
+      if (lists.length >= 1) return res.status(200).end("true");
+      else return res.status(400).end("false");
     });
   } else {
-    console.log(req.body.SndBnyCode);
-    if (typeof req.body.SndBnyCode != "string") {
-      res.status(400);
-      return res.end("false");
-    } else {
-      sqlFnc.Read("user", "salt, enccode", {pn: req.body.pn})
-      .then((lists) => {
-        console.log(lists);
-        lists.forEach((element, index) => {
-          crypto.pbkdf2(req.body.SndBnyCode, element.salt.toString('base64'), 78608, 100, 'sha512', (err, key) => {
-            console.log(key.toString("base64"));
-            if (key.toString("base64") == element.enccode) {
-              check = "true";
-            }
-            if (index == lists.length-1) {
-              res.status(200);
-              return res.end(check);
-            }
-          });
-        })
-      });
-    }
+    if (typeof req.body.SndBnyCode != "string") return res.status(400).end("false")
+    else sqlFnc.Read("user", "salt, enccode", {pn: req.body.pn})
+    .then((lists) => {
+      // console.log(lists);
+      lists.forEach((element, index) => {
+        crypto.pbkdf2(req.body.SndBnyCode, element.salt.toString('base64'), 78608, 100, 'sha512', (err, key) => {
+          console.log(key.toString("base64"));
+          console.log(element.enccode);
+          if (key.toString("base64") == element.enccode) check = "true";
+          console.log(`${index} / ${lists.length-1}`);
+          if (index == lists.length - 1) {
+            console.log("Login Process Complete");
+            return res.status(200).end(check);
+          }
+        });
+      })
+      // return res.status(500).end("ERR: Internal Server Error");
+    });
   }
-})
+}
 
-app.post('/authed', (req, res) => {
-  // req.session.isAuthorized = true;
+function auth(req, res) {
   try {
     console.log(req.body);
     req.session.userInfo = {};
@@ -350,18 +178,9 @@ app.post('/authed', (req, res) => {
     res.status(400);
     res.end("false");
   }
-})
+}
 
-app.post('/register', (req, res) => {
-  // user authCode Register Process
-
-
-  // set complete session
-  // req.session.isRegistered = true;
-
-  // console.log(req.body);
-  // console.log(req.session.userInfo);
-  
+function register(req, res) {
   let encpw = "";
 
   const id = util.getUid(20);
@@ -371,32 +190,37 @@ app.post('/register', (req, res) => {
     crypto.pbkdf2(req.body.passwd, buf.toString('base64'), 78608, 100, 'sha512', (err, key) => {
       encpw = key.toString('base64');
       // console.log(encpw);
-      sqlFnc.Insert('user', {
-        pn,
-        enccode: encpw,
-        id,
-        salt: buf.toString('base64')
-      }, (err, result) => {
-        if (err) {
-          console.error("SERVER ERROR");
-          console.error(err);
-          res.status(400);
-          res.end("ERROR");
-        } else {
+      try {
+        sqlFnc.Insert('user', {
+          pn,
+          enccode: encpw,
+          id,
+          salt: buf.toString('base64')
+        }, (err, result) => {
           req.session.userInfo = {
             pn,
             id
-          }
-          console.log(req.session.userInfo);
-          res.json({
+          };
+          // console.log(req.session.userInfo);
+          res.status(200).json({
             pn,
             id
-          }); 
-        }
-      })
+          });
+        })
+      } catch (e) {
+        console.error("SERVER ERROR");
+        console.error(e);
+        res.status(4000).end("ERROR");
+      }
     });
   });
-})
+}
+
+app.post('/login', login);
+
+app.post('/authed', auth);
+
+app.post('/register', register);
 
 app.post('/logined', (req, res) => {
   req.session.userInfo = req.body;
@@ -598,24 +422,75 @@ app.post('/songDetail', getSongDetail, (req, res) => {
 
 app.post('/play/songInfo', getSongDetail, (req, res) => {
   const searchedObj = req.songDetailData;
-  console.log(req.songDetailData);
+  // console.log(req.songDetailData);
   
-  const { songTitle, artist } = searchedObj;
-  searchYT(songTitle)
+  const { songTitle, artist, ytSyncId } = searchedObj;
+  searchYT(`${songTitle} - ${artist}`)
   .then((ytResult) => {
     console.log(`Search Requested: YTM`);
-    const primaryKeyYT = "40304" + util.getUid(10, true);
     // console.log(ytResult);
     if (ytResult.songObjs.length > 0) {
-      console.log(ytResult.songObjs[0]);
+      // console.log(ytResult.songObjs);
+
+      let searchedSong;
       let resJson = searchedObj;
-      resJson.ytInfo = ytResult.songObjs[0];
-      ytdl(`https://www.youtube.com/watch?v=${ytResult.songObjs[0].song.videoId}`)
+      if (ytSyncId == null) {
+        console.log(`correspond ytMusic musics: ${ytResult.songObjs.length}`);
+        // find same song from yt music api
+        searchedSong = ytResult.songObjs.find(songobjIndiv => {
+          // instrumental distinguition
+          if (songobjIndiv.song.title.replace(/\s/gi, "").includes(songTitle.replace(/\s/gi, ""))) {
+            if (
+              (
+                songTitle.replace(/\s/gi, "").includes("inst") ||
+                songTitle.replace(/\s/gi, "").includes("Inst") ||
+                songTitle.replace(/\s/gi, "").includes("Inst.") ||
+                songTitle.replace(/\s/gi, "").includes("inst.") ||
+                songTitle.replace(/\s/gi, "").includes("instrumental")
+              ) && (
+                songTitle.replace(/\s/gi, "").includes("inst") ||
+                songTitle.replace(/\s/gi, "").includes("Inst") ||
+                songTitle.replace(/\s/gi, "").includes("inst.") ||
+                songTitle.replace(/\s/gi, "").includes("Inst") ||
+                songTitle.replace(/\s/gi, "").includes("instrumental")
+              )
+            ) {
+              return songobjIndiv.song.title.replace(/\s/gi, "").includes(songTitle.replace(/\s/gi, ""));
+            } else if (
+              !(
+                songTitle.replace(/\s/gi, "").includes("inst") ||
+                songTitle.replace(/\s/gi, "").includes("Inst") ||
+                songTitle.replace(/\s/gi, "").includes("Inst.") ||
+                songTitle.replace(/\s/gi, "").includes("inst.") ||
+                songTitle.replace(/\s/gi, "").includes("instrumental")
+              ) && !(
+                songTitle.replace(/\s/gi, "").includes("inst") ||
+                songTitle.replace(/\s/gi, "").includes("Inst") ||
+                songTitle.replace(/\s/gi, "").includes("inst.") ||
+                songTitle.replace(/\s/gi, "").includes("Inst") ||
+                songTitle.replace(/\s/gi, "").includes("instrumental")
+              )
+            ) return songobjIndiv.song.title.replace(/\s/gi, "").includes(songTitle.replace(/\s/gi, ""));
+            else {
+              console.log("ERR: Both are not included");
+            }
+          }
+        })
+        if (searchedSong == undefined) searchedSong = ytResult.songObjs[0];
+        // console.log(searchedSong);
+        resJson.ytInfo = searchedSong;
+      } else {
+        resJson.ytInfo = {};
+      }
+      ytdl(ytSyncId != null ? ytSyncId : searchedSong.song.videoId)
       .on('info', (info, format) => {
+        if (ytSyncId == null) sqlFnc.Update("melonRes", { songIdB: searchedObj.songIdB }, { ytSyncId: searchedSong.song.videoId });
         console.log(format);
-        resJson.ytInfo.setData = JSON.stringify(format);
+        resJson.ytInfo.setData = format;
+        console.log(resJson);
         res.status(200).json(resJson);
-      });
+      })
+      .pipe(fs.createWriteStream(path.join(__dirname, `../static/Cache/music/${req.songDetailData.songIdB}.mp4`)));
     } else return res.status(404).end("Not Ready");
     // searchComplete("yt", ytResult, primaryKeyYT, null);
   })
@@ -624,6 +499,33 @@ app.post('/play/songInfo', getSongDetail, (req, res) => {
       console.error(e);
       // searchComplete("yt", null, null, e);
   })
+})
+
+
+// save music
+
+const serviceCache = new nodeCache({
+  stdTTL: 0,
+  checkperiod: 600
+});
+
+function saveSongBrowser(req, res, next) {
+  const { songIds } = req.body;
+  serviceCache.get('song', (err, value) => {
+    if (err) return res.status(404).end();
+    if (value.length > 100) res.status(403).end("ERR: Too many musics already saved");
+    songIds.forEach((songId, index) => {
+      sqlFnc.Read("melonRes", { songIdB: songId })
+        .then((data) => {
+          if (!data) 
+          serviceCache.set('song', )
+      })
+    })
+  })
+}
+
+app.post('/save/songData', saveSongBrowser, (req, res) => {
+
 })
 
 

@@ -169,7 +169,8 @@ function searchMelonSong(searchKey) {
                                 }
                             }
                             // console.log(`artistId: ${artistId}`);
-                            const artistName = songInfos[i + 1].children[0].children[1].children[1].attribs.title == undefined ? null : songInfos[i + 1].children[0].children[1].children[1].attribs.title.replace(" - 페이지 이동","");
+                            let artistName = songInfos[i + 1].children[0].children[1].children[1].attribs.title == undefined ? null : songInfos[i + 1].children[0].children[1].children[1].attribs.title.replace(" - 페이지 이동", "");
+                            if (artistName == null) artistName = "Various Artist";
                             // const menuId = songInfos[i].children[0].children[1].children[1].attribs.onclick.split("melon.play.playSong('")[1].split("',")[0].replace(");", "");
                             // const menuId = songInfos[i].children[0].children[1].children[9].attribs.href.split("playSong")[1].split(",")[0].replace("(\'", "").replace("\'", "");
                             // const songId = songInfos[i].children[0].children[1].children[1].attribs.onclick.split("melon.play.playSong('")[1].split("',")[1].replace(");", "");
