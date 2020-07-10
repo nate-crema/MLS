@@ -108,6 +108,21 @@ const store = () => new Vuex.Store({
         })
       })
     },
+
+    // login
+    async login(state, { userInfo }) {
+      try { 
+        const { pn, SndBnyCode } = userInfo;
+        axios.post("/api/login", {
+          pn,
+          SndBnyCode,
+        })
+      } catch (e) {
+        console.error("ERR: Vuex Store");
+        console.error(e);
+      }
+    },
+    // playSong - use when songPlayer play song
     playSong(state, { songId }) {
       return new Promise((resolve, reject) => {
         this.commit("playSong", { songId });

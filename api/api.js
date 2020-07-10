@@ -147,18 +147,27 @@ function login(req, res) {
     });
   } else {
     if (typeof req.body.SndBnyCode != "string") return res.status(400).end("false")
-    else sqlFnc.Read("user", "salt, enccode", {pn: req.body.pn})
+    else sqlFnc.Read("user", "*", {pn: req.body.pn})
     .then((lists) => {
       // console.log(lists);
       lists.forEach((element, index) => {
         crypto.pbkdf2(req.body.SndBnyCode, element.salt.toString('base64'), 78608, 100, 'sha512', (err, key) => {
           console.log(key.toString("base64"));
           console.log(element.enccode);
-          if (key.toString("base64") == element.enccode) check = "true";
+          if (key.toString("base64") == element.enccode) {
+            check = index;
+          }
           console.log(`${index} / ${lists.length-1}`);
           if (index == lists.length - 1) {
             console.log("Login Process Complete");
-            return res.status(200).end(check);
+            // set session if check == true
+            if (check != "false") {
+              req.session.userInfo = lists[check];
+              check = true;
+              return res.status(200).end(check);
+            } else {
+              return res.status(200).end("false");
+            }
           }
         });
       })
@@ -172,6 +181,8 @@ function auth(req, res) {
     console.log(req.body);
     req.session.userInfo = {};
     req.session.userInfo.pn = req.body.pn;
+    console.log("req.session.userInfo");
+    console.log(JSON.stringify(req.session.userInfo));
     res.end("true");
   } catch(e) {
     console.error(e);
@@ -181,7 +192,9 @@ function auth(req, res) {
 }
 
 function register(req, res) {
+  console.log("serdtgr");
   let encpw = "";
+  console.log(`register: prev session: ${req.session.userInfo}`);
 
   const id = util.getUid(20);
   const pn = req.session.userInfo.pn;

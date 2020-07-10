@@ -8,6 +8,59 @@
       :style="{backgroundImage: `url(${musicInfo.songImg ? musicInfo.songImg : '/resource/cd.svg'})`}"></div>
       <p class="songTitle">{{musicInfo.songTitle ? musicInfo.songTitle : "음악을 선택해보세요!"}}</p>
       <p class="lyrics">{{musicInfo.songTitle ? (lyricsThis ? lyricsThis : "가사가 없는 노래입니다.") : "음악을 선택하면 음악이 동시에 재생됩니다."}}</p>
+      <div class="replayArea">
+        <svg class="replay" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 472.615 472.615" style="enable-background:new 0 0 472.615 472.615;" xml:space="preserve">
+            <g>
+              <g>
+                <path d="M355.232,0l-13.525,13.525l65.821,65.821h-279.17c-52.894,0-95.924,43.031-95.924,95.919v59.633h19.128v-59.633
+                  c0-42.343,34.452-76.79,76.796-76.79h279.17l-65.821,65.821l13.525,13.525l88.91-88.91L355.232,0z"/>
+              </g>
+            </g>
+            <g>
+              <g>
+                <path d="M421.053,237.714v59.632c0,42.344-34.452,76.795-76.796,76.795H65.087l65.821-65.825l-13.525-13.525l-88.909,88.914
+                  l88.909,88.91l13.525-13.525L65.087,393.27h279.17c52.895,0,95.924-43.031,95.924-95.924v-59.632H421.053z"/>
+              </g>
+            </g>
+            <g>
+            </g>
+            <g>
+            </g>
+            <g>
+            </g>
+            <g>
+            </g>
+            <g>
+            </g>
+            <g>
+            </g>
+            <g>
+            </g>
+            <g>
+            </g>
+            <g>
+            </g>
+            <g>
+            </g>
+            <g>
+            </g>
+            <g>
+            </g>
+            <g>
+            </g>
+            <g>
+            </g>
+            <g>
+            </g>
+        </svg>
+      </div>
+      <div class="playControlArea">
+        <div class="playControl play">
+          <span class="left"></span>
+          <span class="right"></span>
+        </div>
+      </div>
+
   </div>
 </template>
 
@@ -361,6 +414,13 @@ export default {
   border-radius: 5px;
   position: absolute;
   background-color: rgb(9, 17, 88);
+}
+#bottomPlayer .replay {
+  width: 24px;
+  height: auto;
+  position: absolute;
+  right: 50px;
+  top: 30px;
 }
 
 </style>
