@@ -75,7 +75,8 @@ module.exports = {
     '~/api/searchApi'
   ],
   modules: [
-    'nuxt-socket-io'
+    'nuxt-socket-io',
+    '@nuxtjs/pwa'
   ],
   io: {
     sockets: [
@@ -85,6 +86,40 @@ module.exports = {
         default: true
       }
     ]
-  }
+  },
+  manifest: {
+    name: "Base",
+    short_name: "Base",
+    start_url: "/",
+    background_color: "#000"
+  },
+  workbox: {
+    offline: true,
+    offlinePage: "/index.vue",
+    autoRegister: true,
+    strategyOptions: {
+      cacheName: 'our-cache',
+      cacheExpiration: {
+        maxEntries: 10,
+        maxAgeSeconds: 300
+      }
+    },
+    runtimeCaching: [
+      {
+        urlPattern: "/*",
+        handler: "networkFirst",
+        method: "GET"
+      }
+    ],
+    importScripts: [
+      'custom-sw.js'
+    ]
+  },
+  plugins: [
+    {
+      src: "~/plugins/sw.js",
+      ssr: false
+    }
+  ]
 }
 

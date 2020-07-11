@@ -1,6 +1,7 @@
 <template>
   <div class="navBar">
       <p class="serviceTitle">Base</p>
+      <nuxt-link to="/new/search" class="searchTitle">검색</nuxt-link>
       <div class="playList">
           <p class="playListTitle">플레이리스트</p>
           <ul class="playListContUl">
@@ -119,14 +120,25 @@ export default {
     left: 70px;
     font-size: 45px;
     font-weight: 700;
-    font-family: "Noto Sans KR";
+    font-family: "BaseFontB";
+    /* font-family: "Noto Sans KR"; */
     color: #0F326A;
+}
+
+.searchTitle {
+    position: absolute;
+    top: 200px;
+    left: 40px;
+    font-size: 20px;
+    font-weight: 500;
+    color: #0F326A;
+    text-decoration: none;
 }
 
 
 .navBar .playList {
     position: absolute;
-    top: 250px;
+    top: 280px;
     right: 20px;
     /* border: 1px solid black; */
     width: 78%;

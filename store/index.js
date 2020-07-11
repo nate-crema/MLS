@@ -113,10 +113,13 @@ const store = () => new Vuex.Store({
     async login(state, { userInfo }) {
       try { 
         const { pn, SndBnyCode } = userInfo;
-        axios.post("/api/login", {
+        const result = await axios.post("/api/login", {
           pn,
           SndBnyCode,
-        })
+        });
+        if (result.data) {
+          
+        }
       } catch (e) {
         console.error("ERR: Vuex Store");
         console.error(e);

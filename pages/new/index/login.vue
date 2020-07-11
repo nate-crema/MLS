@@ -230,8 +230,8 @@ export default {
                             document.getElementById("phoneNumIN").style.color = "#0f6a43";
                         }, 500);
                         setTimeout(() => {
-                            document.getElementById("nuxt-link-next").click();   
-                            // location.href = "/service";
+                            // document.getElementById("nuxt-link-next").click();   
+                            location.href = this_out.to;
                         }, 1000);
                     } else{
                         document.getElementById("phoneNumIN").value = "회원정보를 확인할 수 없습니다.";

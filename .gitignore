@@ -12,3 +12,7 @@ dist
 
 # Security files
 security/
+security.zip
+
+# pwa
+sw.*

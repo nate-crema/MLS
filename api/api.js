@@ -163,7 +163,7 @@ function login(req, res) {
             // set session if check == true
             if (check != "false") {
               req.session.userInfo = lists[check];
-              check = true;
+              check = "true";
               return res.status(200).end(check);
             } else {
               return res.status(200).end("false");

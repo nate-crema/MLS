@@ -12,6 +12,7 @@ import serviceNavBar from "~/components/serviceNavBar";
 import bottPlayer from '~/components/bottPlayer';
 
 export default {
+  middleware: "auth",
   components: {
     "navbar-side": serviceNavBar,
     bottPlayer
