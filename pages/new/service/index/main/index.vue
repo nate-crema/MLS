@@ -5,13 +5,13 @@
         <nuxt-link id="toMainA" to="/new/service/main/mainA"  style="display: none;">rgtr</nuxt-link>
         <img class="arrowDImg" src="/img/arrowD.svg"/>
     </div>
-    <div class="extender"></div>    
+    <div class="extender"></div>  
   </div>
 </template>
 
 <script>
 export default {
-
+  
 }
 </script>
 

@@ -116,26 +116,6 @@ app.post('/sms', (req, res) => {
   }
 })
 
-// app.post('/login', (req, res) => {
-//   let check = "false";
-//   if (!req.body.SndBnyCode) {
-//     authArray.every((value) => {
-//       console.log(value.pn);
-//       console.log(req.body.pn);
-//       if (req.body.pn == value.pn) check = "true";
-//     })
-//     res.end(check);
-//   } else {
-//     console.log("Login Request");
-//     authArray.every((value) => {
-//       console.log(value.pn);
-//       console.log(req.body.pn);
-//       if (req.body.pn == value.pn && req.body.SndBnyCode == value.SndBnyCode) check = "true";
-//     })
-//     res.end(check);
-//   }
-// })
-
 function login(req, res) { 
   let check = "false";
   if (!req.body.pn) return res.status(400).end("false");
@@ -144,6 +124,9 @@ function login(req, res) {
     .then((lists) => {
       if (lists.length >= 1) return res.status(200).end("true");
       else return res.status(400).end("false");
+    })
+    .catch((e) => {
+      console.log("ERR: " + e);
     });
   } else {
     if (typeof req.body.SndBnyCode != "string") return res.status(400).end("false")
@@ -540,6 +523,9 @@ function saveSongBrowser(req, res, next) {
 app.post('/save/songData', saveSongBrowser, (req, res) => {
 
 })
+
+
+
 
 
 

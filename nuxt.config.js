@@ -76,7 +76,7 @@ module.exports = {
   ],
   modules: [
     'nuxt-socket-io',
-    '@nuxtjs/pwa'
+    // '@nuxtjs/pwa'
   ],
   io: {
     sockets: [
@@ -87,39 +87,39 @@ module.exports = {
       }
     ]
   },
-  manifest: {
-    name: "Base",
-    short_name: "Base",
-    start_url: "/",
-    background_color: "#000"
-  },
-  workbox: {
-    offline: true,
-    offlinePage: "/index.vue",
-    autoRegister: true,
-    strategyOptions: {
-      cacheName: 'our-cache',
-      cacheExpiration: {
-        maxEntries: 10,
-        maxAgeSeconds: 300
-      }
-    },
-    runtimeCaching: [
-      {
-        urlPattern: "/*",
-        handler: "networkFirst",
-        method: "GET"
-      }
-    ],
-    importScripts: [
-      'custom-sw.js'
-    ]
-  },
-  plugins: [
-    {
-      src: "~/plugins/sw.js",
-      ssr: false
-    }
-  ]
+  // manifest: {
+  //   name: "Base",
+  //   short_name: "Base",
+  //   start_url: "/",
+  //   background_color: "#000"
+  // },
+  // workbox: {
+  //   offline: true,
+  //   offlinePage: "/index.vue",
+  //   autoRegister: true,
+  //   strategyOptions: {
+  //     cacheName: 'our-cache',
+  //     cacheExpiration: {
+  //       maxEntries: 10,
+  //       maxAgeSeconds: 300
+  //     }
+  //   },
+  //   runtimeCaching: [
+  //     {
+  //       urlPattern: "/*",
+  //       handler: "networkFirst",
+  //       method: "GET"
+  //     }
+  //   ],
+  //   importScripts: [
+  //     'custom-sw.js'
+  //   ]
+  // },
+  // plugins: [
+  //   {
+  //     src: "~/plugins/sw.js",
+  //     ssr: false
+  //   }
+  // ]
 }
 

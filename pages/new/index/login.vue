@@ -234,6 +234,7 @@ export default {
                             location.href = this_out.to;
                         }, 1000);
                     } else{
+                        console.log("esrdgf");
                         document.getElementById("phoneNumIN").value = "회원정보를 확인할 수 없습니다.";
                         document.getElementById("phoneNumIN").style.color = "#9c0c0c";
                         setTimeout(() => {

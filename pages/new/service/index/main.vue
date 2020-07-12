@@ -34,13 +34,15 @@ export default {
       const Month = TimeInfo[1]; // Month
       const Day = TimeInfo[2]; // Day
       const Year = TimeInfo[3]; // Year
-      // const Time = TimeInfo[4]; // Time
-      const Time = "12:00:00";
+      const Time = TimeInfo[4]; // Time
+      // const Time = "12:00:00";
       const HH = Time.split(":")[0]*1;
       const MM = Time.split(":")[1]*1;
       const SS = Time.split(":")[2]*1;
       // alert(HH);
 
+
+      // alert(HH);
 
       if (HH > 4 && HH <= 10) {
         this_out.textA = "좋은 아침입니다!";
@@ -56,12 +58,13 @@ export default {
         this_out.imgSrc = "/img/undraw_moonlight_5ksn.svg";
       } else if (HH > 18 && HH <= 22) {
         this_out.textA = "오늘 하루도 수고하셨습니다 :)";
-        this_out.textB = `"${userInfo.name}"님을 위한 음악을 들으며 하루를 마무리해보세요!`;
-        this_out.imgSrc = "/img/undraw_summer_jx06.svg";
-      } else if (HH > 22 && HH <= 4) {
+        // this_out.textB = `"${userInfo.name}"님을 위한 음악을 들으며 하루를 마무리해보세요!`;
+        this_out.textB = `귀가길을 "${userInfo.name}"님을 위한 노래들과 함께하세요!`;
+        this_out.imgSrc = "/img/undraw_coming_home_52ir.svg";
+      } else if (HH > 22 || HH <= 4) {
         this_out.textA = "모두 안녕히 주무세요 ;)";
         this_out.textB = `"${userInfo.name}"님을 위한 음악을 들으며 잠자리에 드는건 어떨까요?`;
-        this_out.imgSrc = "/img/undraw_summer_jx06.svg";
+        this_out.imgSrc = "/img/undraw_sleep_analysis_o5f9.svg";
       }
 
 
@@ -76,10 +79,13 @@ export default {
           setTimeout(() => {
             
             $(".textB").css("opacity", "1");
-            $(".backgroundImg").css("opacity", "1");
-            setTimeout(() => {
-              $(".scrollToLogin").css("opacity", "1");
-            }, 500);
+            if (location.pathname == "/new/service/main/"
+            || location.pathname == "/new/service/main") {
+              $(".backgroundImg").css("opacity", "1");
+              setTimeout(() => {
+                $(".scrollToLogin").css("opacity", "1");
+              }, 500);
+            }
           }, 300);
         }, 500);
       }, 500);
@@ -113,7 +119,7 @@ export default {
   transition: all .4s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 .welcome {
-  width: 500px;
+  width: 550px;
   height: 200px;
   position: absolute;
   /* top: 500px; */
@@ -121,12 +127,13 @@ export default {
   left: 100px;
   /* border: 1px solid black; */
   color: #0F326A;
+  z-index: 100;
 }
 .welcome .textA {
   font-size: 50px;
   font-weight: 500;
   opacity: 0;
-  margin-top: 20px;
+  margin-top: 40px;
 }
 .welcome .textB {
   font-size: 16px;
@@ -142,11 +149,18 @@ export default {
   transform: translateY(-50%);
   right: -100px;
   opacity: 0;
+  z-index: 0;
 }
 .childVue {
   position: absolute;
   bottom: 0;
   width: fit-content;
   height: fit-content;
+}
+
+@media (max-width: 1300px) {
+  .backgroundImg {
+    opacity: 0.6 !important;
+  }
 }
 </style>

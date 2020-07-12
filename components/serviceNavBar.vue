@@ -1,7 +1,7 @@
 <template>
   <div class="navBar">
-      <p class="serviceTitle">Base</p>
-      <nuxt-link to="/new/search" class="searchTitle">검색</nuxt-link>
+      <nuxt-link to="/new/service/main" class="serviceTitle">Base</nuxt-link>
+      <nuxt-link to="/new/service/search" class="searchTitleNav">검색</nuxt-link>
       <div class="playList">
           <p class="playListTitle">플레이리스트</p>
           <ul class="playListContUl">
@@ -90,6 +90,16 @@ export default {
         $(document).ready(() => {
             if ($(window).width() <= 500) {
                 $(".navBar").css("display", "none");
+            } else {
+                $(".navBar").css("display", "resize");
+            }
+        })
+
+        $(window).resize(() => {
+            if ($(window).width() <= 500) {
+                $(".navBar").css("display", "none");
+            } else {
+                $(".navBar").css("display", "resize");
             }
         })
     }
@@ -97,6 +107,29 @@ export default {
 </script>
 
 <style>
+
+
+
+/* logo font definition */
+
+@font-face {
+    font-family: "BaseFont";
+    src: url("/font/Aquire-BW0ox.otf");
+}
+@font-face {
+    font-family: "BaseFontB";
+    src: url("/font/AquireBold-8Ma60.otf");
+}
+@font-face {
+    font-family: "BaseFontL";
+    src: url("/font/AquireLight-YzE0o.otf");
+}
+
+/* logo font definition */
+
+
+
+
 * {
     font-family: "Noto Sans KR";
     transition: all .4s ease;
@@ -123,9 +156,10 @@ export default {
     font-family: "BaseFontB";
     /* font-family: "Noto Sans KR"; */
     color: #0F326A;
+    text-decoration: none;
 }
 
-.searchTitle {
+.searchTitleNav {
     position: absolute;
     top: 200px;
     left: 40px;

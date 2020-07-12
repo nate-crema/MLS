@@ -5,6 +5,8 @@ const getListInfo = melon.getListInfo;
 const searchMelon = melon.search.title;
 const searchYT = ytMusic.search.searchYt;
 const searchMedia = mediaSearch.searchMedia;
+const getKTOP100MELON = require("../modules_Base/getTopChart").getKTOP100MELON;
+// import getKTOP100MELON from '../modules_Base/getTopChart';
 import crypto from 'crypto';
 import axios from "axios";
 import fs, { access } from "fs";
@@ -539,15 +541,28 @@ function searchFiltering(searchResult, filter) {
 
 // K-TOP100 songs Taking
 
+
+app.post("/top100", top100Get);
+
+function top100Get(req, res) { 
+    getKTOP100MELON()
+        .then((data) => {
+            res.json({data});
+    })
+}
+
 // 1. MELON
 
-// util.fncRegular("periodic", 0, 1000, function () { 
-//     console.log("test!");
-// })
-
-
-
-
+// 정각마다 동기화 - 비활성화
+// try {
+//     const crawlerRegisterRes = util.fncRegular("specific", 0, {
+//         optionSetter: "MM",
+//         optionValue: 00
+//     }, getKTOP100MELON());
+//     console.log(crawlerRegisterRes);
+// } catch (e) {
+//     console.error("err: register K-TOP100 crawler [MELON]");
+// }
 
 export default {
     path: "/search/api",

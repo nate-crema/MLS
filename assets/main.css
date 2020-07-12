@@ -1,13 +1,13 @@
 .page-leave-active {
     transition: all .8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-    transform: translateX(100px);
+    transform: translateY(-100px);
 }
 .page-enter-active {
     /* transform: translateX(100px); */
     transition: all .8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 .page-leave-to {
-    transform: translateX(100px);
+    transform: translateY(-100px);
     opacity: 0;
 }
 .page-enter {
