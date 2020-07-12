@@ -34,8 +34,8 @@ export default {
       const Month = TimeInfo[1]; // Month
       const Day = TimeInfo[2]; // Day
       const Year = TimeInfo[3]; // Year
-      const Time = TimeInfo[4]; // Time
-      // const Time = "12:00:00";
+      // const Time = TimeInfo[4]; // Time
+      const Time = "8:00:00";
       const HH = Time.split(":")[0]*1;
       const MM = Time.split(":")[1]*1;
       const SS = Time.split(":")[2]*1;

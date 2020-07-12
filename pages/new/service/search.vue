@@ -48,12 +48,12 @@ export default {
     mounted() {
         $(document).ready(() => {
             resizeAction();
-            $(document).on('keyup', function(e) {
-                console.log(e.which);
-                if (e.which == 32) {
-                $("#searchCmd").click();
-                }
-            });
+            // $(document).on('keyup', function(e) {
+            //     console.log(e.which);
+            //     if (e.which == 32) {
+            //     $("#searchCmd").click();
+            //     }
+            // });
         })
 
         $(window).resize(() => {

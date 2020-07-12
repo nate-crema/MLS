@@ -243,11 +243,46 @@ const sqlFnc = {
         if (Object.values(filter).length > 1) {
             command += " WHERE ";
             Object.keys(filter).forEach((element, index) => {
-                command += element + "=" + (util.isNumber(Object.values(filter)[index]) ? Object.values(filter)[index] : "'" + Object.values(filter)[index] + "'");
+                if (util.isNumber(Object.values(filter)[index])) {
+                    command += element + "=" + Object.values(filter)[index];
+                } else {
+                    let elobj = "";
+                    element.split("").forEach((el, ind) => {
+                        if (el == "\'" || el == "\"" || el == "\`") {
+                            if (element.split("")[ind - 1] == "\\") { 
+                                elobj += el;
+                            } else {
+                                elobj += "\\" + el; 
+                            }
+                        } else {
+                            elobj += el;
+                        }
+                    })
+                    console.log(elobj);
+                    command += element + "=" + elobj;
+                }
                 if (Object.keys(filter).indexOf(element) != Object.keys(filter).length-1) command += " AND ";
             });
         } else if (Object.values(filter).length == 1) {
-            command += " WHERE " + Object.keys(filter)[0] + "=" + (util.isNumber(Object.values(filter)[0]) ? Object.values(filter)[0] : "'" + Object.values(filter)[0] + "'");
+            if (util.isNumber(Object.values(filter)[0])) {
+                command += " WHERE " + Object.keys(filter)[0] + "=" + Object.values(filter)[0];
+            } else {
+                let elobj = "";
+                Object.values(filter)[0].split("").forEach((el, ind) => {
+                    if (el == "\'" || el == "\"" || el == "\`") {
+                        if (Object.values(filter)[0].split("")[ind - 1] == "\\") { 
+                            elobj += el;
+                        } else {
+                            elobj += "\\" + el; 
+                        }
+                    } else {
+                        elobj += el;
+                    }
+                })
+                console.log(elobj);
+                command += " WHERE " + Object.keys(filter)[0] + "= \"" + elobj + "\"";
+            }
+            // command += " WHERE " + Object.keys(filter)[0] + "=" + (util.isNumber(Object.values(filter)[0]) ? Object.values(filter)[0] : "'" + Object.values(filter)[0] + "'");
         }
 
         console.log(command);

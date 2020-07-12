@@ -1,7 +1,8 @@
 <template>
   <div class="navBar">
       <nuxt-link to="/new/service/main" class="serviceTitle">Base</nuxt-link>
-      <nuxt-link to="/new/service/search" class="searchTitleNav">검색</nuxt-link>
+      <!-- <nuxt-link to="/new/service/search" class="searchTitleNav">검색</nuxt-link> -->
+      <a href="/new/service/search" class="searchTitleNav">검색</a>
       <div class="playList">
           <p class="playListTitle">플레이리스트</p>
           <ul class="playListContUl">
@@ -13,10 +14,12 @@
           </ul>
       </div>
       <div class="record">
-          <p class="recordTitle">재생기록</p>
+          <p class="recordTitle">재생범주</p>
           <ul class="recordContUl">
-            <li onclick="location.href = '/service/record'">최근 재생기록</li>
-            <li onclick="location.href = '/service/record/location'">위치기반 재생기록</li>
+            <!-- <li onclick="location.href = '/service/record'">최근 재생목록</li>
+            <li onclick="location.href = '/service/record/location'">위치기반 재생목록</li> -->
+            <li>최근 재생목록</li>
+            <li>위치기반 재생목록</li>
           </ul>
       </div>
   </div>
@@ -101,6 +104,14 @@ export default {
             } else {
                 $(".navBar").css("display", "resize");
             }
+        })
+
+
+        // play group: disable
+
+        $(".record").click(() => {
+            alert("현재 제공이 불가능한 서비스입니다.");
+            return false;
         })
     }
 }
@@ -206,6 +217,7 @@ export default {
 
 
 .navBar .record {
+    opacity: 0.2;
     position: absolute;
     top: 550px;
     right: 20px;

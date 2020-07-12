@@ -421,7 +421,7 @@ app.post('/play/songInfo', getSongDetail, (req, res) => {
   // console.log(req.songDetailData);
   
   const { songTitle, artist, ytSyncId } = searchedObj;
-  searchYT(`${songTitle} - ${artist}`)
+  searchYT(`${songTitle} ${artist}`)
   .then((ytResult) => {
     console.log(`Search Requested: YTM`);
     // console.log(ytResult);
@@ -435,6 +435,7 @@ app.post('/play/songInfo', getSongDetail, (req, res) => {
         // find same song from yt music api
         searchedSong = ytResult.songObjs.find(songobjIndiv => {
           // instrumental distinguition
+          console.log(`songTitle: ${songobjIndiv.song.title.replace(/\s/gi, "")}`);
           if (songobjIndiv.song.title.replace(/\s/gi, "").includes(songTitle.replace(/\s/gi, ""))) {
             if (
               (
