@@ -1,24 +1,18 @@
 import express from 'express';
-import { melon } from "../modules";
-const getPList = melon.getPList;
-const getListInfo = melon.getListInfo;
-// const searchYT = ytMusic.search;
 import {ytMusic} from "../modules_Base";
 const searchYT = ytMusic.search.searchYt;
 import crypto from 'crypto';
 import axios from "axios";
 import fs, { access } from "fs";
 import path, { resolve } from "path";
-import mysql from "mysql";
 import util from '../util';
 import async, { reject } from 'async';
 import https from 'https';
 import ytdl from 'ytdl-core';
 import nodeCache from 'node-cache';
 import sqlFnc from '../modules_Base/mysqlFnc';
-// import plModel from '../models/playlog';
+import getKTOP100MELON from '../modules_Base/getTopChart/index';
 const user = require("../models/user");
-// import mongoose from 'mongoose';
 const mongoose = require("mongoose");
 
 // mongodb connection
@@ -38,30 +32,6 @@ db.on('error', function () {
 db.once('open', function() {
   console.log("Database connected!!")
 });
-
-
-
-// let a = new user(
-//   {
-//     "id": 56,
-//     "pn": '1052720204',
-//     "enccode": '35MkJtCpcBDstAP6M0BeSM7gbz+i4WQOG4M2e1qCp0XuRNmX137ZYDTtiWQZvw4stYcdFdnPfYGxpzWmyfxYuLnId9IWoh7OZcWcKNYtCfJYiGf6B9rYIyoWeqt9pBVIKz56Eg==',
-//     "cusId": 'gda56GkzsGKixwFRhzgv',
-//     "date": '2020-04-08T05:59:46.000Z',
-//     "codeG": '4/yQFQ4yJEJeWM7FBO_KrjH59Y78mtP6caU7LLgvXQdiz0WhS9C-k6W3n4iy5i00YVx_cQZjyM1kVWCxYah-YBYCk',
-//     "tokenG": null,
-//     "refTokenG": null,
-//     "salt": 'd2ZybL2TTOCC9DMjT0gw8AlfCTQK7AWY/iYU+IOnWqKYLeKzO0865Jvb6kx7T0aWhxaVxbI1hGNxrRTeB7a//A==',
-//     "name": '김화균',
-//     "isUpdateable": 1
-// });
-// a.save({}, (err, result) => {
-//   console.log(err);
-//   console.log(result);
-// })
-
-
-
 
 // console.log(this.mongoose);
 
@@ -163,21 +133,27 @@ app.post('/sms', (req, res) => {
 
 function login(req, res) { 
   let check = "false";
-  if (!req.body.pn) return res.status(400).end("false");
+  if (!req.body.pn) return res.status(400).end("Bad Request");
   if (!req.body.SndBnyCode) {
-    sqlFnc.Read("user", "cusId", {pn: req.body.pn})
-    .then((lists) => {
+    user.find({
+      pn: req.body.pn
+    }, (err, lists) => {
+      if (err) {
+        console.log("ERR: " + err);
+        res.status(500).end("Internal Server Error");
+      }
       if (lists.length >= 1) return res.status(200).end("true");
-      else return res.status(400).end("false");
-    })
-    .catch((e) => {
-      console.log("ERR: " + e);
+      else return res.status(200).end("false");
     });
   } else {
     if (typeof req.body.SndBnyCode != "string") return res.status(400).end("false")
-    else sqlFnc.Read("user", "*", {pn: req.body.pn})
-    .then((lists) => {
-      // console.log(lists);
+    else user.find({
+      pn: req.body.pn
+    }, (err, lists) => {
+      if (err) {
+        console.log("ERR: " + err);
+        res.status(500).end("Internal Server Error");
+      }
       lists.forEach((element, index) => {
         crypto.pbkdf2(req.body.SndBnyCode, element.salt.toString('base64'), 78608, 100, 'sha512', (err, key) => {
           console.log(key.toString("base64"));
@@ -203,8 +179,7 @@ function login(req, res) {
           }
         });
       })
-      // return res.status(500).end("ERR: Internal Server Error");
-    });
+    })
   }
 }
 
@@ -243,21 +218,24 @@ function register(req, res) {
       encpw = key.toString('base64');
       // console.log(encpw);
       try {
-        sqlFnc.Insert('user', {
+        const newUser = new user({
           pn,
           enccode: encpw,
-          id,
+          cusId: id,
           salt: buf.toString('base64')
-        }, (err, result) => {
-          req.session.userInfo = {
-            pn,
-            id
-          };
-          // console.log(req.session.userInfo);
-          res.status(200).json({
-            pn,
-            id
-          });
+        });
+
+        newUser.save()
+          .then((result) => {
+            req.session.userInfo = {
+              pn,
+              cusId: id
+            };
+            // console.log(req.session.userInfo);
+            res.status(200).json({
+              pn,
+              cusId: id
+            });
         })
       } catch (e) {
         console.error("SERVER ERROR");
@@ -281,78 +259,44 @@ app.post('/logined', (req, res) => {
   res.end("true");
 })
 
+
 app.post('/sess/userInfoAdd', (req, res) => {
   const data = req.body.dataO;
-  console.log("backend: userInfoAdd");
-  console.log(data);
-  if (typeof data != "object") {
-    res.status(400);
-    return res.end("false");
-  }
-  if (Object.keys(data).includes("id") || Object.keys(data).includes("isUpdateable") || !req.session.userInfo) {
-    res.status(400);
-    return res.end("Bad Request");
-  }
-  let sendJson = {};
+  if (typeof data != "object" || req.session.userInfo.pn == undefined) return res.status(400).end("Bad Request");
+  // security info change defense
+  const cngInfos = Object.keys(data);
+  if (cngInfos.includes("isUpdateable") || cngInfos.includes("cusId")) return res.status(400).end("Bad Request");
 
-  console.log(Object.keys(data));
-  
-  try {
-    Object.keys(data).forEach((element, index) => {
-      console.log(element + ": " + Object.values(data)[index]);
-      req.session.userInfo[element] = Object.values(data)[index];
-      console.log(req.session.userInfo);
-      sendJson[element] = Object.values(data)[index];
-    })
-  } catch(e) {
-    res.status(501);
-    return res.end(e);
-  }
   async.waterfall([
-    function(callback) {
-      // read is account updateable
-      console.log("asyncA");
-      sqlFnc.Read("user", "isUpdateable", {
-        id: req.session.userInfo.id
-      })
-      .then((result) => {
-        console.log("results: " + JSON.stringify(result))
-        if (result.length == 1) callback(null, result);
-        else callback(new Error("ERR: Cannot find user"))
-      })
-      .catch((e) => {
-        if (Object.keys(e).length != 0) callback(e);
-      })
+    (callback) => {
+      // insert information
+      for (const cngInfo of cngInfos) {
+        req.session.userInfo[cngInfo] = data[cngInfo];
+        console.log(cngInfos.indexOf(cngInfo));
+        if (cngInfos.length-1 == cngInfos.indexOf(cngInfo)) callback(null, req.session.userInfo);
+      }
     },
-    function(isExt, callback) {
-      console.log("asyncB");
-      console.log(isExt);
-      console.log(isExt[0]);
-      console.log(isExt[0].isUpdateable);
-      if (isExt[0].isUpdateable == 1) {
-        sqlFnc.Update("user", {
-          id: req.session.userInfo.id
-        }, sendJson)
-        .then((updateRes) => {
-          callback(null, true);
+    (session, callback) => {
+      user.update({
+        pn: req.session.userInfo.pn
+      }, session)
+        .then((result) => {
+          callback(null, "true");
         })
         .catch((e) => {
-          console.log(JSON.stringify(e));
-          if (Object.keys(e).length != 0) callback(e);
-        })
-      }
+          callback(e);
+      })
     }
   ], function(err, result) {
-    console.log("asyncC");
     if (err) {
+      console.error("err");
       console.error(err);
-      res.status(500);
-      return res.end(err);
-    } else {
-      return res.end("true");
+      return res.status(500).end("Internal Server Error");
     }
-  })
-})
+    return res.status(200).end();
+  });
+
+});
 
 app.get('/img/:url', (req, res) => {
   console.log(path.join(__dirname, "../assets/" + req.params.url));
@@ -469,26 +413,13 @@ function getLyrics(lyricsId) {
 
 app.post('/song/detail', getSongDetail, (req, res) => {
   return res.json(req.songDetailData);
-  // plModel.create({
-  //   songId: req.body.songId
-  // }, function (err, result) {
-  //     if (err) {
-  //       console.error(err);
-  //       return res.status(500).end("Internal Server ERROR");
-  //     }
-  //     else return res.json(req.songDetailData);
-  // });
-  // if (isPlay) {
-  // } else {
-    // return res.json(req.songDetailData);
-  // }
 });
 
 app.post('/song/record', (req, res) => {
   const { cusId } = req.body;
   if (!cusId) return res.status(400).end("Bad Request");
   let resData = [];
-  sqlFnc.Read("playLog", "*", {})
+  sqlFnc.Read("playLog", "*", {cusId: req.session.userInfo.cusId})
     .then((data) => {
       res.status(200).json({data});
     })
@@ -497,17 +428,6 @@ app.post('/song/record', (req, res) => {
       res.status(500).end("Internal Server Error");
   })
 })
-
-// app.post('/song/recent', (req, res) => {
-//   const { cusId } = req.body;
-//   const { userInfo } = req.session;
-
-//   if (!cusId) return res.status(400).end("Bad Request");
-//   if (!userInfo || Object.keys(userInfo).length == 0) return res.status(401).end("unAuthorized");
-  
-//   if (userInfo.cusId != cusId)
-// })
-
 
 
 // playlist Information get
@@ -536,32 +456,40 @@ app.post('/playlist/detail', (req, res) => {
   if (!plistId || !cusId) return res.status(400).end("Bad Request");
 
   if (plistId == "ytRecommend") {
-
-  }
-  
-  sqlFnc.Read("playlist", "*", { plistId })
-    .then((searchRes) => {
-      if (searchRes.length == 0) return res.status(404).end("Not Found");
-      let playlist = searchRes[0];
-      playlist.contentsData = [];
-      playlist.contents.forEach((val, ind) => {
-        getSongInfo(val)
-          .then((data) => {
-            playlist.contentsData.push(data);
-            if (ind == playlist.contents.lenght - 1) {
-              res.status(200).json(playlist);
-            }
-          })
-          .catch((e) => {
-            console.error(e);
-            res.status(500).end("Internal Server Error");
-          })
+    // not ready
+  } else if (plistId == "top100") {
+    getKTOP100MELON.getKTOP100MELON()
+      .then((data) => {
+        res.status(200).json({
+          title: `TOP100 차트 (업데이트: ${new Date().getHours()}시)`,
+          contentsData: data
+        });
+    })
+  } else {
+    sqlFnc.Read("playlist", "*", { plistId })
+      .then((searchRes) => {
+        if (searchRes.length == 0) return res.status(404).end("Not Found");
+        let playlist = searchRes[0];
+        playlist.contentsData = [];
+        playlist.plistCont.forEach((val, ind) => {
+          getSongInfo(val)
+            .then((data) => {
+              playlist.contentsData.push(data);
+              if (ind == playlist.plistCont.lenght - 1) {
+                res.status(200).json(playlist);
+              }
+            })
+            .catch((e) => {
+              console.error(e);
+              res.status(500).end("Internal Server Error");
+            })
+        })
       })
-    })
-    .catch((e) => {
-      console.error(e);
-      return res.status(500).end("Internal Server Error");
-    })
+      .catch((e) => {
+        console.error(e);
+        return res.status(500).end("Internal Server Error");
+      })
+  } 
 })
 
 
@@ -778,7 +706,13 @@ app.get('/yt/setTokenReq', (req, res) => {
   console.log(userInfo);
 
   if (queryObj.code) {
-    sqlFnc.Update('user', {pn: userInfo.pn}, {codeG: queryObj.code})
+    // sqlFnc.Update('user', {pn: userInfo.pn}, {codeG: queryObj.code})
+    user.update({
+      pn: userInfo.pn
+    }, {
+        codeG: queryObj.code,
+        isUpdateable: 0
+    })
     .then((updateResult) => {
       console.log("complete")
     })
@@ -787,7 +721,7 @@ app.get('/yt/setTokenReq', (req, res) => {
     })
   }
 
-  res.json({});
+  res.end(`<html><script>location.href="/";</script></html>`);
 })
 
 

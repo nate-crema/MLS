@@ -1,40 +1,10 @@
 import express from 'express';
 import { melon, ytMusic, mediaSearch } from "../modules_Base";
-const getPList = melon.getPList;
-const getListInfo = melon.getListInfo;
 const searchMelon = melon.search.title;
-const searchYT = ytMusic.search.searchYt;
-const searchMedia = mediaSearch.searchMedia;
 const getKTOP100MELON = require("../modules_Base/getTopChart").getKTOP100MELON;
-// import getKTOP100MELON from '../modules_Base/getTopChart';
-import crypto from 'crypto';
-import axios from "axios";
-import fs, { access } from "fs";
-import path from "path";
-import mysql from "mysql";
 import util from '../util';
 import sqlFnc from '../modules_Base/mysqlFnc';
-import async from 'async';
-import { isUndefined } from 'util';
-// import { RSA_NO_PADDING } from 'constants';
-// import { callbackify } from 'util';
-// import { STATUS_CODES } from 'http';
 
-// run when server started first
-
-
-// const speedTest = require('speedtest-net');
- 
-// (async () => {
-//   try {
-//     console.log(await speedTest());
-//   } catch (err) {
-//     console.log(err.message);
-//   }
-// })();
-
-
-// run when server started first
 
 
 // Create express router
@@ -61,7 +31,8 @@ function searchQuery (req, res) {
     // search option check
     const option = req.body.searchOption.replace(/(\s*)/g,"");
     const query = req.body.searchQuery;
-    if (!option || !query) {
+    const cusId = req.body.cusId;
+    if (!option || !query || !cusId) {
         res.status(400);
         return res.end("Bad Request");
     }
@@ -75,7 +46,7 @@ function searchQuery (req, res) {
         console.log(`prev searchData: ${data}`);
         if (data.length == 0) {
             console.log("no prev search data found");
-            searchNew(searchId, query, req.ip, option)
+            searchNew(searchId, cusId, query, req.ip, option)
             .then(({ stCode, json }) => {
                 res.status(stCode).json(json);
             })
@@ -96,15 +67,6 @@ function searchQuery (req, res) {
     .catch((e) => {
         console.error(e);
     })
-
-    // searchMediaC.registerListener(function (val) {
-    //     if (val.stat == "ERR") res.status(500).end(`ERR: ${val.errCont}`) // return response error
-    //     else console.log("media searching complete");
-    // });
-  
-
-  
-
 
 }
 
@@ -127,7 +89,6 @@ function getPrevRes(data, searchKeyword, nodeControl) {
         }
         returnObjCounter.registerListener(function (val) {
             console.log(`returnObjCounter: ${val}`);
-            // if (val == 3) resolve(returnData); // activate when all functions complete
             if (val == 1) resolve(returnData);
         })
         
@@ -136,12 +97,6 @@ function getPrevRes(data, searchKeyword, nodeControl) {
             "yt": {},
             "melon": {}
         }
-        // returnData.registerListener(function (val) {
-        //     // console.log(val);
-        //     returnObjCounter++;
-        //     console.log(`returnObjCounter: ${returnObjCounter}`);
-        //     if (returnObjCounter == 1) resolve(returnData.a);
-        // })
         data.forEach((searchData, index) => {
             console.log(index);
             // definition
@@ -221,6 +176,7 @@ function getPrevRes(data, searchKeyword, nodeControl) {
                                             songTitle: prevMelonResIndiv.songTitle,
                                             lyrics: lyricsObj
                                         },
+                                        numOfRes: prevMelonResIndiv.numOfRes*1,
                                         songIdB: prevMelonResIndiv.songIdB
                                     }
                                     melonDatas.push(pushData);
@@ -250,7 +206,8 @@ function getPrevRes(data, searchKeyword, nodeControl) {
                                 songTitle: prevMelonResIndiv.songTitle,
                                 lyrics: null
                             },
-                            songIdB: prevMelonResIndiv.songIdB
+                            songIdB: prevMelonResIndiv.numOfRes*1,
+                            numOfRes: prevMelonRes
                         }
                         melonDatas.push(pushData);
                     }
@@ -282,12 +239,13 @@ function getPrevRes(data, searchKeyword, nodeControl) {
     })
 }
 
-function searchNew(searchId, query, ip, option) {
+function searchNew(searchId, cusId, query, ip, option) {
     return new Promise((resolve, reject) => {
 
         let MdbObj = {
             searchId,
-            cusId: "gda56GkzsGKixwFRhzgv", // change after activate session login
+            // cusId: "gda56GkzsGKixwFRhzgv", // change after activate session login
+            cusId,
             searchKey: query,
             ip
         }
@@ -302,17 +260,17 @@ function searchNew(searchId, query, ip, option) {
             "melon": {}
         };
     
-        searchMedia(query)
-        .then((mediaResult) => {
-            console.log(`Search Requested: Media`);
-            const primaryKeyMedia = "40302" + util.getUid(10, true);
-            searchComplete("med", mediaResult, primaryKeyMedia, null);
-        })
-        .catch((e) => {
-            console.log(`Error Occured: media`);
-            console.error(e);
-            searchComplete("med", null, null, e);
-        })
+        // searchMedia(query)
+        // .then((mediaResult) => {
+        //     console.log(`Search Requested: Media`);
+        //     const primaryKeyMedia = "40302" + util.getUid(10, true);
+        //     searchComplete("med", mediaResult, primaryKeyMedia, null);
+        // })
+        // .catch((e) => {
+        //     console.log(`Error Occured: media`);
+        //     console.error(e);
+        //     searchComplete("med", null, null, e);
+        // })
     
         console.log(`Search Requested: Melon`);
         searchMelon(query)
@@ -325,18 +283,6 @@ function searchNew(searchId, query, ip, option) {
             console.log(`Error Occured: melon`);
             console.error(e);
             searchComplete("melon", null, null, e);
-        })
-    
-        searchYT(query)
-        .then((ytResult) => {
-            console.log(`Search Requested: YTM`);
-            const primaryKeyYT = "40304" + util.getUid(10, true);
-            searchComplete("yt", ytResult, primaryKeyYT, null);
-        })
-        .catch((e) => {
-            console.log(`Error Occured: ytm`);
-            console.error(e);
-            searchComplete("yt", null, null, e);
         })
     
     
@@ -433,7 +379,7 @@ function searchNew(searchId, query, ip, option) {
                     console.error(e);
                 }
             }
-            if (tried_counter == 3) {
+            if (tried_counter == 1) {
     
                 // save search result in db
     
@@ -485,21 +431,6 @@ function searchNew(searchId, query, ip, option) {
 function searchAlliance(searchResult) {
     let resData = [];
     if (!searchResult.melon) return new Array(0);
-    // searchResult.melon.data.forEach((song, index) => {
-    //     // album
-    //     const { albumId, albumImg, albumTitle } = song.album;
-    //     // artist
-    //     const { artistName, artistId, artistImg } = song.artist;
-    //     // song
-    //     const { lyrics, songId, songImg, songTitle } = song.song;
-    //     const songKey = util.getUid(20);
-        
-    //     searchYT(`${songTitle}  ${artistName}`)
-    //     .then((ytspecSearch) => {
-    //         ytspecSearch.songObj
-    //     })
-
-    // })
     return searchResult;
 }
 
@@ -553,7 +484,7 @@ function top100Get(req, res) {
 
 // 1. MELON
 
-// 정각마다 동기화 - 비활성화
+// 정각마다 동기화 -> 요청시마다 조회로 변경 => 비활성화
 // try {
 //     const crawlerRegisterRes = util.fncRegular("specific", 0, {
 //         optionSetter: "MM",

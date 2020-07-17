@@ -66,7 +66,9 @@ function searchMelonSong(searchKey) {
             var counter = 0;
             // console.log(songInfos.length);
             console.log("start filtering... : melon");
+            console.log("Looptimes: " + Math.floor(songInfos.length / 4));
             for (var i = 0; i < songInfos.length; i += 4) {
+                console.log("Status: " + i);
                 // console.log(songInfos[i].children[0].children[1].children[1].attribs.disabled);
                 if (songInfos[i].children[0].children[1].children[1].attribs.disabled == undefined) {
                     async.waterfall([
@@ -196,6 +198,7 @@ function searchMelonSong(searchKey) {
                                 }
                             }
                             const searchPriority = Math.floor(i / 4) + 1;
+                            // console.log("first callback");
                             callback(null, isAdultOnly, searchPriority, isTitle, isHot, songTitle, artistId, artistName, menuId, songId, albumId, albumTitle);
                         },
                         (isAdultOnly, searchPriority, isTitle, isHot, songTitle, artistId, artistName, menuId, songId, albumId, albumTitle, callback) => {
@@ -203,6 +206,7 @@ function searchMelonSong(searchKey) {
                             .then(({ data }) => {
                                 const imgEXTR = cheerio.load(data);
                                 const songImg = imgEXTR("div.section_info .wrap_info .thumb a img")[0].attribs.src;
+                                // console.log("second callback");
                                 callback(null, isAdultOnly, searchPriority, isTitle, isHot, songTitle, artistId, artistName, menuId, songId, albumId, albumTitle, songImg);
                             })
                             .catch((e) => {
@@ -217,6 +221,7 @@ function searchMelonSong(searchKey) {
                             .then(({ data }) => {
                                 const imgEXTR = cheerio.load(data);
                                 const albumImg = imgEXTR("div.section_info .wrap_info .thumb a img")[0].attribs.src;
+                                // console.log("trird callback");
                                 callback(null, isAdultOnly, searchPriority, isTitle, isHot, songTitle, artistId, artistName, menuId, songId, albumId, albumTitle, songImg, albumImg);
                             })
                             .catch((e) => {
@@ -233,6 +238,7 @@ function searchMelonSong(searchKey) {
                                     const imgEXTR = cheerio.load(data);
                                     // console.log(imgEXTR("div.wrap_dtl_atist .wrap_thumb .thumb_frame")[0]);
                                     const artistImg = imgEXTR("div.wrap_dtl_atist .wrap_thumb #artistImgArea img")[0].attribs.src;
+                                    // console.log("4th callback");
                                     callback(null, isAdultOnly, searchPriority, isTitle, isHot, songTitle, artistId, artistName, menuId, songId, albumId, albumTitle, songImg, albumImg, artistImg);
                                 })
                                 .catch((e) => {
@@ -244,7 +250,8 @@ function searchMelonSong(searchKey) {
                         },
                         (isAdultOnly, searchPriority, isTitle, isHot, songTitle, artistId, artistName, menuId, songId, albumId, albumTitle, songImg, albumImg, artistImg, callback) => {
                             axios.get(`https://www.melon.com/webplayer/getLyrics.json?songId=${songId}`)
-                            .then(({ data }) => {
+                                .then(({ data }) => {
+                                    // console.log("5th callback");
                                 callback(null, isAdultOnly, searchPriority, isTitle, isHot, songTitle, artistId, artistName, menuId, songId, albumId, albumTitle, songImg, albumImg, artistImg, data)                            
                             })
                             .catch((e) => {
@@ -254,8 +261,9 @@ function searchMelonSong(searchKey) {
                             })
                         }
                     ], (err, isAdultOnly, searchPriority, isTitle, isHot, songTitle, artistId, artistName, menuId, songId, albumId, albumTitle, songImg, albumImg, artistImg, lyrics) => {
+                            // console.log("callback forest end");
                             if (err) {
-                                // console.error(err);
+                                console.error(err);
                             } else {
                                 song.push({
                                     searchPriority,
@@ -282,23 +290,33 @@ function searchMelonSong(searchKey) {
                                         isAdultOnly
                                     }
                                 })
+                                // console.log("pushed");
                                 endCounter.a++;
+                                // console.log("endCounter added: " + endCounter.a);
+                                // console.log(Math.floor(songInfos.length / 4));
+                                // console.log(songIgnCounter.a);
                             }
                             // end check
-                            
-                            try { 
-                                endCounter.registerListener(function (val) {
-                                    // console.log(`push complete: ${val} || total: ${songInfos.length/4}`);
-                                    console.log(`Complete Percentage: ${Math.floor(val/(songInfos.length/4)*100)}%`);
-                                    if (val >= ((songInfos.length / 4) - songIgnCounter.a)) {
-                                        console.log(`Searching Complete (Page 1)`);
-                                        sortArr(song);
-                                        resolve(song);
-                                    };
-                                });
-                            } catch (e) {
-                                console.error(e)
+
+                            if (Math.floor(songInfos.length / 4) == 1) {
+                                console.log(`Searching Complete (Page 1)`);
+                                resolve(song);
+                            } else {
+                                try { 
+                                    endCounter.registerListener(function (val) {
+                                        // console.log(`push complete: ${val} || total: ${songInfos.length/4}`);
+                                        console.log(`Complete Percentage: ${Math.floor(val/(songInfos.length/4)*100)}%`);
+                                        if (val >= (Math.floor(songInfos.length / 4) - songIgnCounter.a)) {
+                                            console.log(`Searching Complete (Page 1)`);
+                                            sortArr(song);
+                                            resolve(song);
+                                        };
+                                    });
+                                } catch (e) {
+                                    console.error(e)
+                                }
                             }
+                            
     
                     })
                 } else {

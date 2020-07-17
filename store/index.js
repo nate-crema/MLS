@@ -145,10 +145,17 @@ const store = () => new Vuex.Store({
         }
       })
     },
+<<<<<<< Updated upstream
     logout(state, { }) {
       try { 
         axios.post("/api/logout");
         this.commit("logout");
+=======
+    logout(state) {
+      try { 
+        axios.post("/api/logout");
+        state.commit("logout", {});
+>>>>>>> Stashed changes
       } catch (e) {
         console.error("ERR: Vuex Store");
         console.error(e);

@@ -1,4 +1,5 @@
 import { resolve } from "path";
+import modules from "../../modules";
 
 const axios = require("axios");
 const cheerio = require("cheerio");
@@ -112,8 +113,9 @@ function getKTOP100MELON() {
 // }, 2000);
 
 
-// export default {
-//     getKTOP100MELON
-// }
+export default {
+    getKTOP100MELON
+}
 
-module.exports.getKTOP100MELON = getKTOP100MELON;
+// module.exports.getKTOP100MELON = getKTOP100MELON;
+// module.exports = getKTOP100MELON;

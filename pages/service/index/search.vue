@@ -2,6 +2,7 @@
   <div>
     <div class="search">
         <div class="searchObj">
+            <p class="searchTitleM">검색</p>
             <p class="searchTitle">제목/아티스트/가사를 검색해보세요! ;)</p>
             <div class="searchArea">
                 <input type="text" id="searchData" v-model="inputDataUri"/>
@@ -20,7 +21,8 @@
             </div>
             <nuxt-child class="searchResult"/>
         </div>
-    </div>
+        <img src="/img/undraw_location_search_bqps.svg" class="backgroundImgS"/>
+    </div>    
   </div>
 </template>
 
@@ -48,6 +50,12 @@ export default {
     mounted() {
         $(document).ready(() => {
             resizeAction();
+            $(document).on('keyup', function(e) {
+                console.log(e.which);
+                if (e.which == 13) {
+                    $("#searchCmd").click();
+                }
+            });
         })
 
         $(window).resize(() => {
@@ -102,7 +110,7 @@ export default {
 .search {
     position: absolute;
     top: 0;
-    right: 0;
+    left: 50px;
     /* border: 1px solid black; */
 }
 .search .searchObj {
@@ -114,18 +122,25 @@ export default {
     height: 300px;
     /* border: 1px solid purple; */
 }
-.search .searchObj .searchTitle {
-    font-size: 20px;
+.search .searchObj .searchTitleM {
+    font-size: 40px;
     font-weight: 500;
     font-family: "Noto Sans KR";
     color: rgb(15, 63, 141);
+}
+.search .searchObj .searchTitle {
+    font-size: 16px;
+    font-weight: 300;
+    font-family: "Noto Sans KR";
+    color: rgb(15, 63, 141);
+    margin-top: 20px;
 }
 .search .searchObj .searchArea {
     width: 100%;
     height: 80px;
     border: 1.6px solid rgb(15, 63, 141);
     position: absolute;
-    top: 50%;
+    top: 70%;
     left: 50%;
     transform: translate(-50%, -50%);
     border-radius: 40px;
@@ -176,5 +191,16 @@ export default {
     top: 150px;
     width: 100%;
     height: 100%;
+}
+
+
+.search .backgroundImgS {
+    width: 650px;
+    height: auto;
+    position: absolute;
+    right: 50px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: -200;
 }
 </style>

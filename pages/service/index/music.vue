@@ -35,7 +35,7 @@ export default {
   top: 80px;
   width: 80%;
   height: 100%;
-  right: 20px;
+  left: 50px;
   /* overflow-y: hidden; */
   overflow-y: auto;
 }

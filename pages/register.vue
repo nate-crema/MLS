@@ -5,7 +5,7 @@
         <p>나만의 플레이리스트</p>
         <p class="serviceName">Base</p>
       </div>
-      <transition name="page">
+      <transition name="slide">
         <nuxt-child class="routeArea"/>
       </transition>
   </div>
@@ -16,6 +16,9 @@ export default {
   mounted() {
     $(document).ready(() => {
       resizeWindow();
+      if (location.pathname == "/register" || location.pathname == "/register/") {
+        location.href="/register/licenseAgree";
+      }
     })
 
     $(window).resize(() => {

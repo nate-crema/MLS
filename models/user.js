@@ -34,7 +34,7 @@ const log = new mongoose.Schema({
     },
     isUpdateable: {
         type: Number,
-        required: true
+        default: 1
     },
 });
 module.exports = mongoose.model("user", log);

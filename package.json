@@ -1,7 +1,7 @@
 {
-  "name": "mls",
+  "name": "Base",
   "version": "1.0.0",
-  "description": "Music List Sync service",
+  "description": "Base - 빠르게 연결되는 나만의 음악서비스",
   "author": "nate-crema <nate.crema@gmail.com>",
   "private": true,
   "scripts": {
@@ -12,6 +12,7 @@
     "devS": "HOST=172.16.2.51 PORT=80 nuxt",
     "build": "nuxt build",
     "start": "nuxt start",
+    "startO": "HOST=172.16.2.51 PORT=80 nuxt start",
     "generate": "nuxt generate",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
     "predispatch": "npm run lint"

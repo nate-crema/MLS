@@ -163,7 +163,7 @@ export default {
 }
 
 body {
-  background: #f0f0f0;
+  background: #ffffff;
   position: absolute;
   width: 100%;
   padding: 0;
