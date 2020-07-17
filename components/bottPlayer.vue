@@ -224,7 +224,10 @@ export default {
         }
         function reqMInfo(vId) {
             return new Promise((resolve, reject) => {
-                axios.post("/api/play/songInfo", {songId: vId})
+                axios.post("/api/play/songInfo", {
+                  songId: vId,
+                  reqService: "BASE_WEB_ARCHITEC_PLY_MINI"
+                })
                 .then(({data}) => {
 
                     resolve(data);

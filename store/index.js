@@ -38,6 +38,9 @@ const store = () => new Vuex.Store({
         state.userInfo[element] = Object.values(data)[index]
       })
     },
+    logout (state) {
+      state.userInfo = {};
+    }
   },
   actions: {
     nuxtServerInit ({ commit, dispatch }, { req }) {
@@ -110,16 +113,42 @@ const store = () => new Vuex.Store({
     },
 
     // login
-    async login(state, { userInfo }) {
-      try { 
-        const { pn, SndBnyCode } = userInfo;
-        const result = await axios.post("/api/login", {
-          pn,
-          SndBnyCode,
-        });
-        if (result.data) {
-          
+    login(state, { pn, SndBnyCode }) {
+      return new Promise((resolve, reject) => {
+        try { 
+          axios.post("/api/login", {
+            pn,
+            SndBnyCode,
+            allNeed: true
+          })
+            .then(({ data }) => {
+              console.log(data);
+            if (data) {
+              let setter = data;
+              setter.salt = "";
+              setter.tokenG = "";
+              setter.enccode = "";
+              setter.date = "";
+              setter.refTokenG = "";
+              setter.isUpdateable = "";
+              // state.userInfo = data;
+              this.commit("userInfo", setter);
+              resolve(true);
+            } else {
+              resolve(false);
+            }
+          })
+        } catch (e) {
+          console.error("ERR: Vuex Store");
+          console.error(e);
+          reject(e);
         }
+      })
+    },
+    logout(state, { }) {
+      try { 
+        axios.post("/api/logout");
+        this.commit("logout");
       } catch (e) {
         console.error("ERR: Vuex Store");
         console.error(e);

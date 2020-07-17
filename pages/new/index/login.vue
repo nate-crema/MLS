@@ -216,16 +216,14 @@ export default {
             }
 
             function login(pn, SndBnyCode) {
-                axios.post('/api/login', {
+                this_out.$store.dispatch("login", {
                     pn,
-                    SndBnyCode,
+                    SndBnyCode
                 })
-                .then(({data}) => {
-                    console.log(data);
-                    if (data == true) {
+                .then((result) => {
+                    if (result == true) {
                         this_out.to = "/new/service/main";
                         setTimeout(() => {
-
                             document.getElementById("phoneNumIN").value = "인증되었습니다!";
                             document.getElementById("phoneNumIN").style.color = "#0f6a43";
                         }, 500);
@@ -233,13 +231,13 @@ export default {
                             // document.getElementById("nuxt-link-next").click();   
                             location.href = this_out.to;
                         }, 1000);
-                    } else{
+                    } else {
                         console.log("esrdgf");
                         document.getElementById("phoneNumIN").value = "회원정보를 확인할 수 없습니다.";
                         document.getElementById("phoneNumIN").style.color = "#9c0c0c";
                         setTimeout(() => {
                             location.reload();
-                        }, 1200);   
+                        }, 1200);
                     }
                 })
                 .catch((e) => {
@@ -251,6 +249,7 @@ export default {
                     }, 1000);  
                 })
             }
+
 
             $("p.inputPassCode[name=\"passCodeSetted\"]").click(() => {
                 // if (mobileCheck()) {

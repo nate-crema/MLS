@@ -7,6 +7,7 @@
   "scripts": {
     "devSIO": "pm2 start server.js --name 'Base-NUXT' --watch --ignore-watch='.nuxt assets node_modules'",
     "dev": "nuxt",
+    "devM": "nodemon ./apiLSQL/mongoapi.js & nuxt",
     "devOut": "HOST=172.30.1.18 PORT=80 nuxt",
     "devS": "HOST=172.16.2.51 PORT=80 nuxt",
     "build": "nuxt build",

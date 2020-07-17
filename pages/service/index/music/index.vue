@@ -67,13 +67,16 @@ export default {
       const songId = location.search.split("?")[1].split("=")[1].split("&")[0];
       const this_out = this;
       this_out.searchKey = location.search.split("&")[1].split("=")[1];
-      axios.post("/api/songDetail", {
+      axios.post("/api/song/detail", {
         reqService: "BASE_WEB_ARCHITEC",
         songId
       })
       .then(({data}) => {
-        console.log(data);
+        // console.log(data);
         this_out.searchResult = data;
+      })
+      .catch((e) => {
+        console.error(e);
       })
     },
     data() {
@@ -98,7 +101,7 @@ export default {
               $(".selectedObjF").css("height", $(widnow).height());
           }
           const songId = location.search.split("?")[1].split("=")[1];
-          // axios.post("/api/songDetail", {
+          // axios.post("/api/song/detail", {
           //   reqService: "BASE_WEB_ARCHITEC",
           //   songId
           // })

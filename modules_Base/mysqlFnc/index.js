@@ -66,7 +66,7 @@ const sqlFnc = {
           // console.log("frd");
           command += " VALUES (" + (element == "null" ? element : (util.isNumber(Object.values(data)[0]) ? Object.values(data)[0] : "\"" + Object.values(data)[0] + "\""));
       } else return done(new Error("Unvalid Insert"));
-      // console.log(command);
+      console.log(command);
       mysql_query(command)
       .then((res_sql) => {
           return done(null, res_sql);

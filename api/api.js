@@ -11,12 +11,59 @@ import fs, { access } from "fs";
 import path, { resolve } from "path";
 import mysql from "mysql";
 import util from '../util';
-import async from 'async';
+import async, { reject } from 'async';
 import https from 'https';
 import ytdl from 'ytdl-core';
 import nodeCache from 'node-cache';
 import sqlFnc from '../modules_Base/mysqlFnc';
+// import plModel from '../models/playlog';
+const user = require("../models/user");
+// import mongoose from 'mongoose';
+const mongoose = require("mongoose");
 
+// mongodb connection
+
+// mongoose.connect('mongodb://BaseMusicAPI:123BaseMusicAPISERVER@183.101.91.237:50337/admin', {
+mongoose.connect('mongodb://183.101.91.237:50337/BaseMusic', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useCreateIndex: true
+})
+
+
+var db = mongoose.connection;
+db.on('error', function () { 
+  console.error("Not connected");
+});
+db.once('open', function() {
+  console.log("Database connected!!")
+});
+
+
+
+// let a = new user(
+//   {
+//     "id": 56,
+//     "pn": '1052720204',
+//     "enccode": '35MkJtCpcBDstAP6M0BeSM7gbz+i4WQOG4M2e1qCp0XuRNmX137ZYDTtiWQZvw4stYcdFdnPfYGxpzWmyfxYuLnId9IWoh7OZcWcKNYtCfJYiGf6B9rYIyoWeqt9pBVIKz56Eg==',
+//     "cusId": 'gda56GkzsGKixwFRhzgv',
+//     "date": '2020-04-08T05:59:46.000Z',
+//     "codeG": '4/yQFQ4yJEJeWM7FBO_KrjH59Y78mtP6caU7LLgvXQdiz0WhS9C-k6W3n4iy5i00YVx_cQZjyM1kVWCxYah-YBYCk',
+//     "tokenG": null,
+//     "refTokenG": null,
+//     "salt": 'd2ZybL2TTOCC9DMjT0gw8AlfCTQK7AWY/iYU+IOnWqKYLeKzO0865Jvb6kx7T0aWhxaVxbI1hGNxrRTeB7a//A==',
+//     "name": '김화균',
+//     "isUpdateable": 1
+// });
+// a.save({}, (err, result) => {
+//   console.log(err);
+//   console.log(result);
+// })
+
+
+
+
+// console.log(this.mongoose);
 
 // Create express router
 const app = express.Router()
@@ -42,8 +89,6 @@ const NCP_API = JSON.parse(fs.readFileSync(path.join(__dirname, "/../security/NC
 /*
 * Naver Cloud Platform API Information
 */
-
-
 
 
 
@@ -146,8 +191,12 @@ function login(req, res) {
             // set session if check == true
             if (check != "false") {
               req.session.userInfo = lists[check];
-              check = "true";
-              return res.status(200).end(check);
+              if (req.body.allNeed) {
+                return res.status(200).json(lists[check]);
+              } else {
+                check = "true";
+                return res.status(200).end(check);
+              }
             } else {
               return res.status(200).end("false");
             }
@@ -157,6 +206,13 @@ function login(req, res) {
       // return res.status(500).end("ERR: Internal Server Error");
     });
   }
+}
+
+function logout(req, res) {
+  req.session.destroy(function () {
+    req.session
+  });
+  return res.status(200).end("true");
 }
 
 function auth(req, res) {
@@ -213,6 +269,8 @@ function register(req, res) {
 }
 
 app.post('/login', login);
+
+app.post('/logout', logout);
 
 app.post('/authed', auth);
 
@@ -343,6 +401,7 @@ const getSongDetail = function (req, res, next) {
   const songId = req.body.songId;
   // console.log(songId);
   if (!songId) return res.status(400).end("ERR: Bad Request");
+  if (!req.session.userInfo.cusId) return res.status(401).end("Unauthorized");
   
   // check validation
   if (songId.substr(0, 4) != "Base") return res.status(400).end("ERR: Bad Request");
@@ -381,34 +440,129 @@ const getSongDetail = function (req, res, next) {
       }
     })
   
-  function getLyrics(lyricsId) {
-    return new Promise((resolve, reject) => {
-      sqlFnc.Read("lyrics", "*", { lyricsId })
-        .then((data) => {
-          const lyrics = data[0];
-          let lyricsObj = [];
-          lyrics.lyrics.split("| & |").forEach((value, index) => {
-            lyricsObj.push({
-              time: index == 0 ? lyrics.timestamps.split("| & |")[index] : lyrics.timestamps.split("| & |")[index].substr(1),
-              text: index == 0 ? value : value.substr(1)
-            })
-            if (index == lyrics.lyrics.split("| & |").length - 1) {
-              // lyricsObj.sort((a, b) => a - b);
-              setTimeout(() => {
-                // console.log(lyricsObj);
-                resolve(lyricsObj);
-              }, 200);
-            }
-          })
-          // lyricsObj.sort({ time: -1 })
-      })
-    })
-  }
 }
 
-app.post('/songDetail', getSongDetail, (req, res) => {
-  res.json(req.songDetailData);
+
+function getLyrics(lyricsId) {
+  return new Promise((resolve, reject) => {
+    sqlFnc.Read("lyrics", "*", { lyricsId })
+      .then((data) => {
+        const lyrics = data[0];
+        let lyricsObj = [];
+        lyrics.lyrics.split("| & |").forEach((value, index) => {
+          lyricsObj.push({
+            time: index == 0 ? lyrics.timestamps.split("| & |")[index] : lyrics.timestamps.split("| & |")[index].substr(1),
+            text: index == 0 ? value : value.substr(1)
+          })
+          if (index == lyrics.lyrics.split("| & |").length - 1) {
+            // lyricsObj.sort((a, b) => a - b);
+            setTimeout(() => {
+              // console.log(lyricsObj);
+              resolve(lyricsObj);
+            }, 200);
+          }
+        })
+        // lyricsObj.sort({ time: -1 })
+    })
+  })
+}
+
+app.post('/song/detail', getSongDetail, (req, res) => {
+  return res.json(req.songDetailData);
+  // plModel.create({
+  //   songId: req.body.songId
+  // }, function (err, result) {
+  //     if (err) {
+  //       console.error(err);
+  //       return res.status(500).end("Internal Server ERROR");
+  //     }
+  //     else return res.json(req.songDetailData);
+  // });
+  // if (isPlay) {
+  // } else {
+    // return res.json(req.songDetailData);
+  // }
 });
+
+app.post('/song/record', (req, res) => {
+  const { cusId } = req.body;
+  if (!cusId) return res.status(400).end("Bad Request");
+  let resData = [];
+  sqlFnc.Read("playLog", "*", {})
+    .then((data) => {
+      res.status(200).json({data});
+    })
+    .catch((e) => {
+      console.error(e);
+      res.status(500).end("Internal Server Error");
+  })
+})
+
+// app.post('/song/recent', (req, res) => {
+//   const { cusId } = req.body;
+//   const { userInfo } = req.session;
+
+//   if (!cusId) return res.status(400).end("Bad Request");
+//   if (!userInfo || Object.keys(userInfo).length == 0) return res.status(401).end("unAuthorized");
+  
+//   if (userInfo.cusId != cusId)
+// })
+
+
+
+// playlist Information get
+
+const getSongInfo = function (songIdB) {
+  return new Promise((resolve, reject) => {
+    sqlFnc.Read("melonRes", "*", { songIdB })
+      .then((searchRes) => {
+        let resobj = searchRes;
+        if (searchRes.lyricsId != null) {
+          getLyrics(lyricsId)
+            .then((data) => {
+              resobj.lyrics = data;
+            });
+        }
+        resolve(searchRes);
+      })
+      .catch((e) => {
+        reject(e);
+    })
+  })
+}
+
+app.post('/playlist/detail', (req, res) => {
+  const { plistId, cusId } = req.body;
+  if (!plistId || !cusId) return res.status(400).end("Bad Request");
+
+  if (plistId == "ytRecommend") {
+
+  }
+  
+  sqlFnc.Read("playlist", "*", { plistId })
+    .then((searchRes) => {
+      if (searchRes.length == 0) return res.status(404).end("Not Found");
+      let playlist = searchRes[0];
+      playlist.contentsData = [];
+      playlist.contents.forEach((val, ind) => {
+        getSongInfo(val)
+          .then((data) => {
+            playlist.contentsData.push(data);
+            if (ind == playlist.contents.lenght - 1) {
+              res.status(200).json(playlist);
+            }
+          })
+          .catch((e) => {
+            console.error(e);
+            res.status(500).end("Internal Server Error");
+          })
+      })
+    })
+    .catch((e) => {
+      console.error(e);
+      return res.status(500).end("Internal Server Error");
+    })
+})
 
 
 
@@ -420,61 +574,101 @@ app.post('/play/songInfo', getSongDetail, (req, res) => {
   const searchedObj = req.songDetailData;
   // console.log(req.songDetailData);
   
-  const { songTitle, artist, ytSyncId } = searchedObj;
-  searchYT(`${songTitle} ${artist}`)
+  const { songTitle, artist, ytSyncId, songImg } = searchedObj;
+
+  let searchSTDArtist = "";
+  let isparantheseOpenA = false;
+  artist.split("").forEach((val, idx) => {
+    if (val == "(") {
+      isparantheseOpenA = true;
+    } else if (val == ")") {
+      isparantheseOpenA = false;
+    } else if (!isparantheseOpenA) searchSTDArtist += val;
+  })
+  
+  let searchSTDTitle = "";
+  let isparantheseOpenB = false;
+  songTitle.split("").forEach((val, idx) => {
+    if (val == "(") {
+      isparantheseOpenB = true;
+    } else if (val == ")") {
+      isparantheseOpenB = false;
+    } else if (!isparantheseOpenB) searchSTDTitle += val;
+  })
+  console.log(`search: "${searchSTDTitle}" ${searchSTDArtist}`);
+  searchYT(`"${searchSTDTitle}" ${searchSTDArtist}`)
   .then((ytResult) => {
     console.log(`Search Requested: YTM`);
     // console.log(ytResult);
     if (ytResult.songObjs.length > 0) {
       // console.log(ytResult.songObjs);
-
       let searchedSong;
       let resJson = searchedObj;
       if (ytSyncId == null) {
         console.log(`correspond ytMusic musics: ${ytResult.songObjs.length}`);
         // find same song from yt music api
+        fs.appendFileSync("fuckPS.json", JSON.stringify(ytResult));
         searchedSong = ytResult.songObjs.find(songobjIndiv => {
           // instrumental distinguition
-          console.log(`songTitle: ${songobjIndiv.song.title.replace(/\s/gi, "")}`);
-          if (songobjIndiv.song.title.replace(/\s/gi, "").includes(songTitle.replace(/\s/gi, ""))) {
+          let indivTitle = songobjIndiv.song.title.replace(/\s/gi, "");
+          let isparantheseOpen = false;
+          indivTitle.split("").forEach((val, idx) => {
+
+            if (val == "(") {
+              let feat = indivTitle[idx + 1] + indivTitle[idx + 2] + indivTitle[idx + 3] + indivTitle[idx + 4];
+              if (feat.toLowerCase != "feat") isparantheseOpen = idx;
+            } else if (val == ")") {
+              if (isparantheseOpen) {
+                let eraseSTR = indivTitle.substr(isparantheseOpen, idx - isparantheseOpen + 1);
+                indivTitle.split(eraseSTR, "");
+              }
+            }
+          })
+          const stdTitle = songTitle.replace(/\s/gi, "");
+          console.log(`songTitle: ${indivTitle}`);
+          if (indivTitle.includes(stdTitle)) {
             if (
               (
-                songTitle.replace(/\s/gi, "").includes("inst") ||
-                songTitle.replace(/\s/gi, "").includes("Inst") ||
-                songTitle.replace(/\s/gi, "").includes("Inst.") ||
-                songTitle.replace(/\s/gi, "").includes("inst.") ||
-                songTitle.replace(/\s/gi, "").includes("instrumental")
+                stdTitle.includes("inst") ||
+                stdTitle.includes("Inst") ||
+                stdTitle.includes("Inst.") ||
+                stdTitle.includes("inst.") ||
+                stdTitle.includes("instrumental")
               ) && (
-                songTitle.replace(/\s/gi, "").includes("inst") ||
-                songTitle.replace(/\s/gi, "").includes("Inst") ||
-                songTitle.replace(/\s/gi, "").includes("inst.") ||
-                songTitle.replace(/\s/gi, "").includes("Inst") ||
-                songTitle.replace(/\s/gi, "").includes("instrumental")
+                stdTitle.includes("inst") ||
+                stdTitle.includes("Inst") ||
+                stdTitle.includes("inst.") ||
+                stdTitle.includes("Inst") ||
+                stdTitle.includes("instrumental")
               )
             ) {
-              return songobjIndiv.song.title.replace(/\s/gi, "").includes(songTitle.replace(/\s/gi, ""));
+              return indivTitle.includes(stdTitle);
             } else if (
               !(
-                songTitle.replace(/\s/gi, "").includes("inst") ||
-                songTitle.replace(/\s/gi, "").includes("Inst") ||
-                songTitle.replace(/\s/gi, "").includes("Inst.") ||
-                songTitle.replace(/\s/gi, "").includes("inst.") ||
-                songTitle.replace(/\s/gi, "").includes("instrumental")
+                stdTitle.includes("inst") ||
+                stdTitle.includes("Inst") ||
+                stdTitle.includes("Inst.") ||
+                stdTitle.includes("inst.") ||
+                stdTitle.includes("instrumental")
               ) && !(
-                songTitle.replace(/\s/gi, "").includes("inst") ||
-                songTitle.replace(/\s/gi, "").includes("Inst") ||
-                songTitle.replace(/\s/gi, "").includes("inst.") ||
-                songTitle.replace(/\s/gi, "").includes("Inst") ||
-                songTitle.replace(/\s/gi, "").includes("instrumental")
+                stdTitle.includes("inst") ||
+                stdTitle.includes("Inst") ||
+                stdTitle.includes("inst.") ||
+                stdTitle.includes("Inst") ||
+                stdTitle.includes("instrumental")
               )
-            ) return songobjIndiv.song.title.replace(/\s/gi, "").includes(songTitle.replace(/\s/gi, ""));
+            ) return indivTitle.includes(stdTitle);
             else {
               console.log("ERR: Both are not included");
             }
           }
         })
-        if (searchedSong == undefined) searchedSong = ytResult.songObjs[0];
+        if (searchedSong == undefined) {
+          console.log("No match Found: Replace alternatives");
+          searchedSong = ytResult.songObjs[0];
+        }
         // console.log(searchedSong);
+        resJson.serviceSearchKey = `"${searchSTDTitle}" ${searchSTDArtist}`;
         resJson.ytInfo = searchedSong;
       } else {
         resJson.ytInfo = {};
@@ -485,7 +679,28 @@ app.post('/play/songInfo', getSongDetail, (req, res) => {
         console.log(format);
         resJson.ytInfo.setData = format;
         console.log(resJson);
-        res.status(200).json(resJson);
+
+
+        // song play logging
+        console.log("logging songPlay");
+        sqlFnc.Insert("playLog", {
+          cusId: req.session.userInfo.cusId,
+          location: undefined,
+          playArch: req.body.reqService,
+          ip: req.ip,
+          songId: req.body.songId,
+          songTitle,
+          artist,
+          ytSyncId: ytSyncId != null ? ytSyncId : searchedSong.song.videoId,
+          songImg
+        }, (err, result) => {
+            if (err) {
+              console.error(e);
+              return res.status(500).end("Internal Server ERROR");
+            }
+            // console.log(result);
+            res.status(200).json(resJson);
+        })
       })
       .pipe(fs.createWriteStream(path.join(__dirname, `../static/Cache/music/${req.songDetailData.songIdB}.mp4`)));
     } else return res.status(404).end("Not Ready");

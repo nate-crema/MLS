@@ -46,5 +46,6 @@ export default {
   position: absolute;
   top : 0;
   left: 280px;
+  width: 100%;
 }
 </style>

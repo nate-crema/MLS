@@ -5,21 +5,21 @@
               <img class="playlistImg" src="/img/playlist.svg"/>
               <p class="playlistT">Recent</p>
               <p class="playlistCont">최근재생</p>
-              <img class="playlistAdd pListFncBtn" src="/img/playlistAddBtn.svg"/>
+              <img class="playlistAdd pListFncBtn" src="/img/playlistAddBtn.svg" @click="playlist('recent');"/>
               <img class="playlistPlay pListFncBtn" src="/img/listplayBtn.svg"/>
           </div>
           <div class="playlistObj youtube">
               <img class="playlistImg" src="/img/playlist.svg"/>
               <p class="playlistT">Youtube</p>
               <p class="playlistCont">Youtube<br>Recommend</p>
-              <img class="playlistAdd pListFncBtn" src="/img/playlistAddBtn.svg"/>
+              <img class="playlistAdd pListFncBtn" src="/img/playlistAddBtn.svg" @click="playlist('ytrecm');"/>
               <img class="playlistPlay pListFncBtn" src="/img/listplayBtn.svg"/>
           </div>
           <div class="playlistObj melon">
               <img class="playlistImg" src="/img/playlist.svg"/>
               <p class="playlistT">Melon</p>
-              <p class="playlistCont">한국 TOP100<br>{{new Date().getFullYear()}}-{{new Date().getMonth()+1}}-{{new Date().getDate()}}</p>
-              <img class="playlistAdd pListFncBtn" src="/img/playlistAddBtn.svg"/>
+              <p class="playlistCont">한국 TOP100<br>{{new Date().getMonth()+1}}/{{new Date().getDate()}} {{new Date().getHours()}}시 기준</p>
+              <img class="playlistAdd pListFncBtn" src="/img/playlistAddBtn.svg" @click="playlist('KR_TOP100');"/>
               <img class="playlistPlay pListFncBtn" src="/img/listplayBtn.svg"/>
           </div>
       </div>
@@ -34,6 +34,28 @@ export default {
     data() {
         return {
             playlists: []
+        }
+    },
+    methods: {
+        playlist: function(position) {
+            // console.log(this);
+            let url = "";
+            switch(position) {
+                case "recent":
+                    url="/new/service/recent";
+                    break;
+                case "ytrecm":
+                    url="/new/service/playlist/ytRecommend";
+                    break;
+                case "KR_TOP100":
+                    url="/new/service/playlist/top100/kr";
+                    break;
+                default:
+                    break;
+            }
+            console.log(location);
+            console.log(location.href);
+            location.href=url;
         }
     },
     mounted() {
@@ -172,7 +194,8 @@ export default {
     /* opacity: 0.4; */
 }
 .playlistObj .pListFncBtn {
-    position: absolute;   
+    position: absolute;  
+    cursor: pointer; 
 }
 .playlistObj .playlistAdd {
     bottom: 20px;

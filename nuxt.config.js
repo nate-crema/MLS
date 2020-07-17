@@ -87,6 +87,9 @@ module.exports = {
       }
     ]
   },
+  // plugins: [
+  //   { src: '~/plugins/mongoose.js', mode: 'server' }
+  // ]
   // manifest: {
   //   name: "Base",
   //   short_name: "Base",
