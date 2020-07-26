@@ -225,7 +225,7 @@ module.exports.fncRegular = function (timeType, periodNum, timeValue, reservFnc)
 
                     // function run interval
                     switch (timeValue.optionSetter) {
-                        case "TT":
+                        case "HH":
                             intervalTime = 24 * 60 * 60 * 1000;
                             startTime = new Date(Year, Month, Day, timeValue.optionValue, Minutes, Seconds);
                             startInterval = startTime.getTime() - new Date().getTime();

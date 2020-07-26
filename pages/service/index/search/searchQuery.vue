@@ -1,8 +1,6 @@
 <template>
   <div>
       <isMediaComp :mediaTypeText="mediaTypeText"></isMediaComp>
-      <!-- <div class="artists" id="artists">
-      </div> -->
       <div class="songObjs" v-if="searchResult.melon">
         <div class="songObj" v-for="(indivSong, index) in searchResult.melon.data" :key="index">
           <!-- <svg version="1.1" id="lg_imgA" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
@@ -49,6 +47,10 @@
             </div>
           </div>
         </div>
+      </div>
+      <div v-else>
+        <div class="lds-ripple"><div></div><div></div></div>
+        <p class="loadingText">loading...</p>
       </div>
       <nuxt-link :to="to" id="nuxt-link-next" hidden>alpha</nuxt-link>
   </div>
@@ -135,6 +137,7 @@ export default {
 
       
       const this_out = this;
+      // console.log(this.$store.state.userInfo);
 
       
 
@@ -142,24 +145,37 @@ export default {
         document.getElementsByClassName("searchTitle")[0].innerHTML = "\"" + decodeURI(document.location.search.replace("?searchKey=", "")) + "\"에 대한 검색결과입니다!"
         document.getElementById("searchData").value = decodeURI(document.location.search.replace("?searchKey=", ""));
 
-        axios.post('/search/api/searchQuery', {
+        axios.post('/api/search/searchQuery', {
           searchOption: "*",
-          searchQuery: decodeURI(document.location.search.replace("?searchKey=", ""))
+          searchQuery: decodeURI(document.location.search.replace("?searchKey=", "")),
+          cusId: this_out.$store.state.userInfo.cusId
         })
         .then(({data}) => {
-          console.log(data);
-            this_out.searchResult = data;
-            if (data.isMedia) {
+          let alligned = data;
+          // numOfRes 기준 정렬
+          alligned.melon.data.sort(function (a, b) {
+            if (a.numOfRes > b.numOfRes) {
+              return 1;
+            }
+            if (a.numOfRes < b.numOfRes) {
+              return -1;
+            }
+            // a must be equal to b
+            return 0;
+          });
+          console.log(alligned);
+            this_out.searchResult = alligned;
+            if (alligned.isMedia) {
               console.log("data.mediaType");
-              console.log(data.MediaType);
-              this_out.mediaTypeText = data.MediaType.toString();
+              console.log(alligned.MediaType);
+              this_out.mediaTypeText = alligned.MediaType.toString();
               $("#isMediaTrue").css("display", "unset");
               $("#isMediaTrue").css("opacity", "1");
             }
             // let isArtistYT = false;
-            if (data.ytSearch.length > 0) {
+            if (alligned.ytSearch.length > 0) {
               console.log("sef");
-              data.ytSearch.forEach((element) => {
+              alligned.ytSearch.forEach((element) => {
                 // console.log(element);
                 if (element.artists) {
                   this_out.isArtistYT=true;
@@ -203,8 +219,14 @@ export default {
         $(".searchBtn").css("width", "50px");
         $(".searchBtn").css("height", "50px");
         $("#searchData").css("font-size", "17px");
+        $(".searchTitleM").css("opacity", "0");
+        $(".searchTitle").css("font-size", "22px");
+        $(".searchTitle").css("font-weight", "500");
         setTimeout(() => {
-          $(".searchArea").css("top", "55px");
+          $(".searchTitleM").css("display", "none");
+        }, 100);
+        setTimeout(() => {
+          $(".searchArea").css("top", "85px");
           $(".searchArea").css("left", "0px");
           $(".searchArea").css("transform", "unset");
         }, 100);
@@ -350,5 +372,55 @@ export default {
   position: absolute;
   top: 12px;
   left: 10px;
+}
+
+
+
+
+
+/* reference: loading.io */
+.lds-ripple {
+  display: inline-block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width:250px;
+  height:250px;
+}
+.lds-ripple div {
+  position: absolute;
+  border: 4px solid rgb(18, 48, 104);
+  opacity: 1;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  animation: lds-ripple 1s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+}
+.lds-ripple div:nth-child(2) {
+  animation-delay: -0.5s;
+}
+@keyframes lds-ripple {
+  0% {
+    width: 0;
+    height: 0;
+    opacity: 1;
+  }
+  100% {
+    width: 100px;
+    height: 100px;
+    opacity: 0;
+  }
+}
+
+
+.loadingText {
+  font-size: 20px;
+  font-weight: 300;
+  /* position: absolute; */
+  text-align: center;
+  /* left: 50%;
+  transform: translateX(-50%); */
 }
 </style>

@@ -307,7 +307,7 @@ export default {
   position: absolute;
   top: 180px;
   left: 150px;
-  border: 1px solid black;
+  /* border: 1px solid black; */
 }
 .passCode .passCodeP {
   font-size: 25px;

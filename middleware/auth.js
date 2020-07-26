@@ -7,9 +7,8 @@ export default function (obj) {
         //     statusCode: 403
         // })
         // console.log(Object.keys(res));
-        // res.redirect('/new');
         res.end(`
-        <html><script>location.href = "/new"</script></html>`);
+        <html><script>location.href = "/"</script></html>`);
     }
 }
   

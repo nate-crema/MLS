@@ -20,7 +20,7 @@
             </div>
             <nuxt-child class="searchResult"/>
         </div>
-    </div>
+    </div>    
   </div>
 </template>
 
@@ -182,5 +182,15 @@ export default {
     top: 150px;
     width: 100%;
     height: 100%;
+}
+
+
+.search .backgroundImgS {
+    width: 450px;
+    height: auto;
+    position: absolute;
+    right: -50px;
+    top: 50%;
+    transform: translateY(-50%);
 }
 </style>

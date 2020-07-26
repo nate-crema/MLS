@@ -9,11 +9,11 @@ module.exports = {
   ** Headers of the page
   */
   head: {
-    title: 'mls',
+    title: 'Base',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: 'Music List Sync service' }
+      { hid: 'description', name: 'description', content: 'Base - 빠르게 연결되는 나만의 음악서비스' }
     ],
     script: [
       { src: 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js' },
@@ -23,7 +23,7 @@ module.exports = {
       // { src: "https://cdnjs.cloudflare.com/ajax/libs/wavesurfer.js/1.4.0/wavesurfer.min.js" }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      { rel: 'icon', type: 'image/x-icon', href: '/Base.ico' },
       { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Noto+Sans+KR:300,400,500,700&display=swap' }
     ]
   },
@@ -71,8 +71,7 @@ module.exports = {
       cookie: { maxAge: 6 * 60 * 60 * 1000 }
     }),
     // Api middleware
-    '~/api/api',
-    '~/api/searchApi'
+    '~/api'
   ],
   modules: [
     'nuxt-socket-io',
@@ -87,6 +86,9 @@ module.exports = {
       }
     ]
   },
+  // plugins: [
+  //   { src: '~/plugins/mongoose.js', mode: 'server' }
+  // ]
   // manifest: {
   //   name: "Base",
   //   short_name: "Base",

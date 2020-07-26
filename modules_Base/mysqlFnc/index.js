@@ -66,7 +66,7 @@ const sqlFnc = {
           // console.log("frd");
           command += " VALUES (" + (element == "null" ? element : (util.isNumber(Object.values(data)[0]) ? Object.values(data)[0] : "\"" + Object.values(data)[0] + "\""));
       } else return done(new Error("Unvalid Insert"));
-      // console.log(command);
+      console.log(command);
       mysql_query(command)
       .then((res_sql) => {
           return done(null, res_sql);
@@ -309,7 +309,75 @@ const sqlFnc = {
       .catch((e) => {
           return done(e);
       })
-    }   
+    },
+    Read_JOIN: (table, joinType, option, multiOptionCntl, output, filter) => {
+        return new Promise((resolve, reject) => {
+            if (!option || !table || !joinType) reject(new Error(`Invalid options`));
+            else if (typeof table != "object") reject(new Error(`'table' variable requires object. Get ${typeof table}`));
+            else {
+                // reference: http://rapapa.net/wp/wp-content/uploads/2012/06/Visual_SQL_JOINS_V2.png;
+        
+        
+                // typeof table: object
+                // join type: left || right || inner || full (default)
+                // multiOptionCntl: AND || OR || IN
+        
+                let query = `select ${Object.keys(output).toString()} from ${table}`;
+                Object.keys(output);
+
+                const { base, reference } = table;
+        
+                switch (joinType) {
+                    case "inner":
+                        // query: select * from [tableA], [tableB]
+                        // typeof table: array
+                        query += table.toString();
+                        break;
+                    case "right":
+                        if (!base || !reference) reject(new Error(`join option 'right' needs 'base' & 'reference' in variable 'table' `));
+                        // query: select * from [tableA] RIGHT JOIN [tableB] ON (option)
+                        // typeof table: json 
+                        /*
+                            {
+                                base: String,
+                                reference: String
+                            }
+                        */
+                        query += `${base} A RIGHT JOIN ${reference} B ON`;
+                        break;
+                    case "left":
+                        if (!base || !reference) reject(new Error(`join option 'left' needs 'base' & 'reference' in variable 'table' `));
+                        // query: select * from [tableA] LEFT JOIN [tableB] ON (option)
+                        // typeof table: json 
+                        /*
+                            {
+                                base: String,
+                                reference: String
+                            }
+                        */
+                        query += `${base} A LEFT JOIN ${reference} B ON`;
+                        break;
+                    case "full":
+                        // query: select * from [tableA] FULL OUTER JOIN [tableB] ON (option)
+                        // typeof table: array
+
+                        query += `${table[0]} A FULL OUTER JOIN ${table[1]} B ON`;
+                        break;
+                    default:
+                        // query: select * from [tableA] LEFT JOIN [tableB] ON (option)
+                        console.info(`This command occurs lots of overload both server and DBMS. I hope you what you've done`);
+                        
+                        break;
+                }
+
+                query += "WHERE";
+                for (let i = 0; i < Object.keys(option); i++) {
+                    query += `A.${Object.keys(option)[i]}=B.${Object.values(option)[i]}`;
+                    if (i != Object.keys(option).length - 1) query += ` ${multiOptionCntl} `;
+                }
+            }
+        })
+    }
 }
   
 module.exports = sqlFnc;

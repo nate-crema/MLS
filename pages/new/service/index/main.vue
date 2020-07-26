@@ -34,8 +34,8 @@ export default {
       const Month = TimeInfo[1]; // Month
       const Day = TimeInfo[2]; // Day
       const Year = TimeInfo[3]; // Year
-      // const Time = TimeInfo[4]; // Time
-      const Time = "8:00:00";
+      const Time = TimeInfo[4]; // Time
+      // const Time = "8:00:00";
       const HH = Time.split(":")[0]*1;
       const MM = Time.split(":")[1]*1;
       const SS = Time.split(":")[2]*1;
@@ -53,9 +53,9 @@ export default {
         this_out.textB = `"${userInfo.name}"님을 위한 음악을 들으며 잠을 깨워보세요!`;
         this_out.imgSrc = "/img/undraw_working_from_anywhere_ub67.svg";
       } else if (HH > 14 && HH <= 18) {
-        this_out.textA = "벌써 저녁이에요!";
+        this_out.textA = "벌써 오후에요!";
         this_out.textB = `"${userInfo.name}"님을 위한 음악을 들으며 마지막까지 힘내세요!`;
-        this_out.imgSrc = "/img/undraw_moonlight_5ksn.svg";
+        this_out.imgSrc = "/img/undraw_work_time_lhoj.svg";
       } else if (HH > 18 && HH <= 22) {
         this_out.textA = "오늘 하루도 수고하셨습니다 :)";
         // this_out.textB = `"${userInfo.name}"님을 위한 음악을 들으며 하루를 마무리해보세요!`;

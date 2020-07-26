@@ -1,11 +1,11 @@
 <template>
   <div>
-      <div class="songDetail">
+      <div class="songDetail" v-if="searchResult.songTitle != undefined">
         <nuxt-link class="backPageRed"
         :to="`/service/search/searchQuery?searchKey=${searchKey}`"> &lt; 검색 결과로 이동</nuxt-link>
         <div class="songTitle">
-          <p id="songTitle" class="songTitleText">{{searchResult.songTitle}}</p>
-          <p id="songArtist" class="songArtistText">{{searchResult.artist}}</p>
+          <p id="songTitle" class="songTitleText">{{searchResult.songTitle.length > 20 ? searchResult.songTitle.substr(0, 17) + "..." : searchResult.songTitle}}</p>
+          <p id="songArtist" class="songArtistText">{{searchResult.artist.length > 20 ? searchResult.artist.substr(0, 17) + "..." : searchResult.artist}}</p>
         </div>
         <div class="songImage">
           <div class="lpMiddle" id="lpMiddle">
@@ -30,7 +30,7 @@
             <li class="genre" id="genre">장르</li>
           </ul>
           <ul class="dCont">
-            <li class="album" id="album">{{searchResult.albumTitle}}</li>
+            <li class="album" id="album">{{searchResult.albumTitle.length > 20 ? searchResult.albumTitle.substr(0, 18) + "..." : searchResult.albumTitle}}</li>
             <li class="openDate" id="openDate">{{searchResult.openDate ? searchResult.openDate : "?"}}</li>
             <li class="genre" id="genre">{{searchResult.genre ? searchResult.genre : "?"}}</li>
           </ul>
@@ -67,13 +67,16 @@ export default {
       const songId = location.search.split("?")[1].split("=")[1].split("&")[0];
       const this_out = this;
       this_out.searchKey = location.search.split("&")[1].split("=")[1];
-      axios.post("/api/songDetail", {
-        reqService: "BASE_WEB_ARCHITEC",
+      axios.post("/api/song/detail", {
+        reqService: "BASE_WEB_ARCHITEC_PLY_MINI",
         songId
       })
       .then(({data}) => {
-        console.log(data);
+        // console.log(data);
         this_out.searchResult = data;
+      })
+      .catch((e) => {
+        console.error(e);
       })
     },
     data() {
@@ -98,7 +101,7 @@ export default {
               $(".selectedObjF").css("height", $(widnow).height());
           }
           const songId = location.search.split("?")[1].split("=")[1];
-          // axios.post("/api/songDetail", {
+          // axios.post("/api/song/detail", {
           //   reqService: "BASE_WEB_ARCHITEC",
           //   songId
           // })
@@ -176,6 +179,10 @@ export default {
     transform: translate(-50%);
   }
 }
+
+
+/* parent set */
+
 .songDetail {
   width: 100%;
   /* height: 300px; */
@@ -276,7 +283,7 @@ export default {
 .songDetail .songCont {
   width: 450px;
   height: 200px;
-  border: 1px solid black;
+  /* border: 1px solid black; */
   position: absolute;
   left: 350px;
   top: 220px;
@@ -309,7 +316,7 @@ export default {
 .songDetail .playSong {
   width: 400px;
   height: auto;
-  border: 1px solid black;
+  /* border: 1px solid black; */
   position: absolute;
   top: 520px;
   font-size: 18px;

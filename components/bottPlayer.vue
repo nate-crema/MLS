@@ -6,53 +6,11 @@
       </div>
       <div class="imgArea" id="imgArea"
       :style="{backgroundImage: `url(${musicInfo.songImg ? musicInfo.songImg : '/resource/cd.svg'})`}"></div>
-      <p class="songTitle">{{musicInfo.songTitle ? musicInfo.songTitle : "음악을 선택해보세요!"}}</p>
+      <p class="songTitle">{{musicInfo.songTitle ? (musicInfo.songTitle.length > 13 ? musicInfo.songTitle.substr(0, 10) + "..." : musicInfo.songTitle) : "음악을 선택해보세요!"}}</p>
       <p class="lyrics">{{musicInfo.songTitle ? (lyricsThis ? lyricsThis : "가사가 없는 노래입니다.") : "음악을 선택하면 음악이 동시에 재생됩니다."}}</p>
-      <div class="replayArea">
-        <svg class="replay" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 472.615 472.615" style="enable-background:new 0 0 472.615 472.615;" xml:space="preserve">
-            <g>
-              <g>
-                <path d="M355.232,0l-13.525,13.525l65.821,65.821h-279.17c-52.894,0-95.924,43.031-95.924,95.919v59.633h19.128v-59.633
-                  c0-42.343,34.452-76.79,76.796-76.79h279.17l-65.821,65.821l13.525,13.525l88.91-88.91L355.232,0z"/>
-              </g>
-            </g>
-            <g>
-              <g>
-                <path d="M421.053,237.714v59.632c0,42.344-34.452,76.795-76.796,76.795H65.087l65.821-65.825l-13.525-13.525l-88.909,88.914
-                  l88.909,88.91l13.525-13.525L65.087,393.27h279.17c52.895,0,95.924-43.031,95.924-95.924v-59.632H421.053z"/>
-              </g>
-            </g>
-            <g>
-            </g>
-            <g>
-            </g>
-            <g>
-            </g>
-            <g>
-            </g>
-            <g>
-            </g>
-            <g>
-            </g>
-            <g>
-            </g>
-            <g>
-            </g>
-            <g>
-            </g>
-            <g>
-            </g>
-            <g>
-            </g>
-            <g>
-            </g>
-            <g>
-            </g>
-            <g>
-            </g>
-            <g>
-            </g>
-        </svg>
+      <div class="playArea">
+        <img 
+        :src="isPlay ? '/img/pause.svg' : '/img/play-button.svg'" class="pause controller"/>
       </div>
       <div class="playControlArea">
         <div class="playControl play">
@@ -224,7 +182,10 @@ export default {
         }
         function reqMInfo(vId) {
             return new Promise((resolve, reject) => {
-                axios.post("/api/play/songInfo", {songId: vId})
+                axios.post("/api/player/getSongInfo", {
+                  songId: vId,
+                  reqService: "BASE_WEB_ARCHITEC_PLY_MINI"
+                })
                 .then(({data}) => {
 
                     resolve(data);
@@ -238,25 +199,14 @@ export default {
 
         // window layout functions
 
-        // $(document).ready(() => {
-        //     // controllerFnc("first");
-        //     // $(".controller").click();
-        // })
-
-
         // music controller functions
         $("#progBar").on({
           mousedown: function(event) {
             // changeBtnLoc(event);
             console.log("mousedown");
             console.log(event.offsetX);
-            // console.log(event.offsetX);
-            // document.getElementById("progBar").addEventListener("mousemove", dotControlCng); 
           },
           mouseup: function(event) {
-            // console.log(video.currentTime);
-            // console.log(event.offsetX);
-            // console.log((event.offsetX/$("#prog_pBtn").width()));
             console.log(`ct: ${video.currentTime}`);
             console.log(`cp: ${event.offsetX}`);
             console.log(`width: ${$("#progBar").width()}`);
@@ -267,23 +217,6 @@ export default {
             // console.log(video)
           }
         });
-
-        // function changeBtnLoc(event) {
-        //   $("#prog_pBtn").css("left", event.offsetX);
-        //   setTimeout(() => {
-        //     if ($("#progBar").on('mousedown')) {
-        //       changeBtnLoc(event);
-        //     }
-        //   }, 100);
-        // }
-        // $("#progBar").on('click', function(event) {
-        //   // move song position
-          
-        //   // get cursor location 
-        //   console.log(event.pageX);
-
-        //   $("#prog_pBtn").css("left", event.pageX);
-        // })
         $('.controller').on('click', function() {
             controllerFnc();          
         });
@@ -315,7 +248,14 @@ export default {
 
         function controllerFnc(isFirst) {
             console.log(video);
-            $(".controller").toggleClass('pause play');
+            this_out.isPlay == true ? this_out.isPlay = false : this_out.isPlay = true;
+            console.log(this_out.isPlay);
+            if (this_out.isPlay) {
+              document.getElementsByClassName("controller")[0].attributes.src = '/img/pause.svg';
+            } else {
+              document.getElementsByClassName("controller")[0].attributes.src = '/img/play-button.svg';
+            }
+            // $(".controller").toggleClass('pause play');
             // console.log(this_out.status);
             if(this_out.$store.state.songPlayer.status) {
                 this_out.$store.state.songPlayer.status = false;
@@ -415,7 +355,7 @@ export default {
   position: absolute;
   background-color: rgb(9, 17, 88);
 }
-#bottomPlayer .replay {
+#bottomPlayer .play, .pause {
   width: 24px;
   height: auto;
   position: absolute;

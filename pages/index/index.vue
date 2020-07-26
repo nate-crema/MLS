@@ -1,51 +1,50 @@
 <template>
-    <div>
-        <nuxt-link to="/login">
-            <div class="startBtn">
-                <p>시작하기 ></p>
-            </div>
-        </nuxt-link>
+    <div class="scrollToLogin">
+        <p class="loginLoad">스크롤하여 로그인</p>
+        <nuxt-link id="toLogin" to="/login"  style="display: none;">rgtr</nuxt-link>
+        <img class="arrowDImg" src="/img/arrowD.svg"/>
     </div>
 </template>
 
 <script>
 export default {
-
+    mounted() {
+        let isC = false;
+        $(document).ready(() => {
+            sizeCalc();
+            $(document).bind("mousewheel", function(e) {
+                // console.log(`${e.originalEvent.wheelDelta < 0} / ${!isC} / ${location.pathname}`);
+                if ((location.pathname == "/new" || location.pathname == "/") && !isC && e.originalEvent.wheelDelta < 0) {
+                    isC = true;
+                    document.getElementById("toLogin").click();
+                    $(window).scrollTop();
+                    $("#loginArea").css("height", $(window).height());
+                }
+                // alert("srgtf")
+                // console.log(this);
+            })
+        })
+        $(window).resize(() => {
+            sizeCalc();
+        })
+        function sizeCalc() {
+            $("#loginArea").css("height", $(window).height()+100);
+        }
+    }
 }
 </script>
 
 <style>
-.mainPage .startBtn {
-  font-size: 20px;
-  font-weight: 500;
-  color: #0F326A;
-  padding: 20px 60px 20px 60px;
-  border: 1px solid #0F326A;
-  width: 220px;
-  height: 70px;
-  position: absolute;
-  top: 300px;
-  right: 100px;
-  text-align: right;
-  transition: all .2s cubic-bezier(0.17, -0.01, 0, 1.03);
-  border-radius: 13px;
+.scrollToLogin {
+    position: absolute;
+    top: unset;
+    bottom: 150px;
+    /* left: 0; */
+    /* border: 1px solid black; */
 }
-.mainPage .startBtn:hover {
-  background-color: #0F326A;
-  color: white;
-  padding-right: 26px;
-}
-
-@media (max-width: 700px) {
-  .mainPage .startBtn {
-    right: unset;
-    left: 50%;
-    transform: translateX(-50%);
-  }
-}
-@media (max-width: 450px) {
-  .mainPage .startBtn {
-    top: 100px;
-  }
+.scrollToLogin .arrowDImg {
+    width: 20px;
+    height: auto;
+    margin-top: 20px;
 }
 </style>

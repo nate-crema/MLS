@@ -106,7 +106,7 @@ export default {
                             $("#phoneNumPH").css("opacity", "0");
                             document.getElementById("phoneNumIN").focus();
                         } else {
-                            axios.post('/api/sms', {
+                            axios.post('/api/user/sms', {
                                 to: document.getElementById("phoneNumIN").value
                             })
                             .then(({data}) => {
@@ -181,7 +181,7 @@ export default {
                         document.getElementById("authCodeIN").value = "";
                         document.getElementById("authCodeIN").focus();
                     } else {
-                        axios.post('/api/sms', {
+                        axios.post('/api/user/sms', {
                             to: this_out.pn,
                             code: document.getElementById("authCodeIN").value,
                         })

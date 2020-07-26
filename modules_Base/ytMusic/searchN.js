@@ -1,8 +1,7 @@
 const axios = require("axios");
-const cheerio = require("cheerio");
 const fs = require("fs");
 
-// searchYTM("사랑하게 될 줄 알았어", "*");
+// searchYTM("I'm in love 공원소녀", "*");
 
 function searchYTM(searchKey, filter) {
 
@@ -85,7 +84,7 @@ function searchYTM(searchKey, filter) {
             headers: searchData.headers
         })
         .then(({data}) => {
-            fs.appendFileSync("test.json", JSON.stringify(data.contents.sectionListRenderer.contents));
+            // fs.appendFileSync(searchKey + ".json", JSON.stringify(data.contents.sectionListRenderer.contents));
             // console.log(data);
             const ytData = data.contents.sectionListRenderer.contents;
             // console.log(ytData);
@@ -298,11 +297,11 @@ function searchYTM(searchKey, filter) {
                         // console.log(artistObjs);
                         // console.log(albumObjs);
                         
-                        // fs.appendFileSync("result.json", JSON.stringify({
-                        //     songObjs: songObjs,
-                        //     videoObjs: videoObjs,
-                        //     artistObjs: artistObjs,
-                        //     albumObjs: albumObjs
+                        // fs.appendFileSync(searchKey + "_result.json", JSON.stringify({
+                        //     songObjs,
+                        //     videoObjs,
+                        //     artistObjs,
+                        //     albumObjs
                         // }));
                         resolve({
                             songObjs,
