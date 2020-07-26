@@ -42,6 +42,7 @@ const app = express.Router()
 // So we can use res.status() & res.json()
 
 app.use((req, res, next) => {
+  // console.log(req.url);
   Object.setPrototypeOf(req, express().request)
   Object.setPrototypeOf(res, express().response)
   req.res = res
@@ -254,11 +255,11 @@ app.post('/authed', auth);
 
 app.post('/register', register);
 
-app.post('/logined', (req, res) => {
-  req.session.userInfo = req.body;
-  res.end("true");
-})
-
+// /logined: disabled
+// app.post('/logined', (req, res) => {
+//   req.session.userInfo = req.body;
+//   res.end("true");
+// }) 
 
 app.post('/sess/userInfoAdd', (req, res) => {
   const data = req.body.dataO;
@@ -304,39 +305,39 @@ app.get('/img/:url', (req, res) => {
   res.end(img);
 })
 
-app.post('/search', (req, res) => {
-  const searchKeyword = req.body.searchKey;
-  searchYT(searchKeyword)
-  .then((result) => {
-    for (var i = 0; i < result.length; i++) {
-      if (!result[i].videoId) continue;
-      else {
-        const videoId = result[i].videoId.id;
-        axios.get("https://www.googleapis.com/youtube/v3/videos?part=snippet&id=" + videoId, {}, {
-          headers: {
-            Authorization: "Bearer " + ""
-          }
-        })
-      }
-    }
-    res.json(result);
-  })
-})
+// app.post('/search', (req, res) => {
+//   const searchKeyword = req.body.searchKey;
+//   searchYT(searchKeyword)
+//   .then((result) => {
+//     for (var i = 0; i < result.length; i++) {
+//       if (!result[i].videoId) continue;
+//       else {
+//         const videoId = result[i].videoId.id;
+//         axios.get("https://www.googleapis.com/youtube/v3/videos?part=snippet&id=" + videoId, {}, {
+//           headers: {
+//             Authorization: "Bearer " + ""
+//           }
+//         })
+//       }
+//     }
+//     res.json(result);
+//   })
+// })
 
-app.post('/dataRDY', (req, res) => {
-  const vid = req.body.vid;
+// app.post('/dataRDY', (req, res) => {
+//   const vid = req.body.vid;
 
-  async.waterfall([
-    (callback) => {
-      sqlFnc.Read('rdy', "*", {
-        vid
-      })
-      .then((data) => {
-          console.log(data);
-      })
-    }
-  ])
-})
+//   async.waterfall([
+//     (callback) => {
+//       sqlFnc.Read('rdy', "*", {
+//         vid
+//       })
+//       .then((data) => {
+//           console.log(data);
+//       })
+//     }
+//   ])
+// })
 
 
 // song Information get

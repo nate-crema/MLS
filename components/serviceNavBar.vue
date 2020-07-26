@@ -1,14 +1,8 @@
 <template>
   <div class="navBar">
-<<<<<<< Updated upstream
-      <a href="/new/service/main" class="serviceTitle">Base</a>
-      <!-- <nuxt-link to="/new/service/search" class="searchTitleNav">검색</nuxt-link> -->
-      <a href="/new/service/search" class="searchTitleNav">검색</a>
-=======
       <a href="/service/main" class="serviceTitle">Base</a>
       <!-- <nuxt-link to="/service/search" class="searchTitleNav">검색</nuxt-link> -->
       <a href="/service/search" class="searchTitleNav">검색</a>
->>>>>>> Stashed changes
       <div class="playList">
           <p class="playListTitle">플레이리스트</p>
           <ul class="playListContUl">
@@ -44,12 +38,9 @@ export default {
         logout: function() {
             console.log("sef");
             this.$store.dispatch("logout");
-<<<<<<< Updated upstream
-=======
             setTimeout(() => {
                 location.reload();
             }, 200);
->>>>>>> Stashed changes
         },
         mobileCheck: function() {
             let check = false;

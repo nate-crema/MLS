@@ -324,16 +324,16 @@ const sqlFnc = {
         
                 let query = `select ${Object.keys(output).toString()} from ${table}`;
                 Object.keys(output);
+
+                const { base, reference } = table;
         
                 switch (joinType) {
-                    
                     case "inner":
                         // query: select * from [tableA], [tableB]
                         // typeof table: array
                         query += table.toString();
                         break;
                     case "right":
-                        const { base, reference } = table;
                         if (!base || !reference) reject(new Error(`join option 'right' needs 'base' & 'reference' in variable 'table' `));
                         // query: select * from [tableA] RIGHT JOIN [tableB] ON (option)
                         // typeof table: json 
@@ -346,7 +346,6 @@ const sqlFnc = {
                         query += `${base} A RIGHT JOIN ${reference} B ON`;
                         break;
                     case "left":
-                        const { base, reference } = table;
                         if (!base || !reference) reject(new Error(`join option 'left' needs 'base' & 'reference' in variable 'table' `));
                         // query: select * from [tableA] LEFT JOIN [tableB] ON (option)
                         // typeof table: json 

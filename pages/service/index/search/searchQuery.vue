@@ -145,7 +145,7 @@ export default {
         document.getElementsByClassName("searchTitle")[0].innerHTML = "\"" + decodeURI(document.location.search.replace("?searchKey=", "")) + "\"에 대한 검색결과입니다!"
         document.getElementById("searchData").value = decodeURI(document.location.search.replace("?searchKey=", ""));
 
-        axios.post('/search/api/searchQuery', {
+        axios.post('/api/search/searchQuery', {
           searchOption: "*",
           searchQuery: decodeURI(document.location.search.replace("?searchKey=", "")),
           cusId: this_out.$store.state.userInfo.cusId

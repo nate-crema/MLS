@@ -68,11 +68,7 @@ export default {
       const this_out = this;
       this_out.searchKey = location.search.split("&")[1].split("=")[1];
       axios.post("/api/song/detail", {
-<<<<<<< Updated upstream
-        reqService: "BASE_WEB_ARCHITEC",
-=======
         reqService: "BASE_WEB_ARCHITEC_PLY_MINI",
->>>>>>> Stashed changes
         songId
       })
       .then(({data}) => {
@@ -105,7 +101,6 @@ export default {
               $(".selectedObjF").css("height", $(widnow).height());
           }
           const songId = location.search.split("?")[1].split("=")[1];
-<<<<<<< Updated upstream
           // axios.post("/api/song/detail", {
           //   reqService: "BASE_WEB_ARCHITEC",
           //   songId
@@ -113,8 +108,6 @@ export default {
           // .then(({data}) => {
           //   console.log(data);
           // })
-=======
->>>>>>> Stashed changes
 
 
           const colorThief = new ColorThief();

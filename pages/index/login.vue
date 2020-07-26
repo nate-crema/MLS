@@ -120,7 +120,7 @@ export default {
                         //     $("#phoneNumPH").css("opacity", "0");
                         //     document.getElementById("phoneNumIN").focus();
                         // } else {
-                            axios.post('/api/login', {
+                            axios.post('/api/user/login', {
                                 pn: document.getElementById("phoneNumIN").value
                             })
                             .then(({data}) => {

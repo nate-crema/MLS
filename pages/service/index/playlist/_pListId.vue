@@ -1,7 +1,7 @@
 <template>
   <div>
       <div class="recentTop">
-          <p class="text">{{listInfo.title}}</p>
+          <p class="text">{{title}}</p>
       </div>
       <div class="logList" v-if="listInfo.length > 0">
         <div class="listCont" v-for="(listIndiv, index) in listInfo"
@@ -12,7 +12,7 @@
             :src="listIndiv.songImg"/>
           </div>
           <p class="songTitle">{{listIndiv.songTitle}}</p>
-          <p class="listenTime">{{listIndiv.playDate.split('T')[0]}} || {{listIndiv.playDate.split('T')[1].split(".")[0]}}에 들음</p>
+          <img class="playlistPlay pListFncBtn" src="/img/listplayBtn.svg" @click="searchSong(listIndiv.songTitle)"/>
         </div>
       </div>
       <img class="backgroundImgRecent" src="/img/undraw_timeline_9u4u.svg">
@@ -22,20 +22,28 @@
 <script>
 import Axios from 'axios'
 export default {
+  methods: {
+    searchSong: function(songTitle) {
+      location.href=`/service/search/searchQuery?searchKey=${songTitle}`;
+    }
+  },
   data() {
     return {
-        listInfo: []
+        listInfo: [],
+        title: ""
     }
   },
   mounted: function() {
     const this_out = this;
     const plistId = this.$route.params.pListId;
-    Axios.post("/api/song/playlist", {
+    console.log(plistId);
+    Axios.post("/api/playlist/detail", {
         plistId,
         cusId: this_out.$store.state.userInfo.cusId
     })
     .then(({data}) => {
-      this_out.listInfo = data.data.reverse();
+      this_out.listInfo = data.contentsData;
+      this_out.title = data.title;
       console.log(this_out.listInfo);
     })
     .catch((e) => {
@@ -48,10 +56,10 @@ export default {
 <style>
 .recentTop {
   position: absolute;
-  width: 180px;
+  width: 400px;
   top: 100px;
   left: 100px;
-  font-size: 30px;
+  font-size: 28px;
   font-weight: 500;
   color: #0F326A;
 }
@@ -62,6 +70,7 @@ export default {
   width: 50%;
   height: 50%;
   opacity: 0.4;
+  z-index: -200;
 }
 
 
@@ -113,9 +122,8 @@ export default {
   font-size: 17px;
   font-weight: 500;
   color: #05265c;
-  margin-top: 35px;
   position: absolute;
-  top: 40%;
+  top: 50%;
   transform: translateY(-50%);
   left: 220px;
   margin-top: 0;
@@ -127,5 +135,21 @@ export default {
   left: 220px;
   top: 60%;
   color: #1b63d8;
+}
+
+
+.pListFncBtn {
+    position: absolute;  
+    cursor: pointer; 
+    width: 40px;
+    height: auto;
+    top: 50%;
+    transform: translateY(-50%);
+}
+.playlistAdd {
+    right: 80px;
+}
+.playlistPlay {
+    right: 20px;
 }
 </style>

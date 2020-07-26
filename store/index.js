@@ -54,7 +54,7 @@ const store = () => new Vuex.Store({
       return new Promise((resolve, reject) => {
         console.log("authed");
         console.log(pn);
-        axios.post('/api/authed', {pn})
+        axios.post('/api/user/authed', {pn})
         .then((resAuth) => {
           console.log(resAuth);
           this.commit("authed", {pn});
@@ -69,7 +69,7 @@ const store = () => new Vuex.Store({
     registered (state, { passwd }) {
       return new Promise((resolve, reject) => {
         console.log("registered");
-        axios.post('/api/register', { passwd })
+        axios.post('/api/user/register', { passwd })
         .then((response) => {
           this.commit("registered", {
             pn: response.data.pn,
@@ -90,7 +90,7 @@ const store = () => new Vuex.Store({
       // const pn = state.userInfo.pn;
       state.userInfo = userinfo;
       // state.userInfo.pn = pn;
-      // axios.post('/api/logined', state.userInfo);
+      // axios.post('/api/user/logined', state.userInfo);
     },
     userInfoAdd (state, dataO) {
       return new Promise((resolve, reject) => {
@@ -99,7 +99,7 @@ const store = () => new Vuex.Store({
         Object.keys(dataO).forEach((element, index) => {
           state[element] = Object.values(dataO)[index]
         })
-        axios.post('/api/sess/userInfoAdd', {dataO})
+        axios.post('/api/user/sess/userInfoAdd', {dataO})
         .then(({data}) => {
           console.log(data);
           this.commit("userInfoAdd", dataO)
@@ -116,7 +116,7 @@ const store = () => new Vuex.Store({
     login(state, { pn, SndBnyCode }) {
       return new Promise((resolve, reject) => {
         try { 
-          axios.post("/api/login", {
+          axios.post("/api/user/login", {
             pn,
             SndBnyCode,
             allNeed: true
@@ -145,17 +145,10 @@ const store = () => new Vuex.Store({
         }
       })
     },
-<<<<<<< Updated upstream
-    logout(state, { }) {
-      try { 
-        axios.post("/api/logout");
-        this.commit("logout");
-=======
     logout(state) {
       try { 
-        axios.post("/api/logout");
+        axios.post("/api/user/login");
         state.commit("logout", {});
->>>>>>> Stashed changes
       } catch (e) {
         console.error("ERR: Vuex Store");
         console.error(e);

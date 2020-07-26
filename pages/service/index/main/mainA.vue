@@ -5,7 +5,6 @@
               <img class="playlistImg" src="/img/playlist.svg"/>
               <p class="playlistT">Recent</p>
               <p class="playlistCont">최근재생</p>
-<<<<<<< Updated upstream:pages/new/service/index/main/mainA.vue
               <img class="playlistAdd pListFncBtn" src="/img/playlistAddBtn.svg" @click="playlist('recent');"/>
               <img class="playlistPlay pListFncBtn" src="/img/listplayBtn.svg"/>
           </div>
@@ -15,19 +14,12 @@
               <p class="playlistCont">Youtube<br>Recommend</p>
               <img class="playlistAdd pListFncBtn" src="/img/playlistAddBtn.svg" @click="playlist('ytrecm');"/>
               <img class="playlistPlay pListFncBtn" src="/img/listplayBtn.svg"/>
-=======
-              <!-- <img class="playlistPlay pListFncBtn" src="/img/listplayBtn.svg"/> -->
->>>>>>> Stashed changes:pages/service/index/main/mainA.vue
           </div>
           <div class="playlistObj melon" @click="playlist('KR_TOP100');">
               <img class="playlistImg" src="/img/playlist.svg"/>
               <p class="playlistT">Melon</p>
               <p class="playlistCont">한국 TOP100<br>{{new Date().getMonth()+1}}/{{new Date().getDate()}} {{new Date().getHours()}}시 기준</p>
-<<<<<<< Updated upstream:pages/new/service/index/main/mainA.vue
-              <img class="playlistAdd pListFncBtn" src="/img/playlistAddBtn.svg" @click="playlist('KR_TOP100');"/>
-=======
               <img class="playlistAdd pListFncBtn" src="/img/playlistAddBtn.svg"/>
->>>>>>> Stashed changes:pages/service/index/main/mainA.vue
               <img class="playlistPlay pListFncBtn" src="/img/listplayBtn.svg"/>
           </div>
       </div>
@@ -50,15 +42,6 @@ export default {
             let url = "";
             switch(position) {
                 case "recent":
-<<<<<<< Updated upstream:pages/new/service/index/main/mainA.vue
-                    url="/new/service/recent";
-                    break;
-                case "ytrecm":
-                    url="/new/service/playlist/ytRecommend";
-                    break;
-                case "KR_TOP100":
-                    url="/new/service/playlist/top100/kr";
-=======
                     url="/service/recent";
                     break;
                 case "ytrecm":
@@ -66,7 +49,6 @@ export default {
                     break;
                 case "KR_TOP100":
                     url="/service/playlist/top100";
->>>>>>> Stashed changes:pages/service/index/main/mainA.vue
                     break;
                 default:
                     break;
@@ -79,7 +61,7 @@ export default {
     mounted() {
 
         const this_out = this;
-        // Axios.post('http://localhost:3000/search/api/top100')
+        // Axios.post('http://localhost:3000/api/search/top100')
         // .then(({data}) => {
         //     console.log(data);
         //     this_out.playlists = data;

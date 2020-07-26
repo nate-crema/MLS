@@ -496,6 +496,6 @@ function top100Get(req, res) {
 // }
 
 export default {
-    path: "/search/api",
+    path: "/api/search",
     handler: app
 }
