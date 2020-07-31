@@ -36,6 +36,10 @@ app.use("/player", require("./player"));
 
 app.use("/yt", require("./youtube"));
 
+// user location get functions
+
+app.use("/location", require("./location"));
+
 // etc (static, or something test methods)
 
 app.use("/", require("./default"));

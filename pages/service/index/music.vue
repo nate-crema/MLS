@@ -30,6 +30,11 @@ export default {
 </script>
 
 <style>
+@media (max-width: 850px) {
+  .musicCont {
+    width: 100% !important;
+  }
+}
 .musicCont {
   position: absolute;
   top: 80px;

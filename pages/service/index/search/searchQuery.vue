@@ -67,6 +67,11 @@ export default {
     components: {
       isMediaComp
     },
+    head() {
+      return {
+        title: `Base - 검색`
+      }
+    },
     methods: {
       musicSelected: function(element) {
         const clickedId = element.currentTarget.id;

@@ -100,18 +100,18 @@ export default {
     mounted() {
         const this_out = this;
         $(document).ready(() => {
-            if ($(window).width() <= 500) {
+            if ($(window).width() <= 850) {
                 $(".navBar").css("display", "none");
             } else {
-                $(".navBar").css("display", "resize");
+                $(".navBar").css("display", "unset");
             }
         })
 
         $(window).resize(() => {
-            if ($(window).width() <= 500) {
+            if ($(window).width() <= 850) {
                 $(".navBar").css("display", "none");
             } else {
-                $(".navBar").css("display", "resize");
+                $(".navBar").css("display", "unset");
             }
         })
 

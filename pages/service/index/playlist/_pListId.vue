@@ -33,6 +33,11 @@ export default {
         title: ""
     }
   },
+  head() {
+      return {
+          title: `Base - ${this.$route.params.pListId == "top100" ? "top100" : `플레이리스트: ${this.$route.params.pListId}`}`
+      }
+  },
   mounted: function() {
     const this_out = this;
     const plistId = this.$route.params.pListId;

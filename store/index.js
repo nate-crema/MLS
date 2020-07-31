@@ -8,7 +8,8 @@ const store = () => new Vuex.Store({
     login: {},
     songPlayer: {
       songId: "",
-      status: false
+      status: false,
+      isOpen: false
     }
   },
   mutations: {
@@ -40,6 +41,9 @@ const store = () => new Vuex.Store({
     },
     logout (state) {
       state.userInfo = {};
+    },
+    cPOpen(state) {
+      state.songPlayer.isOpen = !state.songPlayer.isOpen;
     }
   },
   actions: {
@@ -166,6 +170,9 @@ const store = () => new Vuex.Store({
         this.commit("songStat", { stat });
         resolve(true);
       })
+    },
+    cPOpen(state) { 
+      this.commit("cPOpen");
     }
   }
 })
