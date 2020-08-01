@@ -18,6 +18,11 @@ export default {
   components: {
     "navbar-side": serviceNavBar
   },
+  head() {
+      return {
+          title: "Base - 메인"
+      }
+  },
   data() {
     return {
       textA: "",
@@ -29,6 +34,7 @@ export default {
     const this_out = this;
     const userInfo = this_out.$store.state.userInfo;
     $(document).ready(() => { 
+      resize();
       const TimeInfo = Date().toString().split(" ");
       const DOW = TimeInfo[0]; // Day of the Week
       const Month = TimeInfo[1]; // Month
@@ -108,6 +114,25 @@ export default {
       })
 
     })
+
+    $(window).resize(resize)
+    
+    function resize() {
+      if ($(window).width() <= 850) {
+        $(".welcome").css("left", "50%");
+        $(".welcome").css("transform", "translateX(-50%)");
+        $(".welcome p").css("margin", "auto");
+        $(".welcome p").css("width", "fit-content");
+        $(".welcome p.textA").css("font-size", "23px");
+        $(".welcome p.textB").css("font-size", "14px");
+      } else {
+        $(".welcome").css("left", "100px");
+        $(".welcome").css("transform", "unset");
+        $(".welcome p").css("margin", "");
+        $(".welcome p.textA").css("font-size", "40px");
+        $(".welcome p.textB").css("font-size", "16px");
+      }
+    }
   }
 }
 </script>
@@ -130,7 +155,7 @@ export default {
   z-index: 100;
 }
 .welcome .textA {
-  font-size: 50px;
+  font-size: 40px;
   font-weight: 500;
   opacity: 0;
   margin-top: 40px;

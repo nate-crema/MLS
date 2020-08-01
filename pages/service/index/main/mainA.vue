@@ -135,7 +135,8 @@ export default {
     width: 80%;
     height: 220px;
     overflow-x: auto;
-    overflow-y: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
 }
 
 /* playlistObj */
@@ -151,8 +152,8 @@ export default {
     border-radius: 20px;
     position: relative;
     box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.49);
-    display: block;
-    float: left;
+    display: inline-block;
+    /* float: left; */
     margin-right: 20px;
     overflow-x: hidden;
     top: 50%;

@@ -27,11 +27,11 @@ const NCP_API = JSON.parse(fs.readFileSync(path.join(__dirname, "/../security/NC
 
 function sendSMS(type, sendto, sendCont, reqEXP) {
     return new Promise((resolve, reject) => {
-        const url = `https://api-sens.ncloud.com/v1/sms/services/${NCP_API.serviceId}/messages`;
+        const url = `https://api-sens.ncloud.com/v1/sms/services/${NCP_API.sms.serviceId}/messages`;
         const headers = {
             "Content-Type": "application/json; charset=utf-8",
-            "x-ncp-auth-key": NCP_API.accKeyId,
-            "x-ncp-service-secret": NCP_API.serviceSecret
+            "x-ncp-auth-key": NCP_API.common.accKeyId,
+            "x-ncp-service-secret": NCP_API.sms.serviceSecret
         };
         const sender = "01052720204";
         let body = {

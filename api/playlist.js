@@ -66,4 +66,18 @@ app.post('/detail', (req, res) => {
     } 
 })
 
+app.post('/add', (req, res) => {
+    let availableList = ["melon", "youtube"];
+    const { playlist, cusId, service, type, baseURL } = req.body;
+    const { userInfo } = req.session;
+    if (!cusId || !userInfo) return res.status(401).end("Unauthorized");
+    if (!playlist || !service || !type) return res.status(400).end("Bad Request");
+    if (!baseURL && !(service == "Base" && type == "new" && !baseURL)) return res.status(400).end("Bad Request");
+    if (!availableList.includes(service)) return res.status(400).end(`Unsupport Service: ${service}`);
+    if (typeof playlist != "object") return res.status(400).end("Bad Request");
+    
+    
+    
+})
+
 module.exports = app;

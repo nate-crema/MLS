@@ -1,7 +1,8 @@
 <template>
-  <div>
+  <div id="searchResult">
       <isMediaComp :mediaTypeText="mediaTypeText"></isMediaComp>
-      <div class="songObjs" v-if="searchResult.melon">
+      <div class="songObjs" id="songObjs" v-if="searchResult.melon">
+        
         <div class="songObj" v-for="(indivSong, index) in searchResult.melon.data" :key="index">
           <!-- <svg version="1.1" id="lg_imgA" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
           y="0px" viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve">
@@ -67,6 +68,28 @@ export default {
     components: {
       isMediaComp
     },
+    head() {
+      return {
+        title: `Base - 검색`
+      }
+    },
+    watch: {
+      searchResult: function() {
+        console.log("updated");
+        const this_out = this;
+        setTimeout(() => {
+          window.addEventListener('mousedown', function() {
+            if ((event.button == 2) || (event.which == 3)) {
+              // Code here
+              console.log("right-clicked");
+              console.log(event.offsetX, event.offsetY);
+              this_out.rightClick(event);
+              document.getElementById("songObjs").oncontextmenu = function() {return false}
+            }
+          });
+        }, 100);
+      }
+    },
     methods: {
       musicSelected: function(element) {
         const clickedId = element.currentTarget.id;
@@ -123,6 +146,11 @@ export default {
         // console.log(this);
         // console.log(element.relatedTarget.classList);
         // console.log(Object.keys(this));
+      },
+      rightClick: function(a) {
+        console.log(`${(a.pageX/2)}, ${(a.pageY/2)}`);
+        $("div.rightClickDP").css("left", (a.pageX/2) + "px");
+        $("div.rightClickDP").css("top", (a.pageY/2) + "px");
       }
     },
     data() {
@@ -209,6 +237,8 @@ export default {
           })
         }
 
+        // design js
+
         $(".searchBtn").css("display", "block");
         setTimeout(() => {
             $(".searchBtn").css("opacity", "1");
@@ -238,6 +268,14 @@ export default {
         $("#searchData").focusout(() => {
           $(".searchArea").css("width", "50%");
         })
+
+        // right-click fnc
+
+        // document.getElementById("songObjs").oncontextmenu = function () {
+        //   console.log(event.offsetX);
+        //     this_out.rightClick(event);
+        //     return false;     // cancel default menu
+        // }
 
 
       })
@@ -422,5 +460,21 @@ export default {
   text-align: center;
   /* left: 50%;
   transform: translateX(-50%); */
+}
+
+
+
+/* right-click display  */
+
+div.rightClickDP {
+  width: 200px;
+  height: 300px;
+  border-radius: 20px;
+  /* border: 1px solid black; */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.4);
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  transform: translateY(50%);
 }
 </style>

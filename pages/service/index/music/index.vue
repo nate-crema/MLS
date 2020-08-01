@@ -49,6 +49,11 @@ export default {
     components: {
       isMediaComp
     },
+    head() {
+      return {
+        title: `Base - 상세 곡 정보: ${this.searchResult.songTitle}`
+      }
+    },
     methods: {
       playSongNow: function() {
         const songId = this.searchResult.songIdB;
@@ -156,11 +161,17 @@ export default {
       function resizeAction() {
           // $("div.songDetail").css("width", $(window).width()-350);
           // alert($(window).width());
-          if ($(window).width() <= 500) {
+          if ($(window).width() <= 850) {
+            $("div.vueBlocks").css("left", "0");
+            $("div.vueBlocks .musicCont").css("left", "0");
             // $("div.songDetail").css("height", $(window).height()+200);
             // alert("wert");
             // $("div.songDetail").css("height", $(window).height()+150);
-          } else $("div.songDetail").css("height", $(window).height()-200);
+          } else {
+            $("div.songDetail").css("height", $(window).height()-200);
+            $("div.vueBlocks").css("left", "280px");
+            $("div.vueBlocks .musicCont").css("left", "50px");
+          }
           // $("div.musicCont").css("height", $(window).height()-80);
       }
 
@@ -171,7 +182,7 @@ export default {
 </script>
 
 <style>
-@media (max-width: 500px) {
+@media (max-width: 850px) {
   .songDetail {
     width: 90% !important;
     position: absolute !important;
@@ -264,7 +275,7 @@ export default {
 
 
 
-@media (max-width: 500px) {
+@media (max-width: 850px) {
   .songDetail .songCont {
     position: relative !important;
     left: 0 !important;

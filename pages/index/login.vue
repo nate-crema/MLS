@@ -60,6 +60,11 @@ export default {
             to: ""
         }
     },
+    head() {
+        return {
+            title: "Base - 로그인"
+        }
+    },
     mounted() {
 
 

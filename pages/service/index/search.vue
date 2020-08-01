@@ -19,6 +19,7 @@
                     </svg>
                 </div>
             </div>
+            <div class="rightClickDP"></div>
             <nuxt-child class="searchResult"/>
         </div>
         <img src="/img/undraw_location_search_bqps.svg" class="backgroundImgS"/>
@@ -67,11 +68,13 @@ export default {
         function resizeAction() {
             // console.log("sefrg");
             // alert(this_out.mobileCheck());
-            if ($(window).width() <= 500) {
-                $("div.search").css("width", $(window).width());
+            if ($(window).width() <= 850) {
+                $("div.search").css("width", "100%");
+                $("div.search").css("left", "0");
                 $("div.search").css("height", $(window).height());
             } else {
                 $("div.search").css("width", $(window).width()-350);
+                $("div.search").css("left", "50px");
                 $("div.search").css("height", $(window).height());
             }
             // $("div.bottom-player").css("width", $(window).width()-280);
@@ -191,6 +194,7 @@ export default {
     top: 150px;
     width: 100%;
     height: 100%;
+    border: 1px solid black;
 }
 
 

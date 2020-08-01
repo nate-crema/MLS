@@ -206,8 +206,8 @@ function getPrevRes(data, searchKeyword, nodeControl) {
                                 songTitle: prevMelonResIndiv.songTitle,
                                 lyrics: null
                             },
-                            songIdB: prevMelonResIndiv.numOfRes*1,
-                            numOfRes: prevMelonRes
+                            songIdB: prevMelonResIndiv.songIdB,
+                            numOfRes: prevMelonResIndiv.numOfRes*1,
                         }
                         melonDatas.push(pushData);
                     }
