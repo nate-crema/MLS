@@ -8,7 +8,7 @@
         <div class="imgArea" id="imgArea"
         :style="{backgroundImage: `url(${musicInfo.songImg ? musicInfo.songImg : '/resource/cd.svg'})`}"></div>
         <p class="songTitle">{{musicInfo.songTitle ? (musicInfo.songTitle.length > 13 ? musicInfo.songTitle.substr(0, 10) + "..." : musicInfo.songTitle) : "음악을 선택해보세요!"}}</p>
-        <p class="lyrics">{{musicInfo.songTitle ? (lyricsThis ? lyricsThis : "가사가 없는 노래입니다.") : "음악을 선택하면 음악이 동시에 재생됩니다."}}</p>
+        <p class="lyrics">{{musicInfo.songTitle ? (lyricsThis ? lyricsThis : "가사가 없는 노래입니다.") : "선택하는 즉시 자동재생 됩니다."}}</p>
         <div class="playArea">
           <img 
           :src="isPlay ? '/img/pause.svg' : '/img/play-button.svg'" class="pause controller" @click="controllerFnc(null)"/>
@@ -18,18 +18,39 @@
             <span class="left"></span>
             <span class="right"></span>
           </div>
+          <div class="repeatControlWrap" id="repeatController" @click="RCClick()"> 
+            <img class="repeatControl uRepeat" src="/img/uRepeat.svg" v-if="isRepeat == 0"/>
+            <img class="repeatControl RepeatOne" src="/img/repeatOne.svg" v-else-if="isRepeat == 1"/>
+            <img class="repeatControl Repeat" src="/img/repeat.svg" v-else/>
+            <!-- :src="isRepeat == 0 ? (isRepeat == 1 ? '/img/repeatOne.svg' : '/img/repeat.svg') : '/img/uRepeat.svg'"/> -->
+
+          </div>
           <div class="openControlWrap" id="openController" @click="OCClick()"> 
             <img class="openControl uOpen" src="/img/playerUOpen.svg"/>
           </div>
         </div>
     </div>
     <div class="coverBP" v-else>
+        <div class="designGradBar Play" v-if="isPlay"></div>
+        <div class="designGradBar Pause" v-else-if="musicInfo.songTitle != undefined"></div>
         <img src="/img/musicNote.svg" class="musicNoteSvg"/>
         <div class="openControlWrap" id="openController" @click="OCClick()">
           <img class="openControl Open" src="/img/playerOpen.svg"/>
         </div>
-        <p class="playInfo" v-if="isPlay">현재 재생중: {{musicInfo.artist}} - {{musicInfo.songTitle.length > 9 ? musicInfo.songTitle.substr(0, 6) + "..." : musicInfo.songTitle}}</p>
+        <p class="playInfo" v-if="isPlay">현재 재생중: {{musicInfo.artist > 6 ? musicInfo.artist.substr(0,3) + "..." : musicInfo.artist}} - {{musicInfo.songTitle.length > 9 ? musicInfo.songTitle.substr(0, 6) + "..." : musicInfo.songTitle}}</p>
+        <p class="playInfo" v-else-if="musicInfo.songTitle != undefined">일시 정지됨: {{musicInfo.artist > 6 ? musicInfo.artist.substr(0,3) + "..." : musicInfo.artist}} - {{musicInfo.songTitle.length > 9 ? musicInfo.songTitle.substr(0, 6) + "..." : musicInfo.songTitle}}</p>
         <p class="playInfo" v-else>현재 재생중인 노래 없음</p>
+        <div class="specArea">
+          <ul class="selector">
+            <li class="selectOption lyricsAll" id="lyricsAll" @click="specAreaSel">전체 가사</li>
+            <li class="selectOption albumInfo" id="albumInfo" @click="specAreaSel">앨범 정보</li>
+            <li class="selectOption cover" id="cover" @click="specAreaSel">커버</li>
+          </ul>
+          <div class="designBar"></div>
+          <div class="contents" id="contentsSA">
+
+          </div>
+        </div>
     </div>
   </div>
 </template>
@@ -51,15 +72,13 @@ export default {
             curTime: 0,
             tTime: 0,
             subtitle: 0,
-            designLyrics_A: "a",
-            designLyrics_B: "b",
-            designLyrics_C: "c",
-            designLyrics_D: "d",
-            designLyrics_E: "e",
             auto_timebarmove: true,
             videoPID: "",
             isPlay: this.$store.state.status,
-            playlist: []
+            playlist: [],
+            playingPlaylistN: 0,
+            specAreaSelV: "",
+            isRepeat: 0
         }
     },
     watch: {
@@ -92,6 +111,9 @@ export default {
         songId(newVal, oldVal) {
           this.playLoad()
         },
+        specAreaSelV(data) {
+          if (data != "") this.specAreaSel(null, data);
+        }
     },
     methods: {
         mobileCheck: function() {
@@ -105,6 +127,26 @@ export default {
             $(".lyrics").css("opacity", 0);
             setTimeout(() => {
               this.lyricsThis = this.musicInfo.lyrics[num].text;
+              if (this.specAreaSelV == "lyricsAll") {
+                const lyricEl = document.getElementById(`lyric_${num}`);
+                $(`.lyric`).css("font-size", "16px");
+                $(`.lyric`).css("font-weight", "300");
+                lyricEl.style.fontSize = "20px";
+                lyricEl.style.fontWeight = "500";
+                // auto scroll
+                const domElRelPosition = lyricEl.getBoundingClientRect();
+                const lyricElN = document.getElementById(`lyric_${num+1}`);
+                // console.log(domElRelPosition);
+                console.log(`scroll: ${num*20}`)
+                if (lyricElN != null) {
+                  const domElRelPositionN = lyricElN.getBoundingClientRect();
+                  document.getElementById("contentsSA").scrollTo(0, num*(domElRelPositionN.top - domElRelPosition.top));
+                }
+              } else if (
+                (
+                  this.lyricsThis.includes("연주중") ||
+                  this.lyricsThis.includes("간주중")
+                ) && this.musicInfo.lyrics[num+1].time - this.musicInfo.lyrics[num].time >= 10000) this.playlistNotice();
               setTimeout(() => {
                 $(".lyrics").css("opacity", 1);
               }, 50);
@@ -117,12 +159,28 @@ export default {
             refreshState();
           }, 100);
         },
+        // music repeat functions
+        RCClick: function() {
+          const this_out = this;
+          console.log(`RCClick: ${this.isRepeat}`);
+          if (this.isRepeat == 0) {
+            if (this.playlist.length > 0) this.isRepeat = 2;
+            else this.isRepeat = 1;
+          } else if (this.isRepeat == 1) {
+            this.isRepeat = 0;
+          } else {
+            this.isRepeat = 1;
+          }
+        },
         // music player extend functions
         OCClick: function() {
+          const this_out = this;
           console.log(`isPOpen: ${this.$store.state.songPlayer.isOpen}`)
           $(".coverBP").css("opacity", "0")
           setTimeout(() => {
             if (this.$store.state.songPlayer.isOpen) {
+              document.getElementById("contentsSA").innerHTML = "";
+              this_out.specAreaSelV = "";
               $("#bottomPlayer").css("height", "120px");
               // $("#imgArea").css("width", "80px");
               // $("#imgArea").css("height", "80px");
@@ -204,12 +262,26 @@ export default {
           const this_out = this;
             this_out.curTime = document.getElementById(this_out.videoPID).currentTime;
             !this_out.tTime ? this_out.tTime = document.getElementById(this_out.videoPID).duration : "";
+            if (this_out.curTime == this_out.tTime) {
+              if (this_out.isRepeat == 1) {
+                this_out.curTime = 0;
+                document.getElementById(this.videoPID).play();
+                this.isPlay = true;
+              } else if (this_out.isRepeat == 2) {
+                this_out.songId = this_out.playlist[++playingPlaylistN];
+                document.getElementById(this.videoPID).play();
+                this.isPlay = true;
+              } else {
+                this.isPlay = false;
+              }
+            }
              setTimeout(() => {
                  this_out.getMusicTime();
              }, 100);
         },
         // play start
         startPlay: function() {
+            console.log(`music start: ${this.musicInfo.songIdB}`);
             const this_out = this;
             // document.getElementById(videoPID).src = this_out.musicInfo.youtube.url;
             // console.log(this_out);
@@ -233,6 +305,65 @@ export default {
             // document.getElementById("progBar").removeEventListener("mousemove", dotControlCng); 
             console.log("mouseup");
             // console.log(video)
+        },
+        specAreaSel: function(event, variable) {
+          // console.log("alpha");
+          const wrapper = document.getElementById("contentsSA");
+          let id;
+          if (variable) id = variable;
+          else id = event.target.getAttribute("id");
+          this.specAreaSelV = id;
+          let left, length;
+          document.getElementById("contentsSA").style.opacity = 0;
+          wrapper.innerHTML = "";
+          setTimeout(() => {
+            document.getElementById("contentsSA").style.opacity = 1;
+            switch(id) {
+              case "albumInfo":
+                left = "145px";
+                length = "70px";
+                break;
+              case "cover":
+                left = "240px";
+                length = "45px";
+                break;
+              case "lyricsAll":
+              default:
+                left = "40px";
+                length = "75px";
+                if (this.musicInfo.lyricsId) {
+                  // add lyrics in document
+                  this.musicInfo.lyrics.forEach((value, index) => {
+                    var lyric = document.createElement("p");
+                    lyric.setAttribute("class", "lyric");
+                    lyric.setAttribute("id", `lyric_${index}`);
+                    lyric.style.opacity = 0;
+                    lyric.textContent = value.text;
+                    if (!document.getElementById(`lyric_${index}`)) wrapper.appendChild(lyric);
+                    console.log(`append: ${index}`); 
+                    setTimeout(() => {
+                      document.getElementById(`lyric_${index}`).style.opacity = 1;
+                    }, 15*index);
+                  })
+                }
+                break;
+            }
+            $("div.designBar").css("width", length);
+            $("div.designBar").css("height", "2px");
+            $("div.designBar").css("top", "30px");
+            $("div.designBar").css("left", left); 
+          }, 50);
+        },
+        playlistNotice: function() {
+          if (this.playlist.length > 0 && this.playlist[this.playingPlaylistN+1] != undefined) {
+            this.reqMInfo(playlist[this.playingPlaylistN+1])
+            .then((resultMusic) => {
+              const innerText = $(".coverBP .lylics").innerText;
+              $(".coverBP #imgArea").css("opacity", "0");
+              $(".coverBP .songTitle").innerText="다음 재생곡";
+              $(".coverBP .lylics").innerText=resultMusic.songTitle;
+            })
+          }
         }
     },
     created() {
@@ -316,6 +447,9 @@ export default {
   #bottomPlayer .openControlWrap {
     right: 7% !important;
   }
+  #bottomPlayer .repeatControlWrap {
+    right: 15% !important;
+  }
   #bottomPlayer .play, .pause {
     right: 24% !important;
   }
@@ -347,6 +481,7 @@ export default {
   transform: translateX(50%);
   background-size: cover;
   transition: all .4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  opacity: 1;
 }
 #bottomPlayer .songTitle {
   top: 25px;
@@ -391,8 +526,27 @@ export default {
   width: 24px;
   height: auto;
   position: absolute;
-  right: 110px;
+  right: 160px;
   top: 50px;
+}
+
+#bottomPlayer .repeatControlWrap {
+  position: absolute;
+  top: 60px;
+  right: 85px;
+  transform: translate(-50%, -50%);
+  width: 30px;
+  height: 30px;
+  /* border: 1px solid black; */
+  transition: none;
+}
+#bottomPlayer .repeatControlWrap .repeatControl {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  transform: translate(-50%, -50%);
 }
 
 #bottomPlayer .openControlWrap {
@@ -418,10 +572,26 @@ export default {
 .coverBP {
   transition: all .3s ease;
   opacity: 1;
+  width: 100%;
+  height: 100%;
+  position: absolute;
 }
 
 
 /* bottPlayer: open Design */
+
+div.designGradBar {
+  width: 100%;
+  height: 7px;
+  position: absolute;
+  top: -7px;
+}
+div.designGradBar.Play {
+  box-shadow: 0px 10px 60px rgb(24, 84, 195);
+}
+div.designGradBar.Pause {
+  box-shadow: 0px 10px 60px rgb(195, 24, 24);
+}
 
 img.musicNoteSvg {
   width: 30px;
@@ -439,4 +609,57 @@ p.playInfo {
   left: 120px;
 }
 
+.specArea {
+  width: 100%;
+  height: 350px;
+  /* border: 1px solid black; */
+  position: absolute;
+  transform: translateX(-50%);
+  bottom: 0;
+  left: 50%;
+}
+.specArea .selector {
+  list-style: none;
+}
+.specArea .selector li {
+  float: left;
+  margin-left: 30px;
+  font-size: 18px;
+  color:rgb(9, 17, 88);
+  cursor: pointer;
+}
+.specArea .selector li:nth-child(1) {
+  margin-left: 0;
+}
+.specArea div.designBar {
+  width: 3px;
+  height: 20px;
+  background-color:rgb(9, 17, 88);
+  border-radius: 1px;
+  position: absolute;
+  top: 5px;
+  left: 30px;
+  transition: all .3s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+.specArea .contents {
+  width: 80%;
+  height: 300px;
+  /* border: 1px solid black; */
+  position: absolute;
+  bottom: 0;
+  /* background-color: black; */
+  overflow-y: auto;
+  overflow-x: hidden;
+  opacity: 1;
+  transform: translateX(-50%);
+  left: 50%;
+  scroll-behavior: smooth;
+}
+.specArea .contents .lyric {
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 16px;
+  line-height: 1.7;
+  font-weight: 300;
+  /* color:rgb(9, 17, 88); */
+}
 </style>

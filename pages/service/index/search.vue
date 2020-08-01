@@ -19,6 +19,7 @@
                     </svg>
                 </div>
             </div>
+            <div class="rightClickDP"></div>
             <nuxt-child class="searchResult"/>
         </div>
         <img src="/img/undraw_location_search_bqps.svg" class="backgroundImgS"/>
@@ -193,6 +194,7 @@ export default {
     top: 150px;
     width: 100%;
     height: 100%;
+    border: 1px solid black;
 }
 
 
