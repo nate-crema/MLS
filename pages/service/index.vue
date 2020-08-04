@@ -4,6 +4,7 @@
     <nuxt-child class="vueBlocks" />
     <bottPlayer class="bottom-player" :playerId="songId"></bottPlayer>
     <playlistEditor></playlistEditor>
+    <alert></alert>
   </div>
 </template>
 
@@ -12,17 +13,20 @@
 import serviceNavBar from "~/components/serviceNavBar";
 import bottPlayer from '~/components/bottPlayer';
 import playlistEditor from '~/components/playlistEditor';
+import alert from '~/components/alert';
 
 export default {
   middleware: "auth",
   components: {
     "navbar-side": serviceNavBar,
     bottPlayer,
-    playlistEditor
+    playlistEditor,
+    alert
   },
   data() {
     return {
-      songId: this.$store.state.songPlayer.songId
+      songId: this.$store.state.songPlayer.songId,
+      alertCont: this.$store.state.alertCont
     }
   },
   mounted() {

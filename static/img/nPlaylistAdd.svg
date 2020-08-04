@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14">
+  <g id="그룹_192" data-name="그룹 192" transform="translate(-1357 -533)">
+    <g id="타원_182" data-name="타원 182" transform="translate(1357 533)" fill="none" stroke="#152c6a" stroke-width="1">
+      <circle cx="7" cy="7" r="7" stroke="none"/>
+      <circle cx="7" cy="7" r="6.5" fill="none"/>
+    </g>
+    <g id="그룹_190" data-name="그룹 190" transform="translate(770 -245)">
+      <line id="선_17" data-name="선 17" x2="4.196" transform="translate(591.5 783.5)" fill="none" stroke="#132e6a" stroke-linecap="round" stroke-width="0.3"/>
+      <line id="선_18" data-name="선 18" x2="1.632" transform="translate(591.5 785.132)" fill="none" stroke="#132e6a" stroke-linecap="round" stroke-width="0.3"/>
+      <line id="선_19" data-name="선 19" x2="2.797" transform="translate(591.5 786.764)" fill="none" stroke="#132e6a" stroke-linecap="round" stroke-width="0.3"/>
+      <g id="다각형_3" data-name="다각형 3" transform="translate(597 784) rotate(90)" fill="none">
+        <path d="M1.5,0,3,2H0Z" stroke="none"/>
+        <path d="M 1.5 0.5 L 0.5999999046325684 1.700000047683716 L 2.400000095367432 1.700000047683716 L 1.5 0.5 M 1.5 0 L 3 2 L 0 2 L 1.5 0 Z" stroke="none" fill="#16296a"/>
+      </g>
+    </g>
+  </g>
+</svg>

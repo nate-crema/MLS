@@ -56,27 +56,27 @@ const getSongDetail = function (req, res, next) {
 }
 
 function getLyrics(lyricsId) {
-return new Promise((resolve, reject) => {
-    sqlFnc.Read("lyrics", "*", { lyricsId })
-    .then((data) => {
-        const lyrics = data[0];
-        let lyricsObj = [];
-        lyrics.lyrics.split("| & |").forEach((value, index) => {
-        lyricsObj.push({
-            time: index == 0 ? lyrics.timestamps.split("| & |")[index] : lyrics.timestamps.split("| & |")[index].substr(1),
-            text: index == 0 ? value : value.substr(1)
+    return new Promise((resolve, reject) => {
+        sqlFnc.Read("lyrics", "*", { lyricsId })
+        .then((data) => {
+            const lyrics = data[0];
+            let lyricsObj = [];
+            lyrics.lyrics.split("| & |").forEach((value, index) => {
+            lyricsObj.push({
+                time: index == 0 ? lyrics.timestamps.split("| & |")[index] : lyrics.timestamps.split("| & |")[index].substr(1),
+                text: index == 0 ? value : value.substr(1)
+            })
+            if (index == lyrics.lyrics.split("| & |").length - 1) {
+                // lyricsObj.sort((a, b) => a - b);
+                setTimeout(() => {
+                // console.log(lyricsObj);
+                resolve(lyricsObj);
+                }, 200);
+            }
+            })
+            // lyricsObj.sort({ time: -1 })
         })
-        if (index == lyrics.lyrics.split("| & |").length - 1) {
-            // lyricsObj.sort((a, b) => a - b);
-            setTimeout(() => {
-            // console.log(lyricsObj);
-            resolve(lyricsObj);
-            }, 200);
-        }
-        })
-        // lyricsObj.sort({ time: -1 })
     })
-})
 }
 
 app.post('/getSongInfo', getSongDetail, (req, res) => {

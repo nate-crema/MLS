@@ -9,8 +9,13 @@ const store = () => new Vuex.Store({
     songPlayer: {
       songId: "",
       status: false,
-      isOpen: false
-    }
+      isOpen: false,
+      playlist: {}
+    },
+    alertCont: {}
+  },
+  getters: {
+    getAlertCont: state => () => state.alertCont
   },
   mutations: {
     playSong(state, { songId }) {
@@ -18,6 +23,9 @@ const store = () => new Vuex.Store({
     },
     songStat(state, { stat }) {
       state.songPlayer.status = stat;
+    },
+    playlist(state, { cont, data }) {
+      state.songPlayer.playlist[cont] = data;
     },
     authed (state, { pn }) {
       console.log("commitx");
@@ -44,6 +52,9 @@ const store = () => new Vuex.Store({
     },
     cPOpen(state) {
       state.songPlayer.isOpen = !state.songPlayer.isOpen;
+    },
+    alertCont(state, cont) {
+      state.alertCont = cont;
     }
   },
   actions: {
@@ -173,6 +184,37 @@ const store = () => new Vuex.Store({
     },
     cPOpen(state) { 
       this.commit("cPOpen");
+    },
+    playlist(state, { fnc, cont }) {
+      return new Promise((resolve, reject) => {
+        console.log("playlist: store");
+        switch (fnc) {
+          case "delete":
+            let array = state.songPlayer.playlist;
+            delete array[cont];
+            console.log(JSON.stringify(array));
+            state.songPlayer.playlist = array;
+            resolve(state.songPlayer.playlist);
+            break;
+          case "push":
+          default:
+            axios.post("/api/player/getSongInfo", {
+              songId: cont,
+              reqService: "BASE_WEB_ARCHITEC_PLY_MINI_STB"
+            })
+              .then(({ data }) => {
+                state.commit("playlist", { cont, data })
+                // console.log(state);
+                // console.log(state.songPlayer);
+                resolve();
+            })
+            .catch((e) => {
+              console.error(e);
+              reject(e);
+            })
+            break;
+        }
+      })
     }
   }
 })

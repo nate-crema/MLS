@@ -19,7 +19,8 @@ module.exports = {
       { src: 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js' },
       { src: "https://cdnjs.cloudflare.com/ajax/libs/color-thief/2.3.0/color-thief.umd.js" },
       { src: "https://unpkg.com/hangul-js" },
-      { src: "https://cdnjs.cloudflare.com/ajax/libs/color-thief/2.3.0/color-thief.umd.js" }
+      { src: "https://cdnjs.cloudflare.com/ajax/libs/color-thief/2.3.0/color-thief.umd.js" },
+      { src: "/socket.io/socket.io.js" }
       // { src: "https://cdnjs.cloudflare.com/ajax/libs/wavesurfer.js/1.4.0/wavesurfer.min.js" }
     ],
     link: [
@@ -74,18 +75,9 @@ module.exports = {
     '~/api'
   ],
   modules: [
-    'nuxt-socket-io',
+    // 'nuxt-socket-io',
     // '@nuxtjs/pwa'
   ],
-  io: {
-    sockets: [
-      {
-        name: "BaseBND",
-        url: process.env.host || "http://localhost:3000",
-        default: true
-      }
-    ]
-  },
   // plugins: [
   //   { src: '~/plugins/mongoose.js', mode: 'server' }
   // ]

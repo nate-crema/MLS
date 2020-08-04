@@ -46,6 +46,14 @@
               <p class="songTitle">{{indivSong.song.songTitle.length > 6 ? indivSong.song.songTitle.substr(0, 5) + "..." : indivSong.song.songTitle}}</p>
               <p class="songArtist">{{indivSong.artist.artistName.length > 6 ? indivSong.artist.artistName.substr(0, 5) + "..." : indivSong.artist.artistName}}</p>
             </div>
+            <div class="optionDot">
+              <div class="playlistAddWrap" @click="addPlaylist(true, indivSong.songIdB)">
+                <img class="playlistAdd" src="/img/playlistAdd.svg"/>
+              </div>
+              <div class="nPlaylistAddWrap" @click="addPlaylist(false, indivSong.songIdB)">
+                <img class="nPlaylistAdd" src="/img/nPlaylistAdd.svg"/>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -77,80 +85,97 @@ export default {
       searchResult: function() {
         console.log("updated");
         const this_out = this;
-        setTimeout(() => {
-          window.addEventListener('mousedown', function() {
-            if ((event.button == 2) || (event.which == 3)) {
-              // Code here
-              console.log("right-clicked");
-              console.log(event.offsetX, event.offsetY);
-              this_out.rightClick(event);
-              document.getElementById("songObjs").oncontextmenu = function() {return false}
-            }
-          });
-        }, 100);
       }
-    },
+    },    
     methods: {
+      addPlaylist: function(isNow, songIdB) {
+        // console.log(this.$el);
+        const this_out = this;
+        if (isNow) {
+          console.log(this_out.$store.state.songPlayer.playlist);
+          this_out.$store.state.songPlayer.playlist.push(songIdB);
+        }
+      },
       musicSelected: function(element) {
         const clickedId = element.currentTarget.id;
         console.log(clickedId);
         
         // transition animation
 
-        
-
         let this_out = this;
-        this.$store.commit("playSong", {songId: clickedId})
-        console.log(this_out.searchResult.melon.data);
-        
-        function designChange(q, index) {
-          console.log(index);
-          setTimeout(() => {
-            console.log(".songObjs_" + q);
-            $(`.songObjs_${q}`).css("width", "100%");
-            $(`.songObjs_${q}`).css("height", "100%");
-            $(`.songObjs_${q}`).css("box-shadow", "none");
-            $(`.songObjs_${q}`).css("box-shadow", "none");
-            $(`.songObjs_${q} .songTitle`).css("opacity", "0");
-            $(`.songObjs_${q} .songArtist`).css("opacity", "0");
-            $(`.songObjs_${q}_lp`).css("opacity", "0");
+        console.log(`this_out.$store.state.songPlayer.status: ${this_out.$store.state.songPlayer.status}`);
+        if (this_out.$store.state.songPlayer.status) {
+          this.$store.dispatch("playlist", {
+            fnc: "push",
+            cont: clickedId
+          })
+          .then((result) => {
+            this_out.playlistAdded(this_out.$store.state.songPlayer.playlist, clickedId);
+          })
+          .catch((e) => {
+            this_out.playlistAdded(null, null, e);
+          })
+        } else {
+          this.$store.commit("playSong", {songId: clickedId})
+          console.log(this_out.searchResult.melon.data);
+          
+          function designChange(q, index) {
+            console.log(index);
             setTimeout(() => {
-              $(`.songObjs_${q} .songTitle`).css("display", "none");
-              $(`.songObjs_${q} .songArtist`).css("display", "none");
-            }, 200);
-            if (q < index) designChange(++q, index);
-          }, 5);
+              console.log(".songObjs_" + q);
+              $(`.songObjs_${q}`).css("width", "100%");
+              $(`.songObjs_${q}`).css("height", "100%");
+              $(`.songObjs_${q}`).css("box-shadow", "none");
+              $(`.songObjs_${q}`).css("box-shadow", "none");
+              $(`.songObjs_${q} .songTitle`).css("opacity", "0");
+              $(`.songObjs_${q} .songArtist`).css("opacity", "0");
+              $(`.songObjs_${q}_lp`).css("opacity", "0");
+              setTimeout(() => {
+                $(`.songObjs_${q} .songTitle`).css("display", "none");
+                $(`.songObjs_${q} .songArtist`).css("display", "none");
+              }, 200);
+              if (q < index) designChange(++q, index);
+            }, 5);
+          }
+  
+          setTimeout(() => {
+            designChange(0, this_out.searchResult.melon.data.length);
+            setTimeout(() => {
+              $(".searchObj").css("transition", "all .4s cubic-bezier(0.08, 0.93, 0.58, 1)");
+              setTimeout(() => {
+                $(".searchObj").css("opacity", "0");
+                $(".searchObj").css("top", "150px");
+                this_out.to=`/service/music?musicId=${clickedId}&searchKey=${document.getElementsByClassName("searchTitle")[0].innerText.split("\"")[1]}`;
+                setTimeout(() => {
+                  console.log(clickedId);
+                  console.log($("#nuxt-link-next"));
+                  document.getElementById("nuxt-link-next").click();
+                }, 100);
+              }, 10);
+            }, 500);
+          }, 100);
         }
 
-        setTimeout(() => {
-          designChange(0, this_out.searchResult.melon.data.length);
-          setTimeout(() => {
-            $(".searchObj").css("transition", "all .4s cubic-bezier(0.08, 0.93, 0.58, 1)");
-            setTimeout(() => {
-              $(".searchObj").css("opacity", "0");
-              $(".searchObj").css("top", "150px");
-              this_out.to=`/service/music?musicId=${clickedId}&searchKey=${document.getElementsByClassName("searchTitle")[0].innerText.split("\"")[1]}`;
-              setTimeout(() => {
-                console.log(clickedId);
-                console.log($("#nuxt-link-next"));
-                document.getElementById("nuxt-link-next").click();
-              }, 100);
-            }, 10);
-          }, 500);
-        }, 100);
-
         
 
+      },
+      playlistAdded: function(array, clickedId, error) {
+        // after playlist added design function
+        if (error) console.log(`Error: ${error}`);
+        else {
+          console.log(`playlist updated: added complete`)
+          // console.log(`playlist: ${array}`);
+          this.$store.commit('alertCont', {
+            type: "notice",
+            cont: `재생목록에 노래가 추가되었습니다: ${array[clickedId].songTitle}`,
+            time: 5000
+          });
+        }
       },
       mouseOver: function(element) {
         // console.log(this);
         // console.log(element.relatedTarget.classList);
         // console.log(Object.keys(this));
-      },
-      rightClick: function(a) {
-        console.log(`${(a.pageX/2)}, ${(a.pageY/2)}`);
-        $("div.rightClickDP").css("left", (a.pageX/2) + "px");
-        $("div.rightClickDP").css("top", (a.pageY/2) + "px");
       }
     },
     data() {
@@ -466,15 +491,33 @@ export default {
 
 /* right-click display  */
 
-div.rightClickDP {
-  width: 200px;
-  height: 300px;
-  border-radius: 20px;
-  /* border: 1px solid black; */
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.4);
+div.optionDot {
   position: absolute;
-  top: 0px;
-  left: 0px;
-  transform: translateY(50%);
+  bottom: 10px;
+  right: 10px;
+  width: 60px;
+  height: 30px;
+}
+div.optionDot .playlistAdd {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+}
+div.optionDot .nPlaylistAdd {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+}
+div.optionDot .playlistAddWrap {
+  width: 45%;
+  height: 100%;
+  left: 0;
+  position: absolute;
+}
+div.optionDot .nPlaylistAddWrap {
+  width: 45%;
+  height: 100%;
+  right: 0;
+  position: absolute;
 }
 </style>

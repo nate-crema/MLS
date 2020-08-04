@@ -1,10 +1,9 @@
 const axios = require("axios");
 const fs = require("fs");
 
-// searchYTM("I'm in love 공원소녀", "*");
+// searchYTM("power instrumental", "*");
 
 function searchYTM(searchKey, filter) {
-
     return new Promise((resolve, reject) => {
         const searchData = {
             url: "https://music.youtube.com/youtubei/v1/search?alt=json&key=AIzaSyC9XL3ZjWddXya6X74dJoCTL-WEYFDNX30",
@@ -63,6 +62,8 @@ function searchYTM(searchKey, filter) {
         let sendData = {};
 
         switch (filter) {
+            case "topResult":
+                sendData.topResult = {};
             case "title":
                 sendData.title = {};
             case "artist":
@@ -73,6 +74,7 @@ function searchYTM(searchKey, filter) {
                 sendData.album = {};
             default:
                 sendData = {
+                    topResult: {},
                     title: {},
                     artist: {},
                     lyrics: {},
@@ -88,6 +90,7 @@ function searchYTM(searchKey, filter) {
             // console.log(data);
             const ytData = data.contents.sectionListRenderer.contents;
             // console.log(ytData);
+            let topResultObj = {};
             let songObjs = [];
             let videoObjs = [];
             let artistObjs = [];
@@ -96,6 +99,28 @@ function searchYTM(searchKey, filter) {
                 ytData.forEach((value, index) => {
                     // console.log(songs);
                     if (value.musicShelfRenderer.title) switch (value.musicShelfRenderer.title.runs[0].text) {
+                        // case "상위 검색결과":
+                            // console.log(value);
+                            // const flexColumns = value.contents[0].musicResponsiveListItemRenderer.flexColumns;
+                            // const title = flexColumns[0].musicResponsiveListItemFlexColumnRenderer.text.runs[0].text;
+                            // const videoId = value.contents[0].musicResponsiveListItemRenderer.overlay.musicItemThumbnailOverlayRenderer.content.musicPlayButtonRenderer.playNavigationEndpoint.watchEndpoint.videoId;
+                            // const videoRelativePList = value.contents[0].musicResponsiveListItemRenderer.overlay.musicItemThumbnailOverlayRenderer.content.musicPlayButtonRenderer.playNavigationEndpoint.watchEndpoint.playlistId;
+                            // const type = flexColumns[1].musicResponsiveListItemFlexColumnRenderer.text.runs[0].text;
+                            // const uploader = flexColumns[2].musicResponsiveListItemFlexColumnRenderer.text.runs[0].text;
+                            // const loadCnt = flexColumns[3].musicResponsiveListItemFlexColumnRenderer.text.runs[0].text;
+                            // const duration = flexColumns[4].musicResponsiveListItemFlexColumnRenderer.text.runs[0].text;
+                            // const thumbnail = value.contents[0].musicResponsiveListItemRenderer.thumbnail.musicThumbnailRenderer.thumbnail.thumbnails;
+                            // topResultObj = {
+                            //     title,
+                            //     videoId,
+                            //     videoRelativePList,
+                            //     type,
+                            //     uploader,
+                            //     loadCnt,
+                            //     duration,
+                            //     thumbnail
+                            // };
+                            // break;
                         case "노래":
                             const songs = value.musicShelfRenderer.contents;
                             songs.forEach((song, index) => {
@@ -304,6 +329,7 @@ function searchYTM(searchKey, filter) {
                         //     albumObjs
                         // }));
                         resolve({
+                            topResultObj,
                             songObjs,
                             videoObjs,
                             artistObjs,

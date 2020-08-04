@@ -66,7 +66,7 @@ const sqlFnc = {
           // console.log("frd");
           command += " VALUES (" + (element == "null" ? element : (util.isNumber(Object.values(data)[0]) ? Object.values(data)[0] : "\"" + Object.values(data)[0] + "\""));
       } else return done(new Error("Unvalid Insert"));
-      console.log(command);
+    //   console.log(command);
       mysql_query(command)
       .then((res_sql) => {
           return done(null, res_sql);
@@ -129,7 +129,7 @@ const sqlFnc = {
             console.log(`${counter} / ${dataArr.length}`);
         //   console.log(Object.values(data));
             // let data;
-            console.log(data);
+            // console.log(data);
             if (Object.values(data).length > 1) {
                 command += "(";
                 Object.values(data).forEach((element, index) => {
@@ -258,7 +258,7 @@ const sqlFnc = {
                             elobj += el;
                         }
                     })
-                    console.log(elobj);
+                    // console.log(elobj);
                     command += element + "=" + elobj;
                 }
                 if (Object.keys(filter).indexOf(element) != Object.keys(filter).length-1) command += " AND ";
@@ -279,7 +279,7 @@ const sqlFnc = {
                         elobj += el;
                     }
                 })
-                console.log(elobj);
+                // console.log(elobj);
                 command += " WHERE " + Object.keys(filter)[0] + "= \"" + elobj + "\"";
             }
             // command += " WHERE " + Object.keys(filter)[0] + "=" + (util.isNumber(Object.values(filter)[0]) ? Object.values(filter)[0] : "'" + Object.values(filter)[0] + "'");
@@ -376,6 +376,21 @@ const sqlFnc = {
                     if (i != Object.keys(option).length - 1) query += ` ${multiOptionCntl} `;
                 }
             }
+        })
+    },
+    Direct: (command) => {
+        return new Promise((resolve, reject) => {
+            mysql_query(command)
+            .then((res_sql) => {
+                // return done(null, res_sql.length == 1 ? res_sql[0] : res_sql);
+                // console.log(res_sql);  
+                resolve(res_sql);
+            })
+            .catch((e) => {
+                console.log("mysql read Error: ");          
+                console.log(e);          
+                reject(e);
+            })
         })
     }
 }
