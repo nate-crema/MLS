@@ -29,6 +29,10 @@
           <div class="openControlWrap" id="openController" @click="OCClick()"> 
             <img class="openControl uOpen" src="/img/playerUOpen.svg"/>
           </div>
+
+          <div class="groupEditorWrap" id="groupController" @click="groupController()">
+            <img class="groupEditor uOpen" src="/img/adjust.png"/>
+          </div>
         </div>
     </div>
     <div class="coverBP" v-else>
@@ -44,8 +48,8 @@
         <div class="specArea">
           <ul class="selector">
             <li class="selectOption lyricsAll" id="lyricsAll" @click="specAreaSel">전체 가사</li>
-            <li class="selectOption albumInfo" id="albumInfo" @click="specAreaSel">앨범 정보</li>
-            <li class="selectOption cover" id="cover" @click="specAreaSel">커버</li>
+            <!-- <li class="selectOption albumInfo" id="albumInfo" @click="specAreaSel">앨범 정보</li>
+            <li class="selectOption cover" id="cover" @click="specAreaSel">커버</li> -->
           </ul>
           <div class="designBar"></div>
           <div class="contents" id="contentsSA">
@@ -195,6 +199,18 @@ export default {
                 $("#repeatController").css("left", "50%");
                 $("#repeatController").css("width", "30px");
                 $("#repeatController").css("height", "30px"); 
+                $("#openController").css("top", "60px");
+                $("#openController").css("left", "unset");
+                $("#openController").css("width", "30px");
+                $("#openController").css("height", "30px"); 
+                if ($(window).width() < 850) {
+                  $("#repeatController").css("display", "none"); 
+                  $("#openController").css("display", "none"); 
+                  $("#repeatController").css("opacity", "0"); 
+                  $("#openController").css("opacity", "0"); 
+                  $("#repeatController").css("opacity", "0"); 
+                  $("#openController").css("opacity", "0"); 
+                }
               }, 100);
               // $("#imgArea").css("width", "80px");
               // $("#imgArea").css("height", "80px");
@@ -207,6 +223,16 @@ export default {
                 $(".designBar").css("height", "20px");
                 $(".designBar").css("top", "5px");
                 $(".designBar").css("left", "30px");
+                if ($(window).width() < 850) {
+                  if ($(window).width() < 850) {
+                    $("#repeatController").css("display", "unset"); 
+                    $("#openController").css("display", "unset"); 
+                    $("#repeatController").css("opacity", "1"); 
+                    $("#openController").css("opacity", "1");
+                    $("#contentsSA").css("opacity", "1"); 
+                    $("#contentsSA").css("display", "unset"); 
+                  }
+                }
               }, 100);
               this_out.isspecAreaSelVactivate = true;
               // $("#imgArea").css("width", "100%");
@@ -265,6 +291,13 @@ export default {
                   })
                   this_out.startPlay();
               }, 150);
+          })
+          .catch((e) => {
+            this.$store.commit('alertCont', {
+              type: "warning",
+              cont: `음악재생 준비중 오류가 발생하였습니다. 다시 시도해주세요.`,
+              time: 5000
+            });
           })
         },
         // get music media information
@@ -422,6 +455,58 @@ export default {
               $(".coverBP .lylics").innerText=resultMusic.songTitle;
             })
           }
+        },
+        // mobile - make controller hide
+        groupController: function() {
+          const this_out = this;
+          if ($(window).width() < 850) {
+            $("#bottomPlayer .controller").css("display", "unset");
+            $("#bottomPlayer .repeatControlWrap").css("display", "unset");
+            $("#bottomPlayer .openControlWrap").css("display", "unset");
+            $("#bottomPlayer #groupController").css("opacity", "0");
+            $("#bottomPlayer .songTitle").css("opacity", "0");
+            $("#bottomPlayer .lyrics").css("opacity", "0");
+            setTimeout(() => {
+              $("#bottomPlayer .controller").css("opacity", "1");
+              $("#bottomPlayer .repeatControlWrap").css("opacity", "1");
+              $("#bottomPlayer .openControlWrap").css("opacity", "1");
+              $("#bottomPlayer #groupController").css("display", "none");
+              $("#bottomPlayer .songTitle").css("display", "none");
+              $("#bottomPlayer .lyrics").css("display", "none");
+              setTimeout(() => {
+                $("#bottomPlayer .controller").css("opacity", "0");
+                $("#bottomPlayer .repeatControlWrap").css("opacity", "0");
+                if (!this_out.$store.state.songPlayer.isOpen) {
+                  $("#bottomPlayer .openControlWrap").css("opacity", "0");
+                  $("#bottomPlayer .playInfo").css("opacity", "0");
+                } else {
+                  setTimeout(() => {
+                    $("#bottomPlayer .openControlWrap").css("opacity", "1");
+                    $("#bottomPlayer .playInfo").css("opacity", "1");
+                  }, 500);
+                }
+                $("#bottomPlayer #groupController").css("display", "unset");
+                $("#bottomPlayer .songTitle").css("display", "unset");
+                $("#bottomPlayer .lyrics").css("display", "unset");
+                setTimeout(() => {
+                  $("#bottomPlayer .controller").css("display", "none");
+                  $("#bottomPlayer .repeatControlWrap").css("display", "none");
+                  if (!this_out.$store.state.songPlayer.isOpen) {
+                    $("#bottomPlayer .openControlWrap").css("display", "none");
+                    $("#bottomPlayer .playInfo").css("display", "none");
+                  } else {
+                    setTimeout(() => {
+                      $("#bottomPlayer .openControlWrap").css("display", "unset");
+                      $("#bottomPlayer .playInfo").css("display", "unset");
+                    }, 500);
+                  }
+                  $("#bottomPlayer #groupController").css("opacity", "1");
+                  $("#bottomPlayer .songTitle").css("opacity", "1");
+                  $("#bottomPlayer .lyrics").css("opacity", "1");
+                }, 100);
+              }, 2000);
+            }, 100);
+          }
         }
     },
     created() {
@@ -509,12 +594,18 @@ export default {
   }
   #bottomPlayer .openControlWrap {
     right: 7% !important;
+    display: none;
   }
   #bottomPlayer .repeatControlWrap {
     right: 15% !important;
+    display: none;
   }
   #bottomPlayer .play, .pause {
     right: 24% !important;
+    display: none;
+  }
+  #bottomPlayer .groupEditorWrap {
+    display: unset;
   }
 }
 #bottomPlayer {
@@ -552,6 +643,7 @@ export default {
   position: relative;
   font-size: 20px;
   font-weight: 500;
+  opacity: 1;
 }
 #bottomPlayer .artist {
   top: 5px;
@@ -567,6 +659,7 @@ export default {
   font-size: 15px;
   font-weight: 300;
   transition: all .4s cubic-bezier(0.3, 0.97, 0, 1.01);
+  opacity: 1;
 }
 #bottomPlayer .progBar {
   width: 100%;
@@ -627,6 +720,7 @@ export default {
 }
 
 #bottomPlayer .openControlWrap {
+  z-index: 10000;
   position: absolute;
   top: 60px;
   right: 30px;
@@ -643,6 +737,22 @@ export default {
   width: 100%;
   height: 100%;
   transform: translate(-50%, -50%);
+}
+
+#bottomPlayer .groupEditorWrap {
+  /* display: none; */
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  top: 50%;
+  right: 0px;
+  transform: translate(-50%, -50%);
+}
+#bottomPlayer .groupEditorWrap .groupEditor {
+  /* display: none; */
+  width: 100%;
+  height: auto;
+  position: absolute;
 }
 
 

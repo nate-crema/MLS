@@ -96,6 +96,48 @@ app.post("/searchQuery", (req, res) => {
     })
 });
 
+app.post("/lyrics", (req, res) => {
+    let resArr = [];
+    const baseData = req.body.data;
+    for (var i = 0; i < baseData.length; i++) {
+        getLyricsN(baseData[i], i)
+            .then((data) => {
+                resArr.push({
+                    lyricsId: baseData[data.i],
+                    lyrics: data.lylics
+                });
+            // res.json({data});
+            })
+            .catch((e) => {
+                console.error(e);
+            })
+        if (i == baseData.length - 1) res.status(200).json({
+            data: resArr
+        });
+    }
+})
+
+app.post("/img", (req, res) => {
+    let resArr = [];
+    const baseData = req.body.data;
+    for (var i = 0; i < baseData.length; i++) {
+        getSongImgM(baseData[i], i)
+            .then((data) => {
+                resArr.push({
+                    songIdM: baseData[data.i],
+                    lyrics: data.lylics
+                });
+            // res.json({data});
+            })
+            .catch((e) => {
+                console.error(e);
+            })
+        if (i == baseData.length - 1) res.status(200).json({
+            data: resArr
+        });
+    }
+})
+
 
 
 // K-TOP100 songs Taking

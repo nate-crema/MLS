@@ -24,7 +24,7 @@ import Axios from 'axios'
 export default {
   methods: {
     searchSong: function(songTitle) {
-      location.href=`/service/search/searchQuery?searchKey=${songTitle}`;
+      location.href=`/service/search/searchQueryN?searchKey=${songTitle}`;
     }
   },
   data() {

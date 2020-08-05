@@ -12,7 +12,11 @@ const store = () => new Vuex.Store({
       isOpen: false,
       playlist: {}
     },
-    alertCont: {}
+    alertCont: {},
+    search: {
+      melon: {}
+    },
+    isSearching: false
   },
   getters: {
     getAlertCont: state => () => state.alertCont
@@ -55,6 +59,9 @@ const store = () => new Vuex.Store({
     },
     alertCont(state, cont) {
       state.alertCont = cont;
+    },
+    search(state, data) {
+      state.search = data;
     }
   },
   actions: {
@@ -63,6 +70,9 @@ const store = () => new Vuex.Store({
         console.log(req.session);
         if (req.session.userInfo) {
           commit('userInfo', req.session.userInfo)
+        }
+        if (req.session.search) {
+          commit('search', req.session.search)
         }
     },
     authed (state, { pn }) {
@@ -124,6 +134,32 @@ const store = () => new Vuex.Store({
           console.error(reason);
           reject(reason);
         })
+      })
+    },
+    search(state, searchKey) {
+      const this_out = this;
+      return new Promise((resolve, reject) => {
+        console.log(`this_out.state.isSearching: ${this_out.state.isSearching}`)
+        if (!this_out.state.userInfo.cusId) resolve(false);
+        // else if (this_out.state.isSearching) resolve("busy!");
+        else if (searchKey && searchKey != "" && searchKey != "undefined") {
+          this_out.state.isSearching = true;
+          axios.post('/api/search/searchQuery', {
+          searchOption: "*",
+          searchQuery: searchKey,
+          cusId: this_out.state.userInfo.cusId
+        })
+          .then(({ data }) => {
+            this_out.state.search = data;
+            this_out.state.isSearching = false;
+            this_out.state.search.searchKey = searchKey;
+            resolve(data);
+          })
+          .catch((e) => {
+            reject(e);
+          })
+        }
+        else resolve(false);
       })
     },
 

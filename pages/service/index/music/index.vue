@@ -2,7 +2,7 @@
   <div>
       <div class="songDetail" v-if="searchResult.songTitle != undefined">
         <nuxt-link class="backPageRed"
-        :to="`/service/search/searchQuery?searchKey=${searchKey}`"> &lt; 검색 결과로 이동</nuxt-link>
+        :to="`/service/search/searchQueryN?searchKey=${searchKey}`"> &lt; 검색 결과로 이동</nuxt-link>
         <div class="songTitle">
           <p id="songTitle" class="songTitleText">{{searchResult.songTitle.length > 20 ? searchResult.songTitle.substr(0, 17) + "..." : searchResult.songTitle}}</p>
           <p id="songArtist" class="songArtistText">{{searchResult.artist.length > 20 ? searchResult.artist.substr(0, 17) + "..." : searchResult.artist}}</p>
@@ -164,6 +164,8 @@ export default {
           if ($(window).width() <= 850) {
             $("div.vueBlocks").css("left", "0");
             $("div.vueBlocks .musicCont").css("left", "0");
+            $(".vueBlocks").css("top", "0px");
+            $(".vueBlocks").css("height", "fit-content");
             // $("div.songDetail").css("height", $(window).height()+200);
             // alert("wert");
             // $("div.songDetail").css("height", $(window).height()+150);

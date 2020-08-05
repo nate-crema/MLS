@@ -25,7 +25,7 @@
                 </g></g>
             </svg>
             <p id="phoneNumPH" class="placeHolderInput">핸드폰 번호 입력</p>
-            <input id="phoneNumIN" type="number"/>
+            <input id="phoneNumIN" type="number" v-model="pns"/>
             <p class="msg"></p>
         </div>
         <div class="authCode">
@@ -56,13 +56,20 @@ export default {
     data() {
         return {
             isInputing: -1,
+            pn: "",
             inputData: "",
-            to: ""
+            to: "",
+            isPNChecked: false
         }
     },
     head() {
         return {
             title: "Base - 로그인"
+        }
+    },
+    watch: {
+        inputData: function(val) {
+            if (this.isPNChecked) document.getElementById("phoneNumIN").value="비밀번호를 입력해주세요.";
         }
     },
     mounted() {
@@ -139,15 +146,16 @@ export default {
                                         document.getElementById("phoneNumIN").value = "비밀번호를 입력해주세요.";
                                         $(".authCode").css("display", "unset");
                                         setTimeout(() => {
-                                            if (mobileCheck()) {
-                                                const inputPW = prompt("비밀번호를 입력하세요 (숫자 4자리 + 한글단어 1개)");
-                                                login(this_out.pn, inputPW);
-                                            } else {
+                                            // if (mobileCheck()) {
+                                            //     const inputPW = prompt("비밀번호를 입력하세요 (숫자 4자리 + 한글단어 1개)");
+                                            //     login(this_out.pn, inputPW);
+                                            // } else {
+                                                this_out.isPNChecked = true;
                                                 $(".authCode").css("opacity", "1");
                                                 // alert(mobileCheck());
                                                 // if (mobileCheck()) $("#fakeInput").click();
                                                 $("#authCodePH").click();
-                                            }
+                                            // }
                                         }, 500);
                                     }, 500);
                                 } else{

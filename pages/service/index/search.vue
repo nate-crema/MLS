@@ -7,7 +7,7 @@
             <div class="searchArea">
                 <input type="text" id="searchData" v-model="inputDataUri"/>
                 <div class="searchBtn" id="searchCmd">
-                    <nuxt-link :to="'/service/search/searchQueryN?searchKey=' + encodeURI(inputDataUri)" hidden id="hiddenClicker"></nuxt-link>
+                    <nuxt-link :to="`/service/search/searchQueryN?searchKey=${encodeURI(inputDataUri)}`" hidden id="hiddenClicker"></nuxt-link>
                     <svg xmlns="http://www.w3.org/2000/svg" height="512px" version="1.1" viewBox="-1 0 136 136.21852"
                       width="512px">
                       <g>
@@ -93,6 +93,12 @@ export default {
             })
         }
     },
+    watch: {
+        inputDataUri: function(val) {
+            console.log(val);
+            this.$store.state.search.searchKey = this.inputDataUri;
+        }
+    },
     mounted() {
         $(document).ready(() => {
             resizeAction();
@@ -143,13 +149,10 @@ export default {
         })
 
         $("#searchCmd").click(() => {
-            document.getElementById("hiddenClicker").click();
-            // this_out.search();
-            // if (location.href.includes('/search/searchQuery')) {
-            //     setTimeout(() => {
-            //         location.reload();
-            //     }, 100);
-            //     }
+            if (!location.href.includes('/search/searchQuery')) {
+                // location.reload();
+                document.getElementById("hiddenClicker").click();
+            }
         });
     }
 }
@@ -240,7 +243,7 @@ export default {
     top: 150px;
     width: 100%;
     height: 100%;
-    border: 1px solid black;
+    /* border: 1px solid black; */
 }
 
 

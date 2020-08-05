@@ -1,9 +1,9 @@
 <template>
   <div id="searchResult">
       <isMediaComp :mediaTypeText="mediaTypeText"></isMediaComp>
-      <div class="songObjs" id="songObjs" v-if="searchResult.melon">
+      <div class="songObjs" id="songObjs" v-if="isSearchComplete && !$store.state.isSearching">
         
-        <div class="songObj" v-for="(indivSong, index) in searchResult.melon.data" :key="index">
+        <div class="songObj" v-for="(indivSong, index) in searchResult" :key="index">
           <!-- <svg version="1.1" id="lg_imgA" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
           y="0px" viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve">
             <circle cx="50.79" cy="50.79" r="36.79"/>
@@ -33,31 +33,33 @@
           </svg>
           <div class="background-lpTop" style="background-size: contain"
           :style="{backgroundImage: `url(${indivSong.song.songImg})`}"
-          :class="`songObjs_${index}_lp`">
+          :class="`songObjs_${index}_lp`"
+          :id="!indivSong.song.songImg ? indivSong.song.songIdM : ''">
           </div>
           <div class="lpFTop"
           :class="`songObjs_${index}_lp`">
             <div class="smallLpFTop"></div>
           </div>
-          <div class="songCover" @mouseover="mouseOver" @click="musicSelected"
+          <div class="songCover" @mouseover="mouseOver"
           :class="`songObjs_${index} id_${indivSong.songIdB}_contBox`"
           :id="indivSong.songIdB">
+          <div class="clickableArea"  :id="indivSong.songIdB" @click="musicSelected"></div>
             <div class="songInfo">
               <p class="songTitle">{{indivSong.song.songTitle.length > 6 ? indivSong.song.songTitle.substr(0, 5) + "..." : indivSong.song.songTitle}}</p>
               <p class="songArtist">{{indivSong.artist.artistName.length > 6 ? indivSong.artist.artistName.substr(0, 5) + "..." : indivSong.artist.artistName}}</p>
             </div>
             <div class="optionDot">
-              <div class="playlistAddWrap" @click="addPlaylist(true, indivSong.songIdB)">
+              <div class="playlistAddWrap" @click="addPlaylist(false, indivSong.songIdB)">
                 <img class="playlistAdd" src="/img/playlistAdd.svg"/>
               </div>
-              <div class="nPlaylistAddWrap" @click="addPlaylist(false, indivSong.songIdB)">
+              <div class="nPlaylistAddWrap" @click="addPlaylist(true, indivSong.songIdB)">
                 <img class="nPlaylistAdd" src="/img/nPlaylistAdd.svg"/>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div v-else>
+      <div v-else-if="$store.state.isSearching">
         <div class="lds-ripple"><div></div><div></div></div>
         <p class="loadingText">loading...</p>
       </div>
@@ -88,12 +90,34 @@ export default {
       }
     },    
     methods: {
+      getParameterByName: function(name, url) {
+        if (!url) url = window.location.href;
+        name = name.replace(/[\[\]]/g, '\\$&');
+        var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'), results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, ' '));
+      },
       addPlaylist: function(isNow, songIdB) {
-        // console.log(this.$el);
+        console.log(isNow);
         const this_out = this;
         if (isNow) {
-          console.log(this_out.$store.state.songPlayer.playlist);
-          this_out.$store.state.songPlayer.playlist.push(songIdB);
+          // console.log(this_out.$store.state.songPlayer.playlist);
+          // this_out.$store.state.songPlayer.playlist.push(songIdB);
+          if (this_out.$store.state.songPlayer.status) {
+            this.$store.dispatch("playlist", {
+              fnc: "push",
+              cont: songIdB
+            })
+            .then((result) => {
+              this_out.playlistAdded(this_out.$store.state.songPlayer.playlist, songIdB);
+            })
+            .catch((e) => {
+              this_out.playlistAdded(null, null, e);
+            })
+          } else {
+            this.$store.commit("playSong", {songId: songIdB})
+          }
         }
       },
       musicSelected: function(element) {
@@ -104,20 +128,21 @@ export default {
 
         let this_out = this;
         console.log(`this_out.$store.state.songPlayer.status: ${this_out.$store.state.songPlayer.status}`);
-        if (this_out.$store.state.songPlayer.status) {
-          this.$store.dispatch("playlist", {
-            fnc: "push",
-            cont: clickedId
-          })
-          .then((result) => {
-            this_out.playlistAdded(this_out.$store.state.songPlayer.playlist, clickedId);
-          })
-          .catch((e) => {
-            this_out.playlistAdded(null, null, e);
-          })
-        } else {
+        if (!this_out.$store.state.songPlayer.status) {
+          // this.$store.dispatch("playlist", {
+          //   fnc: "push",
+          //   cont: clickedId
+          // })
+          // .then((result) => {
+          //   this_out.playlistAdded(this_out.$store.state.songPlayer.playlist, clickedId);
+          // })
+          // .catch((e) => {
+          //   this_out.playlistAdded(null, null, e);
+          // })
           this.$store.commit("playSong", {songId: clickedId})
-          console.log(this_out.searchResult.melon.data);
+        // } else {
+        }
+          // console.log(this_out.searchResult.melon.data);
           
           function designChange(q, index) {
             console.log(index);
@@ -139,13 +164,13 @@ export default {
           }
   
           setTimeout(() => {
-            designChange(0, this_out.searchResult.melon.data.length);
+            designChange(0, this_out.searchResult.length);
             setTimeout(() => {
               $(".searchObj").css("transition", "all .4s cubic-bezier(0.08, 0.93, 0.58, 1)");
               setTimeout(() => {
                 $(".searchObj").css("opacity", "0");
                 $(".searchObj").css("top", "150px");
-                this_out.to=`/service/music?musicId=${clickedId}&searchKey=${document.getElementsByClassName("searchTitle")[0].innerText.split("\"")[1]}`;
+                this_out.to=`/service/music?musicId=${clickedId}&searchKey=${this_out.$parent.inputDataUri}`;
                 setTimeout(() => {
                   console.log(clickedId);
                   console.log($("#nuxt-link-next"));
@@ -154,7 +179,7 @@ export default {
               }, 10);
             }, 500);
           }, 100);
-        }
+        // }
 
         
 
@@ -178,19 +203,11 @@ export default {
         // console.log(Object.keys(this));
       },
       search: function() {
+        console.log(`searchStart`);
         let this_out = this;
-        const searchKey = decodeURI(document.location.search.replace("?searchKey=", ""));
-        document.getElementsByClassName("searchTitle")[0].innerHTML = `${searchKey}에 대한 검색결과 입니다!`;
-        document.getElementById("searchData").value = searchKey;
-
-        axios.post('/api/search/searchQuery', {
-          searchOption: "*",
-          searchQuery: searchKey,
-          cusId: this_out.$store.state.userInfo.cusId
-        })
-        .then(({data}) => {
-          this_out.searchResult = data;
-        })
+        // const searchKey = this.$store.state.search.searchKey;
+        document.getElementsByClassName("searchTitle")[0].innerHTML = `${this_out.searchKey}에 대한 검색결과 입니다!`;
+        document.getElementById("searchData").value = this_out.searchKey;
           // let alligned = data;
           // // numOfRes 기준 정렬
           // alligned.melon.data.sort(function (a, b) {
@@ -223,52 +240,142 @@ export default {
           //       }
           //     })
           //   }
-      }
+      },
+      refreshState: function() {
+          const this_out = this;
+          // console.log(`data: ${JSON.stringify(this.$store.state.alertCont)}`);
+          
+          console.log(this.$store.state.search.melon);
+          // console.log(this.searchResult);
+          if (this.$store.state.search.melon) {
+            console.log(`searchedDataExist`);
+            this.searchResult = this.$store.state.search.melon.data;
+          }
+          setTimeout(() => {
+              this_out.refreshState();
+          }, 100);
+      },
+      // updateSearchResult: function() {
+        
+      //   setTimeout(() => {
+      //     this_out.updateSearchResult();
+      //   }, 100);
+      // }
     },
     data() {
       return {
-        searchResult: [],
+        searchResult: this.$store.state.search.melon.data || [],
         mediaTypeText: "",
+        searchKey: "",
+        isSearchComplete: false,
         isArtistYT: false,
         to: "/"
       }
     },
     mounted() {
 
-      this.search();
+      // this.search();
+      console.log(this.searchResult);
+      const query = this.getParameterByName("searchKey");
+      if (query) {
+        console.log(`search: query: ${query}`);
+        if (query != "undefined") {
+          // console.log(this.$parent.inputDataUri);
+          // console.log(query);
+          // this.$parent.inputDataUri = query;
+          // console.log(this.$parent.inputDataUri);
+          $(document).ready(() => {
+            document.getElementById("searchData").value=query;
+            document.getElementById("searchCmd").click();
+          })
+          // $("#searchCmd").click();
+        }
+      }
+
+      if (this.$parent.inputDataUri = "") {
+        
+      }
+
+      const this_out = this;
+      $("#searchCmd").click(() => {
+          console.log("dispatch");
+          let searchData = this_out.$parent.inputDataUri;
+          const inputR = document.getElementById("searchData").value;
+          if (inputR != searchData) searchData = inputR;
+          console.log(`search: ${searchData}`);
+          this_out.$store.dispatch("search", searchData)
+          .then((data) => {
+            if (!data) {
+              console.log("can't search undefined")
+            } else if (data == "busy!") {
+              this.$store.commit('alertCont', {
+                type: "warning",
+                cont: `현재 이전 검색을 처리중입니다. 잠시만 기다려주세요`,
+                time: 5000
+              });
+            } else {
+              console.log(data);
+              this_out.searchResult = data.melon.data;
+              this_out.isSearchComplete = true;
+              let imgReqArr = [];
+              let lyricsReqArr = [];
+              let lyrics_index = {};
+              data.melon.data.forEach((value, index) => {
+                console.log(index);
+                if (!value.songImg) {
+                  imgReqArr.push(value.songIdM);
+                }
+                if (value.lyricsId && (!value.lyrics || value.lyrics.length == 0)) {
+                  lyricsReqArr.push(value.lyrisId);
+                  lyrics_index[value.lyricsId] = index;
+                }
+                if (index == data.melon.data.length) {
+                  if (imgReqArr.length != 0) axios.post("/api/search/img", {data: imgReqArr})
+                  .then((result) => {
+                    result.data.forEach((val, ind) => {
+                      try {
+                        document.getElementById(val.songIdM).style.backgroundImage = url(val.imgURL);
+                      } catch(e) {
+                        console.log(`ERR: Cannot find document(${img}): ${val.songIdM}`);
+                      }
+                    })
+                  })
+                  if (lyricsReqArr.length != 0) axios.post("/api/search/lyrics", {data: lyricsReqArr})
+                  .then((result) => {
+                    result.data.forEach((val, ind) => {
+                      try {
+                        this_out.searchResult[lyrics_index[value.lyricsId]] = value.lyrics;
+                      } catch(e) {
+                        console.log(`ERR: Cannot find document(${lyrics}): ${val.songIdM}`);
+                      }
+                    })
+                  })
+                }
+              })
+            }
+          })
+          // console.log()
+          // this_out.search();
+          // if (location.href.includes('/search/searchQuery')) {
+          //     setTimeout(() => {
+          //         location.reload();
+          //     }, 100);
+          //     }
+      });
 
       
-      const this_out = this;
+      // this.search();
+      // this.refreshState();
       // console.log(this.$store.state.userInfo);
 
       
 
       $(document).ready(() => {
+
+        // this_out.updateSearchResult();
         
 
-        $(".musicSelector").click(function() {console.log("hi")})
-
-        function ArtistOBJM(service, data) {
-          data.forEach((element, index) => {
-            const data = document.createElement("div");
-            if (service == "yt") {
-              data.className = "artist " + index;
-              data.id = element.ArtistName;
-              data.style.backgroundImage = `url(${element.thumbnails[3].url})`;
-              data.style.backgroundSize = "100%";
-              const artistName = document.createElement("p");
-              console.log(element);
-              artistName.innerText = element.ArtistName;
-              artistName.className = "artistName";
-              data.appendChild(artistName);
-
-
-              document.getElementById("artists").appendChild(data);
-              console.log(data);
-            }
-          })
-        }
-
+        
         // design js
 
         $(".searchBtn").css("display", "block");
@@ -396,7 +503,7 @@ export default {
   z-index: 200;
   border-radius: 9px;
   box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.49);
-  cursor: pointer;
+  /* cursor: pointer; */
 }
 .songObjs .songCover:hover {
   width: 160px;
@@ -405,6 +512,13 @@ export default {
 }
 .songCover:hover .songObjs {
   background-color: black;
+}
+.songObjs .songCover .clickableArea {
+  width: 100%;
+  height: 75%;
+  position: absolute;
+  z-index: 10000;
+  cursor: pointer;
 }
 .songObjs .songCover .songInfo {
   /* border: 1px solid black; */

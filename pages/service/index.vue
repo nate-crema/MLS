@@ -66,6 +66,8 @@ export default {
 @media (max-width: 850px) {
   .vueBlocks {
     left: 0px;
+    top: 0;
+    height: fit-content;
   }
 }
 </style>

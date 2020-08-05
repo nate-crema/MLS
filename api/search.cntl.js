@@ -253,14 +253,15 @@ const isAlreadySaved = function(songId, bi, bSearchPriority) {
     })
 }
 
-const getSongImgM = function(songId) { 
+const getSongImgM = function(songId, i) { 
     return new Promise((resolve, reject) => {
         axios.get(`https://www.melon.com/song/detail.htm?songId=${songId}`)
             .then(({ data }) => {
                 const imgEXTR = cheerio.load(data);
                 const songImg = imgEXTR("div.section_info .wrap_info .thumb a img")[0].attribs.src;
                 // console.log("second callback");
-                resolve(songImg);
+                if (i) resolve(songImg, i);
+                else resolve(songImg);
             })
             .catch((e) => {
                 console.log("MELON_API_ERROR[songDetail]: " + e);
@@ -351,12 +352,13 @@ const getLyrics = function(songIdM) {
     })
 }
 
-const getLyricsN = function(songIdM) {
+const getLyricsN = function(songIdM, i) {
     return new Promise((resolve, reject) => {
         axios.get(`https://www.melon.com/webplayer/getLyrics.json?songId=${songIdM}`)
         .then(({ data }) => {
                 // console.log("5th callback");
-            resolve(data);
+            if (i) resolve(data, i);
+            else resolve(data);
         })
         .catch((e) => {
             console.log("MELON_API_ERROR[lyricsInfo]: " + e);
@@ -430,10 +432,13 @@ const newSongRegister = function (songArr) {
                     .then((ytdata) => {
                         songObjU.songImg = ytdata;
                         isPossiblePush[indexsO] = true;
+                        
                     })
                     .catch((eY) => {
                         console.error(`ERR: BackgroundRegister(getSongImgM && getSongImgY) || ${indexsO} || ${songObj.songId} ==> ${eY}`);
                     })
+                    songImgS = true;
+                    isPushable(songImgS, albumImgS, artistImgS, getLyricsS, songObjU, indexsO);
             })
             getAlbumImgM(songObj.albumIdM)
                 .then((data) => {
@@ -453,6 +458,8 @@ const newSongRegister = function (songArr) {
                     .catch((eY) => {
                         console.error(`ERR: BackgroundRegister(getAlbumImgM && getAlbumImgY) || ${indexsO} || ${songObj.songId} ==> ${eY}`);
                     })
+                    albumImgS = true;
+                    isPushable(songImgS, albumImgS, artistImgS, getLyricsS, songObjU, indexsO);
                 })
             if (songObj.artistIdM != "") {
                 getArtistImgM(songObj.artistIdM)
@@ -479,6 +486,8 @@ const newSongRegister = function (songArr) {
                             songObjU.artistImg = "";
                             console.log(`Artist Image search automatically stopped: (artistname: ${songObj.artist})`)
                         }
+                        artistImgS = true;
+                        isPushable(songImgS, albumImgS, artistImgS, getLyricsS, songObjU, indexsO);
                 })
             } else {
                 isPossiblePush[indexsO] = true;

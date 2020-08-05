@@ -8,12 +8,12 @@
               <img class="playlistAdd pListFncBtn" src="/img/playlistAddBtn.svg" @click="playlist('recent');"/>
               <img class="playlistPlay pListFncBtn" src="/img/listplayBtn.svg"/>
           </div>
-          <div class="playlistObj youtube">
+          <div class="playlistObj base" @click="move('search')">
               <img class="playlistImg" src="/img/playlist.svg"/>
-              <p class="playlistT">Youtube</p>
-              <p class="playlistCont">Youtube<br>Recommend</p>
-              <img class="playlistAdd pListFncBtn" src="/img/playlistAddBtn.svg" @click="playlist('ytrecm');"/>
-              <img class="playlistPlay pListFncBtn" src="/img/listplayBtn.svg"/>
+              <p class="playlistT">Search</p>
+              <p class="playlistCont">Base<br>검색</p>
+              <!-- <img class="playlistAdd pListFncBtn" src="/img/playlistAddBtn.svg" @click="playlist('ytrecm');"/>
+              <img class="playlistPlay pListFncBtn" src="/img/listplayBtn.svg"/> -->
           </div>
           <div class="playlistObj melon" @click="playlist('KR_TOP100');">
               <img class="playlistImg" src="/img/playlist.svg"/>
@@ -37,6 +37,9 @@ export default {
         }
     },
     methods: {
+        move: function() {
+            location.href="/service/search";
+        },
         playlist: function(position) {
             // console.log(this);
             let url = "";
