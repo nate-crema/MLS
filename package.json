@@ -36,7 +36,7 @@
     "net": "^1.0.2",
     "node-cache": "^5.1.2",
     "nodejs-traceroute": "^1.2.0",
-    "nuxt": "^2.0.0",
+    "nuxt": "^2.15.8",
     "nuxt-socket-io": "^1.0.24",
     "path": "^0.12.7",
     "socket.io": "^2.3.0",
