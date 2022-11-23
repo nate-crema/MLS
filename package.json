@@ -39,7 +39,7 @@
     "nuxt": "^2.0.0",
     "nuxt-socket-io": "^1.0.24",
     "path": "^0.12.7",
-    "socket.io": "^2.3.0",
+    "socket.io": "^2.5.0",
     "speedtest-net": "^2.1.1",
     "tls": "0.0.1",
     "vuex": "^3.5.1",
